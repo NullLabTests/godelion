@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a2e"/>
+      <stop offset="50%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f3460"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7c948"/>
+      <stop offset="100%" style="stop-color:#e8a317"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d2ff"/>
+      <stop offset="100%" style="stop-color:#3a7bd5"/>
+    </linearGradient>
+    <linearGradient id="mane" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7c948;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#e8a317;stop-opacity:0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="248" fill="url(#bg)" stroke="url(#gold)" stroke-width="3"/>
+
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="240" fill="none" stroke="url(#cyan)" stroke-width="1" stroke-opacity="0.3"/>
+  <circle cx="256" cy="256" r="230" fill="none" stroke="url(#gold)" stroke-width="0.5" stroke-opacity="0.2"/>
+
+  <!-- Text path -->
+  <path id="text-path" d="M 256 40 A 216 216 0 1 1 255.9 40" fill="none"/>
+  <text font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="700" fill="url(#gold)" letter-spacing="12">
+    <textPath href="#text-path" startOffset="28%">GODELION</textPath>
+  </text>
+
+  <!-- Subtle inner ring with code brackets -->
+  <circle cx="256" cy="256" r="175" fill="none" stroke="url(#cyan)" stroke-width="0.8" stroke-opacity="0.15" stroke-dasharray="8,6"/>
+
+  <!-- Mane: Ouroboros/Möbius self-referential loop -->
+  <path d="M 256 100 
+           C 340 100, 400 160, 400 256 
+           C 400 352, 340 412, 256 412 
+           C 172 412, 112 352, 112 256 
+           C 112 160, 172 100, 256 100"
+        fill="none" stroke="url(#mane)" stroke-width="40" stroke-opacity="0.6"/>
+
+  <!-- Mane detail arcs -->
+  <path d="M 256 85 C 355 85, 425 155, 425 256 C 425 357, 355 427, 256 427 C 157 427, 87 357, 87 256 C 87 155, 157 85, 256 85"
+        fill="none" stroke="url(#gold)" stroke-width="2" stroke-opacity="0.25"/>
+  <path d="M 256 70 C 370 70, 450 150, 450 256 C 450 362, 370 442, 256 442 C 142 442, 62 362, 62 256 C 62 150, 142 70, 256 70"
+        fill="none" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.15"/>
+
+  <!-- Lion Face - Geometric Abstract -->
+  <!-- Main face shape -->
+  <ellipse cx="256" cy="260" rx="75" ry="80" fill="#1a0a2e" stroke="url(#gold)" stroke-width="2.5"/>
+
+  <!-- Eyes -->
+  <ellipse cx="225" cy="240" rx="16" ry="18" fill="#0a0a1a" stroke="url(#cyan)" stroke-width="2"/>
+  <ellipse cx="287" cy="240" rx="16" ry="18" fill="#0a0a1a" stroke="url(#cyan)" stroke-width="2"/>
+
+  <!-- Eye pupils - infinity symbol within -->
+  <text x="224" y="249" font-family="'Courier New', monospace" font-size="20" fill="#00d2ff" text-anchor="middle">∞</text>
+  <text x="286" y="249" font-family="'Courier New', monospace" font-size="20" fill="#00d2ff" text-anchor="middle">∞</text>
+
+  <!-- Angular brows / code brackets -->
+  <text x="256" y="210" font-family="'Courier New', monospace" font-size="18" fill="url(#gold)" text-anchor="middle" font-weight="bold">&lt;/&gt;</text>
+
+  <!-- Nose bridge -->
+  <line x1="256" y1="258" x2="256" y2="290" stroke="url(#gold)" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Nose -->
+  <ellipse cx="256" cy="292" rx="10" ry="7" fill="url(#gold)"/>
+
+  <!-- Mouth / Gödel brackets -->
+  <text x="256" y="320" font-family="'Courier New', monospace" font-size="16" fill="url(#cyan)" text-anchor="middle" font-weight="bold">{  }</text>
+
+  <!-- Whiskers - code parentheses and brackets -->
+  <line x1="190" y1="260" x2="155" y2="248" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="190" y1="270" x2="155" y2="270" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="190" y1="280" x2="155" y2="292" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <line x1="322" y1="260" x2="357" y2="248" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="322" y1="270" x2="357" y2="270" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="322" y1="280" x2="357" y2="292" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- Small dots at whisker ends -->
+  <circle cx="155" cy="248" r="2.5" fill="url(#cyan)" opacity="0.6"/>
+  <circle cx="155" cy="270" r="2.5" fill="url(#cyan)" opacity="0.6"/>
+  <circle cx="155" cy="292" r="2.5" fill="url(#cyan)" opacity="0.6"/>
+  <circle cx="357" cy="248" r="2.5" fill="url(#cyan)" opacity="0.6"/>
+  <circle cx="357" cy="270" r="2.5" fill="url(#cyan)" opacity="0.6"/>
+  <circle cx="357" cy="292" r="2.5" fill="url(#cyan)" opacity="0.6"/>
+
+  <!-- Ears -->
+  <path d="M 195 195 L 185 155 L 220 180" fill="#1a0a2e" stroke="url(#gold)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 317 195 L 327 155 L 292 180" fill="#1a0a2e" stroke="url(#gold)" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Inner ear detail -->
+  <circle cx="200" cy="185" r="6" fill="url(#gold)" opacity="0.4"/>
+  <circle cx="312" cy="185" r="6" fill="url(#gold)" opacity="0.4"/>
+
+  <!-- Decorative nodes (neural network / machine) around face -->
+  <circle cx="160" cy="200" r="3" fill="#00d2ff" opacity="0.7"/>
+  <circle cx="148" cy="220" r="2" fill="#00d2ff" opacity="0.5"/>
+  <circle cx="170" cy="230" r="2.5" fill="#00d2ff" opacity="0.6"/>
+
+  <circle cx="352" cy="200" r="3" fill="#00d2ff" opacity="0.7"/>
+  <circle cx="364" cy="220" r="2" fill="#00d2ff" opacity="0.5"/>
+  <circle cx="342" cy="230" r="2.5" fill="#00d2ff" opacity="0.6"/>
+
+  <!-- Connection lines between nodes -->
+  <line x1="160" y1="200" x2="148" y2="220" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="148" y1="220" x2="170" y2="230" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="352" y1="200" x2="364" y2="220" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="364" y1="220" x2="342" y2="230" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Tagline at bottom -->
+  <text x="256" y="480" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="url(#cyan)" text-anchor="middle" letter-spacing="6" opacity="0.7">SELF-EVOLVING CODING AGENT</text>
+</svg>

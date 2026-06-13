@@ -1,4 +1,4 @@
-# Code adapted from https://github.com/SakanaAI/AI-Scientist/blob/main/ai_scientist/llm.py.
+
 import json
 import os
 import re

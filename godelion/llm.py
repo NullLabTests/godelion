@@ -1,17 +1,9 @@
 """
-Godelion LLM Client Factory
+Godelion LLM Client Factory — multi-provider LLM interface.
 
-Unified interface for multiple LLM providers:
-- Anthropic (Claude)
-- OpenAI (GPT-4o, o-series)
-- DeepSeek
-- OpenRouter
-- Amazon Bedrock
-- Google Vertex AI
-- Ollama (local)
-- vLLM (local)
-- LM Studio (local)
-- Custom OpenAI-compatible endpoints
+Supported providers: Anthropic, OpenAI, DeepSeek, OpenRouter,
+Bedrock, Vertex AI, Ollama, vLLM, LM Studio, and any
+OpenAI-compatible endpoint.
 """
 import json
 import os

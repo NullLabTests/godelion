@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="./misc/godelion-logo.svg" alt="Godelion Logo" width="256" height="256">
+</div>
+
 <h1 align="center">
   🦁 Godelion
 </h1>
@@ -10,9 +14,9 @@
 <p align="center">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="License"></a>
   <a href="https://arxiv.org/abs/2505.22954"><img src="https://img.shields.io/badge/Paper-arXiv%202505.22954-b31b1b.svg?style=for-the-badge" alt="Paper"></a>
-  <a href="https://sakana.ai/dgm/"><img src="https://img.shields.io/badge/Blog-Sakana%20AI-8D6748?style=for-the-badge" alt="Blog"></a>
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python" alt="Python">
   <img src="https://img.shields.io/badge/Docker-Required-2496ED?style=for-the-badge&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/Local%20Models-Ollama%2FvLLM-00d2ff?style=for-the-badge" alt="Local Models">
 </p>
 
 ---
@@ -32,8 +36,8 @@
 >
 > Never run this on production systems, machines with sensitive data, or environments that could affect
 > the real world if the agent escapes its sandbox. Always review model-generated patches before
-> applying them outside the Docker sandbox. The authors and contributors of this project accept **zero
-> liability** for misuse or unintended consequences.
+> applying them outside the Docker sandbox. The authors and contributors accept **zero liability**
+> for misuse or unintended consequences.
 
 ---
 
@@ -80,7 +84,6 @@ compounding improvements over generations.
 - [Troubleshooting](#-troubleshooting)
 - [Contributing](#-contributing)
 - [Changelog](./CHANGELOG.md)
-- [Citation](#-citation)
 
 ---
 
@@ -95,13 +98,12 @@ compounding improvements over generations.
 ### 1. Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/godelion.git
+git clone https://github.com/NullLabTests/godelion.git
 cd godelion
 
 python3 -m venv venv
 source venv/bin/activate
 
-# Install Godelion (editable mode)
 pip install -e .
 
 # Optional: for analysis & plotting
@@ -232,7 +234,7 @@ See [config.yaml](./config.yaml) for the complete reference.
 
 ## 🤖 Running with Local Models
 
-One of Godelion's standout features is full support for **free, local, offline models**.
+Godelion fully supports **free, local, offline models**.
 
 ### Option 1: Ollama
 
@@ -290,7 +292,6 @@ local:
 ### Basic Run
 
 ```bash
-# Default: 80 generations, 2 children per generation
 python run.py
 ```
 
@@ -323,32 +324,19 @@ python run.py --continue-from ./output_godelion/20250101_120000_123456
 python run.py --polyglot
 ```
 
-### Shallow Evaluation (Faster, Less Accurate)
-
-```bash
-python run.py --shallow-eval
-```
-
 ---
 
 ## 📊 Analysis & Visualization
 
-### Lineage Tree
-
 ```bash
-python -m analysis.plot_lineage --output-dir ./output_godelion/20250101_120000_123456
-```
-
-### Performance Over Generations
-
-```bash
+# Performance over generations
 python -m analysis.plot_performance --output-dir ./output_godelion/20250101_120000_123456
-```
 
-### Full Analysis Report
+# Lineage tree (requires graphviz)
+python -m analysis.plot_lineage --output-dir ./output_godelion/20250101_120000_123456
 
-```bash
-python -m analysis.report --output-dir ./output_godelion/20250101_120000_123456 --format html
+# Full HTML report
+python -m analysis.report --output-dir ./output_godelion/20250101_120000_123456
 ```
 
 ---
@@ -357,7 +345,7 @@ python -m analysis.report --output-dir ./output_godelion/20250101_120000_123456 
 
 ```
 godelion/
-├── run.py                    # Main entry point (replaces DGM_outer.py)
+├── run.py                    # Main entry point
 ├── config.yaml               # Default configuration
 ├── config.local.yaml         # Local overrides (gitignored)
 ├── godelion/
@@ -387,12 +375,10 @@ godelion/
 ├── swe_bench/                # SWE-bench integration
 ├── polyglot/                 # Polyglot benchmark integration
 ├── analysis/                 # Analysis & visualization
-│   ├── plot_lineage.py
-│   ├── plot_performance.py
-│   └── report.py
 ├── tests/                    # Test suite
+├── misc/                     # Logo, diagrams
 ├── Dockerfile                # Container definition
-└── pyproject.toml            # Modern Python packaging
+└── pyproject.toml            # Python packaging
 ```
 
 ---
@@ -459,22 +445,12 @@ def tool_function(param: str) -> str:
     return f"Result: {param}"
 ```
 
-That's it. The tool is auto-discovered and available to the agent.
+Auto-discovered and available to the agent immediately.
 
 ### Adding a New Benchmark
 
 Create a new directory following the `swe_bench/` or `polyglot/` pattern, then add it to
 `config.yaml` under `benchmark`.
-
-### Customizing the Evolutionary Algorithm
-
-Override the selection methods in `godelion/engine.py`:
-
-```python
-def custom_selection(archive, candidates, size):
-    # Your custom selection logic here
-    return selected_parents
-```
 
 ---
 
@@ -488,16 +464,13 @@ newgrp docker
 ```
 
 ### "Model response is too long"
-Increase context window or reduce the prompt size. Check `config.yaml` → `llm.api.max_tokens`.
+Increase context window or reduce prompt size. Check `config.yaml` → `llm.api.max_tokens`.
 
 ### "Self-improvement times out"
 Increase `docker.timeout_seconds` or reduce `evolution.selfimprove_size`.
 
 ### "Container runs out of memory"
 Set `docker.memory_limit` in config, e.g., `"8g"`.
-
-### "No evaluation files found"
-Run `python -m swe_bench.harness` once to generate baseline evaluations.
 
 ### "Cannot connect to local model"
 Verify the model is running: `curl http://localhost:11434/v1/models` (Ollama) or
@@ -507,9 +480,7 @@ Verify the model is running: `curl http://localhost:11434/v1/models` (Ollama) or
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-### Development Setup
+Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ```bash
 pip install -e ".[dev]"
@@ -517,41 +488,32 @@ pre-commit install
 pytest
 ```
 
-### Pre-commit Hooks
-
-This project uses pre-commit for code quality. Run `pre-commit run --all-files` before committing.
-
 ---
 
 ## 📜 Changelog
 
-See [CHANGELOG.md](./CHANGELOG.md) for the full history of changes and improvements.
+See [CHANGELOG.md](./CHANGELOG.md) for the full history of changes.
 
 ---
 
-## 📖 Citation
+## 📖 Attribution
 
-This project is a fork and evolution of the **Darwin Gödel Machine** (arXiv:2505.22954) by
-Zhang, Hu, Lu, Lange, and Clune (Sakana AI). If you use this work, please cite both:
+This project builds on prior research into self-improving systems. See [NOTICE](./NOTICE)
+for legal attributions. If you use this work in your research, please cite:
 
 ```bibtex
 @software{godelion2025,
   title = {Godelion: Open-Ended Evolution of Self-Improving Coding Agents},
   author = {Godelion Contributors},
   year = {2025},
-  url = {https://github.com/YOUR_USERNAME/godelion}
-}
-
-@article{zhang2025darwin,
-  title = {Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents},
-  author = {Zhang, Jenny and Hu, Shengran and Lu, Cong and Lange, Robert and Clune, Jeff},
-  journal = {arXiv preprint arXiv:2505.22954},
-  year = {2025}
+  url = {https://github.com/NullLabTests/godelion}
 }
 ```
 
 ---
 
 <p align="center">
+  <img src="./misc/godelion-logo.svg" alt="Godelion Logo" width="96" height="96">
+  <br>
   <strong>Built with 🔬 for open research into safe, self-improving systems.</strong>
 </p>

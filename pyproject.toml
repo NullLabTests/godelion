@@ -59,8 +59,8 @@ analysis = [
 ]
 
 [project.urls]
-Source = "https://github.com/YOUR_USERNAME/godelion"
-Issues = "https://github.com/YOUR_USERNAME/godelion/issues"
+Source = "https://github.com/NullLabTests/godelion"
+Issues = "https://github.com/NullLabTests/godelion/issues"
 
 [tool.setuptools.packages.find]
 include = ["godelion*"]

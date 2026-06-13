@@ -222,7 +222,7 @@ def run_harness_polyglot(entry, model_name_or_path, patch_files, num_evals, outp
         safe_log("End of evaluation more")
 
 def self_improve(
-    parent_commit='initial',  # 'initial' if starting from original dgm, else the run_id
+    parent_commit='initial',  # 'initial' for baseline, otherwise a previous run_id
     output_dir='output_selfimprove/',
     force_rebuild=False,
     num_evals=1,
