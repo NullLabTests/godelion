@@ -1,27 +1,51 @@
+# Python
 __pycache__/
-.vscode
-.DS_Store
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.whl
+
+# Environments
 venv/
+.venv/
+env/
 
-logs/
-!initial/logs/
-swe_bench/predictions/
-swe_bench/tmp_repos/
-swe_bench/repos/
-swe_bench/SWE-bench/
-swe_bench/logs/
-swe_bench/*.json
+# Config
+config.local.yaml
 
-evo_expr/
-output_selfimprove/
+# Output
+output_*/
+output_godelion/
 output_dgm/
-output_peer_review/
-self_evo.md
-*.ipynb
 
-polyglot/polyglot_benchmark_metadata.json
-polyglot/polyglot-benchmark/
-polyglot/predictions/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
-final_results/
-analysis/output/
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Logs
+*.log
+
+# Analysis
+analysis/*.png
+analysis/*.html
+analysis/*.csv
+
+# Checkpoints
+*.ckpt
+
+# Misc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

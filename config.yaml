@@ -1,0 +1,126 @@
+# =============================================================================
+# Godelion Configuration
+# =============================================================================
+# This is the central configuration file for all Godelion runs.
+# Copy this file to config.local.yaml and modify for your setup.
+# Settings in config.local.yaml override config.yaml.
+
+# --- Model Configuration ---
+# Supports: anthropic, openai, deepseek, openrouter, bedrock, vertexai, ollama, vllm, lm_studio
+llm:
+  # Primary coding agent model
+  coding_model: "claude-sonnet-4-20250514"
+  # Diagnose/improvement model (typically more capable)
+  diagnose_model: "claude-sonnet-4-20250514"
+  # Fallback models if primary fails (tried in order)
+  fallback_models: []
+  # API configuration
+  api:
+    max_tokens: 4096
+    temperature: 0.7
+    # Retry settings
+    max_retries: 5
+    retry_max_time: 300  # seconds
+    context_window_limit: 200000
+
+# --- Local Model Support ---
+# Uncomment and configure to use local/OSS models
+# local:
+#   enabled: true
+#   provider: "ollama"  # ollama | vllm | lm_studio | custom
+#   base_url: "http://localhost:11434/v1"
+#   coding_model: "deepseek-coder-v2"
+#   diagnose_model: "deepseek-r1:70b"
+#   api_key: "ollama"  # often "ollama" or "not-needed"
+
+# --- Evolution Settings ---
+evolution:
+  max_generations: 80
+  self_improve_size: 2
+  parallel_workers: 2
+  selection_method: "score_child_prop"  # random | score_prop | score_child_prop | best
+  archive_update: "keep_all"  # keep_all | keep_better
+  eval_noise: 0.1
+  noise_leeway: 0.1
+
+# --- Evaluation Settings ---
+evaluation:
+  num_evals: 1
+  shallow_eval: false
+  post_improve_diagnose: true
+  polyglot: false
+  test_more_threshold: 0.4
+  full_eval_threshold: null  # null = auto-calculate
+
+# --- Docker Sandbox ---
+docker:
+  image_name: "godelion"
+  container_prefix: "godelion"
+  force_rebuild: false
+  timeout_seconds: 1800  # 30 min per self-improve step
+  memory_limit: null  # e.g., "8g"
+  cpu_limit: null  # e.g., 4.0
+  network_disabled: true  # recommended for safety
+  read_only: false
+  # Environment variables to pass to container
+  env_vars:
+    - ANTHROPIC_API_KEY
+    - OPENAI_API_KEY
+    - DEEPSEEK_API_KEY
+    - OPENROUTER_API_KEY
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+    - AWS_REGION_NAME
+
+# --- Safety & Guardrails ---
+safety:
+  # Enable constitutional checks on self-modifications
+  constitutional_checks: false
+  # Maximum allowed patch size (in bytes, 0 = unlimited)
+  max_patch_size: 0
+  # Block patches that modify these files
+  protected_files:
+    - "config.yaml"
+    - "config.local.yaml"
+  # Require human approval for modifications to safety-critical files
+  require_human_approval:
+    enabled: false
+    critical_files:
+      - "docker/*"
+      - "safety/*"
+
+# --- Logging & Observability ---
+logging:
+  level: "INFO"  # DEBUG | INFO | WARNING | ERROR
+  output_dir: "./output_godelion"
+  save_chat_history: true
+  save_model_patches: true
+  trace_llm_calls: false
+  log_retention_days: 30
+
+# --- Checkpointing ---
+checkpoint:
+  enabled: true
+  interval_generations: 1
+  compress: false
+
+# --- Benchmark Configuration ---
+benchmark:
+  swe_bench:
+    dataset: "princeton-nlp/SWE-bench_Verified"
+    subsets:
+      small: "./swe_bench/subsets/small.json"
+      medium: "./swe_bench/subsets/medium.json"
+      big: "./swe_bench/subsets/big.json"
+  polyglot:
+    metadata_file: "./polyglot/polyglot_benchmark_metadata.json"
+    subsets:
+      small: "./polyglot/subsets/small.json"
+      medium: "./polyglot/subsets/medium.json"
+
+# --- Tools ---
+tools:
+  # Custom tool paths (for extensibility)
+  custom_tool_dirs: []
+  # Enable/disable specific tools
+  disabled_tools: []
