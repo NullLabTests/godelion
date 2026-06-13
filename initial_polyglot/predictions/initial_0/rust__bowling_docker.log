@@ -1,0 +1,1290 @@
+2025-05-10 02:41:49,196 - ThreadPoolExecutor-0_24 - INFO - No existing container with name pb.eval.rust__bowling.20250510_024149_166715 found.
+2025-05-10 02:41:49,216 - ThreadPoolExecutor-0_24 - INFO - Environment image pb.env.x86_64.3bb2f0e92d01ae3d2f2ae7:latest found for rust__bowling
+Building instance image pb.eval.x86_64.rust__bowling:latest for rust__bowling
+2025-05-10 02:41:49,231 - ThreadPoolExecutor-0_24 - INFO - Image pb.eval.x86_64.rust__bowling:latest already exists, skipping build.
+2025-05-10 02:41:49,270 - ThreadPoolExecutor-0_24 - INFO - Creating container for rust__bowling...
+2025-05-10 02:41:54,550 - ThreadPoolExecutor-0_24 - INFO - Container for rust__bowling created: 7e42f84cbf0f8cf5c1db0ca10c8836a046c992dc2597d8f70565fea2dd57929b
+2025-05-10 02:41:56,413 - ThreadPoolExecutor-0_24 - INFO - Copying coding_agent.py to container at /dgm/coding_agent.py
+2025-05-10 02:41:56,474 - ThreadPoolExecutor-0_24 - INFO - Successfully copied coding_agent.py to container
+2025-05-10 02:41:56,930 - ThreadPoolExecutor-0_24 - INFO - Copying requirements.txt to container at /dgm/requirements.txt
+2025-05-10 02:41:56,991 - ThreadPoolExecutor-0_24 - INFO - Successfully copied requirements.txt to container
+2025-05-10 02:41:57,282 - ThreadPoolExecutor-0_24 - INFO - Copying pytest.ini to container at /dgm/pytest.ini
+2025-05-10 02:41:57,405 - ThreadPoolExecutor-0_24 - INFO - Successfully copied pytest.ini to container
+2025-05-10 02:41:57,977 - ThreadPoolExecutor-0_24 - INFO - Copying tools to container at /dgm/tools
+2025-05-10 02:41:58,299 - ThreadPoolExecutor-0_24 - INFO - Successfully copied tools to container
+2025-05-10 02:41:58,790 - ThreadPoolExecutor-0_24 - INFO - Copying utils to container at /dgm/utils
+2025-05-10 02:41:59,512 - ThreadPoolExecutor-0_24 - INFO - Successfully copied utils to container
+2025-05-10 02:42:00,595 - ThreadPoolExecutor-0_24 - INFO - Copying tests to container at /dgm/tests
+2025-05-10 02:42:00,762 - ThreadPoolExecutor-0_24 - INFO - Successfully copied tests to container
+2025-05-10 02:42:01,297 - ThreadPoolExecutor-0_24 - INFO - Copying prompts to container at /dgm/prompts
+2025-05-10 02:42:01,305 - ThreadPoolExecutor-0_24 - INFO - Successfully copied prompts to container
+2025-05-10 02:42:02,162 - ThreadPoolExecutor-0_24 - INFO - Copying llm.py to container at /dgm/llm.py
+2025-05-10 02:42:02,516 - ThreadPoolExecutor-0_24 - INFO - Successfully copied llm.py to container
+2025-05-10 02:42:02,994 - ThreadPoolExecutor-0_24 - INFO - Copying llm_withtools.py to container at /dgm/llm_withtools.py
+2025-05-10 02:42:03,046 - ThreadPoolExecutor-0_24 - INFO - Successfully copied llm_withtools.py to container
+2025-05-10 02:42:03,304 - ThreadPoolExecutor-0_24 - INFO - Container output: /testbed:
+Cargo.toml
+src
+
+/testbed/src:
+lib.rs
+
+2025-05-10 02:42:03,305 - ThreadPoolExecutor-0_24 - INFO - Installing more requirements
+2025-05-10 02:45:33,396 - ThreadPoolExecutor-0_24 - INFO - Container output: Collecting datasets (from -r /dgm/requirements.txt (line 1))
+  Downloading datasets-3.6.0-py3-none-any.whl.metadata (19 kB)
+Collecting anthropic (from -r /dgm/requirements.txt (line 2))
+  Downloading anthropic-0.51.0-py3-none-any.whl.metadata (25 kB)
+Collecting backoff (from -r /dgm/requirements.txt (line 4))
+  Downloading backoff-2.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting botocore (from -r /dgm/requirements.txt (line 5))
+  Downloading botocore-1.38.13-py3-none-any.whl.metadata (5.7 kB)
+Collecting boto3 (from -r /dgm/requirements.txt (line 6))
+  Downloading boto3-1.38.13-py3-none-any.whl.metadata (6.6 kB)
+Collecting openai (from -r /dgm/requirements.txt (line 7))
+  Downloading openai-1.78.0-py3-none-any.whl.metadata (25 kB)
+Collecting beautifulsoup4 (from -r /dgm/requirements.txt (line 10))
+  Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+Collecting chardet (from -r /dgm/requirements.txt (line 11))
+  Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting docker (from -r /dgm/requirements.txt (line 12))
+  Downloading docker-7.1.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting ghapi (from -r /dgm/requirements.txt (line 13))
+  Downloading ghapi-1.0.6-py3-none-any.whl.metadata (13 kB)
+Collecting GitPython (from -r /dgm/requirements.txt (line 14))
+  Downloading GitPython-3.1.44-py3-none-any.whl.metadata (13 kB)
+Collecting pre-commit (from -r /dgm/requirements.txt (line 15))
+  Downloading pre_commit-4.2.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting python-dotenv (from -r /dgm/requirements.txt (line 16))
+  Downloading python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
+Collecting rich (from -r /dgm/requirements.txt (line 17))
+  Downloading rich-14.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting unidiff (from -r /dgm/requirements.txt (line 18))
+  Downloading unidiff-0.7.5-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting pytest (from -r /dgm/requirements.txt (line 21))
+  Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-asyncio (from -r /dgm/requirements.txt (line 22))
+  Downloading pytest_asyncio-0.26.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting async_timeout (from -r /dgm/requirements.txt (line 23))
+  Downloading async_timeout-5.0.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting filelock (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting numpy>=1.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 372.6 kB/s eta 0:00:00
+Collecting pyarrow>=15.0.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Collecting pandas (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (89 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 kB 1.0 MB/s eta 0:00:00
+Collecting requests>=2.32.2 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.66.3 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 793.9 kB/s eta 0:00:00
+Collecting xxhash (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess<0.70.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multiprocess-0.70.16-py311-none-any.whl.metadata (7.2 kB)
+Collecting fsspec<=2025.3.0,>=2023.1.0 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading fsspec-2025.3.0-py3-none-any.whl.metadata (11 kB)
+Collecting huggingface-hub>=0.24.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading huggingface_hub-0.31.1-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: packaging in /opt/miniconda3/lib/python3.11/site-packages (from datasets->-r /dgm/requirements.txt (line 1)) (23.1)
+Collecting pyyaml>=5.1 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting anyio<5,>=3.5.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Requirement already satisfied: distro<2,>=1.7.0 in /opt/miniconda3/lib/python3.11/site-packages (from anthropic->-r /dgm/requirements.txt (line 2)) (1.8.0)
+Collecting httpx<1,>=0.25.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.4.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic-2.11.4-py3-none-any.whl.metadata (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.6/66.6 kB 893.3 kB/s eta 0:00:00
+Collecting sniffio (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting typing-extensions<5,>=4.10 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/miniconda3/lib/python3.11/site-packages (from botocore->-r /dgm/requirements.txt (line 5)) (1.26.18)
+Collecting s3transfer<0.13.0,>=0.12.0 (from boto3->-r /dgm/requirements.txt (line 6))
+  Downloading s3transfer-0.12.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4->-r /dgm/requirements.txt (line 10))
+  Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting fastcore>=1.7.2 (from ghapi->-r /dgm/requirements.txt (line 13))
+  Downloading fastcore-1.8.2-py3-none-any.whl.metadata (3.7 kB)
+Collecting gitdb<5,>=4.0.1 (from GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+Collecting cfgv>=2.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading cfgv-3.4.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting identify>=1.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading identify-2.6.10-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading nodeenv-1.9.1-py2.py3-none-any.whl.metadata (21 kB)
+Collecting virtualenv>=20.10.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading virtualenv-20.31.2-py3-none-any.whl.metadata (4.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting iniconfig (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting pluggy<2,>=1.5 (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: idna>=2.8 in /opt/miniconda3/lib/python3.11/site-packages (from anyio<5,>=3.5.0->anthropic->-r /dgm/requirements.txt (line 2)) (3.4)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading smmap-5.0.2-py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: certifi in /opt/miniconda3/lib/python3.11/site-packages (from httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2)) (2023.11.17)
+Collecting httpcore==1.* (from httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting hf-xet<2.0.0,>=1.1.0 (from huggingface-hub>=0.24.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (494 bytes)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->-r /dgm/requirements.txt (line 17))
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore->-r /dgm/requirements.txt (line 5))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: charset-normalizer<4,>=2 in /opt/miniconda3/lib/python3.11/site-packages (from requests>=2.32.2->datasets->-r /dgm/requirements.txt (line 1)) (2.0.4)
+Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in /opt/miniconda3/lib/python3.11/site-packages (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15)) (3.10.0)
+Collecting pytz>=2020.1 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting aiohappyeyeballs>=2.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (16 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (72 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.4/72.4 kB 3.4 MB/s eta 0:00:00
+Downloading datasets-3.6.0-py3-none-any.whl (491 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 491.5/491.5 kB 3.2 MB/s eta 0:00:00
+Downloading anthropic-0.51.0-py3-none-any.whl (263 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 264.0/264.0 kB 3.1 MB/s eta 0:00:00
+Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+Downloading botocore-1.38.13-py3-none-any.whl (13.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 4.5 MB/s eta 0:00:00
+Downloading boto3-1.38.13-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.9/139.9 kB 259.0 kB/s eta 0:00:00
+Downloading openai-1.78.0-py3-none-any.whl (680 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 680.4/680.4 kB 2.2 MB/s eta 0:00:00
+Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.3/187.3 kB 413.8 kB/s eta 0:00:00
+Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.4/199.4 kB 6.1 MB/s eta 0:00:00
+Downloading docker-7.1.0-py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 1.8 MB/s eta 0:00:00
+Downloading ghapi-1.0.6-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 469.0 kB/s eta 0:00:00
+Downloading GitPython-3.1.44-py3-none-any.whl (207 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 207.6/207.6 kB 123.1 kB/s eta 0:00:00
+Downloading pre_commit-4.2.0-py2.py3-none-any.whl (220 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.7/220.7 kB 394.0 kB/s eta 0:00:00
+Downloading python_dotenv-1.1.0-py3-none-any.whl (20 kB)
+Downloading rich-14.0.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.2/243.2 kB 2.1 MB/s eta 0:00:00
+Downloading unidiff-0.7.5-py2.py3-none-any.whl (14 kB)
+Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 343.6/343.6 kB 1.2 MB/s eta 0:00:00
+Downloading pytest_asyncio-0.26.0-py3-none-any.whl (19 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.9/100.9 kB 140.8 kB/s eta 0:00:00
+Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 283.8 kB/s eta 0:00:00
+Downloading fastcore-1.8.2-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.2/78.2 kB 243.8 kB/s eta 0:00:00
+Downloading fsspec-2025.3.0-py3-none-any.whl (193 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.6/193.6 kB 1.8 MB/s eta 0:00:00
+Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.8/62.8 kB 297.0 kB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 552.6 kB/s eta 0:00:00
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 2.1 MB/s eta 0:00:00
+Downloading huggingface_hub-0.31.1-py3-none-any.whl (484 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 484.3/484.3 kB 6.4 MB/s eta 0:00:00
+Downloading identify-2.6.10-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 2.6 MB/s eta 0:00:00
+Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (351 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.8/351.8 kB 3.1 MB/s eta 0:00:00
+Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 4.5 MB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py311-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.5/143.5 kB 3.4 MB/s eta 0:00:00
+Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.4/16.4 MB 11.9 MB/s eta 0:00:00
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl (42.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.3/42.3 MB 6.9 MB/s eta 0:00:00
+Downloading pydantic-2.11.4-py3-none-any.whl (443 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 kB 4.1 MB/s eta 0:00:00
+Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 3.6 MB/s eta 0:00:00
+Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.4 MB/s eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 3.3 MB/s eta 0:00:00
+Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (762 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 763.0/763.0 kB 18.5 MB/s eta 0:00:00
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 2.0 MB/s eta 0:00:00
+Downloading s3transfer-0.12.0-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.8/84.8 kB 738.3 kB/s eta 0:00:00
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 118.2 kB/s eta 0:00:00
+Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.8/45.8 kB 75.6 kB/s eta 0:00:00
+Downloading virtualenv-20.31.2-py3-none-any.whl (6.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 6.2 MB/s eta 0:00:00
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 6.2 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.8/194.8 kB 12.9 MB/s eta 0:00:00
+Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 2.5 MB/s eta 0:00:00
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 469.0/469.0 kB 2.1 MB/s eta 0:00:00
+Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 MB 5.5 MB/s eta 0:00:00
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 10.1 MB/s eta 0:00:00
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading smmap-5.0.2-py3-none-any.whl (24 kB)
+Downloading typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 347.8/347.8 kB 8.7 MB/s eta 0:00:00
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 958.4 kB/s eta 0:00:00
+Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (313 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.6/313.6 kB 13.0 MB/s eta 0:00:00
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 223.5/223.5 kB 7.0 MB/s eta 0:00:00
+Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.5/232.5 kB 6.6 MB/s eta 0:00:00
+Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (358 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 358.1/358.1 kB 10.9 MB/s eta 0:00:00
+Installing collected packages: unidiff, pytz, distlib, xxhash, tzdata, typing-extensions, tqdm, soupsieve, sniffio, smmap, six, requests, pyyaml, python-dotenv, pygments, pyarrow, propcache, pluggy, numpy, nodeenv, multidict, mdurl, jmespath, jiter, iniconfig, identify, hf-xet, h11, fsspec, frozenlist, filelock, fastcore, dill, chardet, cfgv, backoff, attrs, async_timeout, annotated-types, aiohappyeyeballs, yarl, virtualenv, typing-inspection, python-dateutil, pytest, pydantic-core, multiprocess, markdown-it-py, huggingface-hub, httpcore, gitdb, ghapi, docker, beautifulsoup4, anyio, aiosignal, rich, pytest-asyncio, pydantic, pre-commit, pandas, httpx, GitPython, botocore, aiohttp, s3transfer, openai, anthropic, datasets, boto3
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.65.0
+    Uninstalling tqdm-4.65.0:
+      Successfully uninstalled tqdm-4.65.0
+  Attempting uninstall: requests
+    Found existing installation: requests 2.31.0
+    Uninstalling requests-2.31.0:
+      Successfully uninstalled requests-2.31.0
+  Attempting uninstall: pluggy
+    Found existing installation: pluggy 1.0.0
+    Uninstalling pluggy-1.0.0:
+      Successfully uninstalled pluggy-1.0.0
+Successfully installed GitPython-3.1.44 aiohappyeyeballs-2.6.1 aiohttp-3.11.18 aiosignal-1.3.2 annotated-types-0.7.0 anthropic-0.51.0 anyio-4.9.0 async_timeout-5.0.1 attrs-25.3.0 backoff-2.2.1 beautifulsoup4-4.13.4 boto3-1.38.13 botocore-1.38.13 cfgv-3.4.0 chardet-5.2.0 datasets-3.6.0 dill-0.3.8 distlib-0.3.9 docker-7.1.0 fastcore-1.8.2 filelock-3.18.0 frozenlist-1.6.0 fsspec-2025.3.0 ghapi-1.0.6 gitdb-4.0.12 h11-0.16.0 hf-xet-1.1.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-0.31.1 identify-2.6.10 iniconfig-2.1.0 jiter-0.9.0 jmespath-1.0.1 markdown-it-py-3.0.0 mdurl-0.1.2 multidict-6.4.3 multiprocess-0.70.16 nodeenv-1.9.1 numpy-2.2.5 openai-1.78.0 pandas-2.2.3 pluggy-1.5.0 pre-commit-4.2.0 propcache-0.3.1 pyarrow-20.0.0 pydantic-2.11.4 pydantic-core-2.33.2 pygments-2.19.1 pytest-8.3.5 pytest-asyncio-0.26.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 pytz-2025.2 pyyaml-6.0.2 requests-2.32.3 rich-14.0.0 s3transfer-0.12.0 six-1.17.0 smmap-5.0.2 sniffio-1.3.1 soupsieve-2.7 tqdm-4.67.1 typing-extensions-4.13.2 typing-inspection-0.4.0 tzdata-2025.2 unidiff-0.7.5 virtualenv-20.31.2 xxhash-3.5.0 yarl-1.20.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+2025-05-10 02:45:33,731 - ThreadPoolExecutor-0_24 - INFO - Running the agent
+2025-05-10 02:46:13,842 - ThreadPoolExecutor-0_24 - INFO - Container output: Using OpenAI API with model o3-mini-2025-01-31.
+
+2025-05-10 02:46:13,843 - ThreadPoolExecutor-0_24 - INFO - Copying output files back to host
+2025-05-10 02:46:14,413 - ThreadPoolExecutor-0_24 - INFO - Copying from container /dgm/rust__bowling.md to local path polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__bowling.md
+2025-05-10 02:46:14,527 - ThreadPoolExecutor-0_24 - INFO - Successfully copied from container to polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__bowling.md
+2025-05-10 02:46:14,785 - ThreadPoolExecutor-0_24 - INFO - Getting model_patch
+2025-05-10 02:46:15,269 - ThreadPoolExecutor-0_24 - INFO - Container output: diff --git a/src/lib.rs b/src/lib.rs
+index 3163e61..904d7a0 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1,21 +1,137 @@
+-#[derive(Debug, PartialEq, Eq)]
+-pub enum Error {
+-    NotEnoughPinsLeft,
+-    GameComplete,
+-}
++/// A struct to represent a game of bowling.
++/// 
++/// It supports rolling the ball and scoring the game.
+ 
+-pub struct BowlingGame {}
++pub struct BowlingGame {
++    rolls: Vec<u32>,
++}
+ 
+ impl BowlingGame {
++    /// Create a new game with an empty set of rolls.
+     pub fn new() -> Self {
+-        todo!();
++        Self { rolls: Vec::new() }
++    }
++
++    /// Record the number of pins knocked down for a roll.
++    pub fn roll(&mut self, pins: u32) {
++        self.rolls.push(pins);
++    }
++
++    /// Compute the total score of the game.
++    ///
++    /// Scoring rules:
++    /// - An open frame is where fewer than 10 pins are knocked down in the frame.
++    ///   The score is the sum of the pins knocked down in that frame.
++    /// - A spare (all 10 pins knocked down in two rolls) scores 10 plus the pins of the next roll.
++    /// - A strike (all 10 pins knocked down in one roll) scores 10 plus the pins in the next two rolls.
++    ///   In cases where strikes follow each other, the score for the first strike waits for the extra roll.
++    /// - The 10th frame can have extra fill balls when a spare or strike is rolled.
++    pub fn score(&self) -> u32 {
++        let mut score = 0;
++        let mut roll_index = 0;
++        // There are exactly 10 frames in a game
++        for _ in 0..10 {
++            if self.is_strike(roll_index) {
++                // Strike: add next two rolls as bonus
++                score += 10 + self.strike_bonus(roll_index);
++                roll_index += 1;
++            } else if self.is_spare(roll_index) {
++                // Spare: add next roll as bonus
++                score += 10 + self.spare_bonus(roll_index);
++                roll_index += 2;
++            } else {
++                // Open frame: sum of two rolls
++                score += self.sum_of_balls_in_frame(roll_index);
++                roll_index += 2;
++            }
++        }
++        score
++    }
++
++    fn is_strike(&self, roll_index: usize) -> bool {
++        self.rolls.get(roll_index).copied().unwrap_or(0) == 10
++    }
++
++    fn is_spare(&self, roll_index: usize) -> bool {
++        let first = self.rolls.get(roll_index).copied().unwrap_or(0);
++        let second = self.rolls.get(roll_index + 1).copied().unwrap_or(0);
++        first + second == 10
++    }
++
++    fn strike_bonus(&self, roll_index: usize) -> u32 {
++        let bonus1 = self.rolls.get(roll_index + 1).copied().unwrap_or(0);
++        let bonus2 = self.rolls.get(roll_index + 2).copied().unwrap_or(0);
++        bonus1 + bonus2
++    }
++
++    fn spare_bonus(&self, roll_index: usize) -> u32 {
++        self.rolls.get(roll_index + 2).copied().unwrap_or(0)
++    }
++
++    fn sum_of_balls_in_frame(&self, roll_index: usize) -> u32 {
++        let first = self.rolls.get(roll_index).copied().unwrap_or(0);
++        let second = self.rolls.get(roll_index + 1).copied().unwrap_or(0);
++        first + second
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::BowlingGame;
++
++    #[test]
++    fn test_gutter_game() {
++        let mut game = BowlingGame::new();
++        for _ in 0..20 {
++            game.roll(0);
++        }
++        assert_eq!(game.score(), 0);
++    }
++
++    #[test]
++    fn test_all_ones() {
++        let mut game = BowlingGame::new();
++        for _ in 0..20 {
++            game.roll(1);
++        }
++        assert_eq!(game.score(), 20);
++    }
++
++    #[test]
++    fn test_one_spare() {
++        let mut game = BowlingGame::new();
++        // Spare: 5 + 5, bonus roll 3
++        game.roll(5);
++        game.roll(5); // spare
++        game.roll(3);
++        for _ in 0..17 {
++            game.roll(0);
++        }
++        // Score: 10 + 3 + 3 = 16
++        assert_eq!(game.score(), 16);
+     }
+ 
+-    pub fn roll(&mut self, pins: u16) -> Result<(), Error> {
+-        todo!("Record that {pins} pins have been scored");
++    #[test]
++    fn test_one_strike() {
++        let mut game = BowlingGame::new();
++        // Strike: 10, bonus: 3 + 4
++        game.roll(10); // strike
++        game.roll(3);
++        game.roll(4);
++        for _ in 0..16 {
++            game.roll(0);
++        }
++        // Score: 10 + 3 + 4 + 3 + 4 = 24
++        assert_eq!(game.score(), 24);
+     }
+ 
+-    pub fn score(&self) -> Option<u16> {
+-        todo!("Return the score if the game is complete, or None if not.");
++    #[test]
++    fn test_perfect_game() {
++        let mut game = BowlingGame::new();
++        // Perfect game: 12 strikes -> 300
++        for _ in 0..12 {
++            game.roll(10);
++        }
++        assert_eq!(game.score(), 300);
+     }
+ }
+diff --git a/Cargo.lock b/Cargo.lock
+new file mode 100644
+index 0000000..b9c683e
+--- /dev/null
++++ b/Cargo.lock
+@@ -0,0 +1,7 @@
++# This file is automatically @generated by Cargo.
++# It is not intended for manual editing.
++version = 4
++
++[[package]]
++name = "bowling"
++version = "1.2.0"
+diff --git a/target/.rustc_info.json b/target/.rustc_info.json
+new file mode 100644
+index 0000000..4bdcae1
+--- /dev/null
++++ b/target/.rustc_info.json
+@@ -0,0 +1 @@
++{"rustc_fingerprint":15433756029299601208,"outputs":{"17747080675513052775":{"success":true,"status":"","code":0,"stdout":"rustc 1.85.1 (4eb161250 2025-03-15)\nbinary: rustc\ncommit-hash: 4eb161250e340c8f48f66e2b929ef4a5bed7c181\ncommit-date: 2025-03-15\nhost: x86_64-unknown-linux-gnu\nrelease: 1.85.1\nLLVM version: 19.1.7\n","stderr":""},"13331785392996375709":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu\noff\npacked\nunpacked\n___\ndebug_assertions\npanic=\"unwind\"\nproc_macro\ntarget_abi=\"\"\ntarget_arch=\"x86_64\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"fxsr\"\ntarget_feature=\"sse\"\ntarget_feature=\"sse2\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"64\"\ntarget_vendor=\"unknown\"\nunix\n","stderr":""}},"successes":{}}
+\ No newline at end of file
+diff --git a/target/CACHEDIR.TAG b/target/CACHEDIR.TAG
+new file mode 100644
+index 0000000..20d7c31
+--- /dev/null
++++ b/target/CACHEDIR.TAG
+@@ -0,0 +1,3 @@
++Signature: 8a477f597d28d172789f06886806bc55
++# This file is a cache directory tag created by cargo.
++# For information about cache directory tags see https://bford.info/cachedir/
+diff --git a/target/debug/.cargo-lock b/target/debug/.cargo-lock
+new file mode 100644
+index 0000000..e69de29
+diff --git a/target/debug/.fingerprint/bowling-4c500bb939b3fa80/dep-test-lib-bowling b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/dep-test-lib-bowling
+new file mode 100644
+index 0000000..024be49
+Binary files /dev/null and b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/dep-test-lib-bowling differ
+diff --git a/target/debug/.fingerprint/bowling-4c500bb939b3fa80/invoked.timestamp b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/invoked.timestamp
+new file mode 100644
+index 0000000..e00328d
+--- /dev/null
++++ b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/invoked.timestamp
+@@ -0,0 +1 @@
++This file has an mtime of when this was started.
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/bowling-4c500bb939b3fa80/test-lib-bowling b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/test-lib-bowling
+new file mode 100644
+index 0000000..01bc0bc
+--- /dev/null
++++ b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/test-lib-bowling
+@@ -0,0 +1 @@
++3bf7978ac3b30b53
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/bowling-4c500bb939b3fa80/test-lib-bowling.json b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/test-lib-bowling.json
+new file mode 100644
+index 0000000..b27df3b
+--- /dev/null
++++ b/target/debug/.fingerprint/bowling-4c500bb939b3fa80/test-lib-bowling.json
+@@ -0,0 +1 @@
++{"rustc":8750902384292223123,"features":"[]","declared_features":"[]","target":16724214495700467165,"profile":3088835346987975569,"path":10763286916239946207,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/bowling-4c500bb939b3fa80/dep-test-lib-bowling","checksum":false}}],"rustflags":[],"config":2069994364910194474,"compile_kind":0}
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/bowling-8f1edbcfdb614960/dep-lib-bowling b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/dep-lib-bowling
+new file mode 100644
+index 0000000..024be49
+Binary files /dev/null and b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/dep-lib-bowling differ
+diff --git a/target/debug/.fingerprint/bowling-8f1edbcfdb614960/invoked.timestamp b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/invoked.timestamp
+new file mode 100644
+index 0000000..e00328d
+--- /dev/null
++++ b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/invoked.timestamp
+@@ -0,0 +1 @@
++This file has an mtime of when this was started.
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/bowling-8f1edbcfdb614960/lib-bowling b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/lib-bowling
+new file mode 100644
+index 0000000..a38c24c
+--- /dev/null
++++ b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/lib-bowling
+@@ -0,0 +1 @@
++75ac7adcd78951c3
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/bowling-8f1edbcfdb614960/lib-bowling.json b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/lib-bowling.json
+new file mode 100644
+index 0000000..16e19d0
+--- /dev/null
++++ b/target/debug/.fingerprint/bowling-8f1edbcfdb614960/lib-bowling.json
+@@ -0,0 +1 @@
++{"rustc":8750902384292223123,"features":"[]","declared_features":"[]","target":16724214495700467165,"profile":5249451054307717189,"path":10763286916239946207,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/bowling-8f1edbcfdb614960/dep-lib-bowling","checksum":false}}],"rustflags":[],"config":2069994364910194474,"compile_kind":0}
+\ No newline at end of file
+diff --git a/target/debug/deps/bowling-4c500bb939b3fa80 b/target/debug/deps/bowling-4c500bb939b3fa80
+new file mode 100755
+index 0000000..1eddace
+Binary files /dev/null and b/target/debug/deps/bowling-4c500bb939b3fa80 differ
+diff --git a/target/debug/deps/bowling-4c500bb939b3fa80.d b/target/debug/deps/bowling-4c500bb939b3fa80.d
+new file mode 100644
+index 0000000..7202a16
+--- /dev/null
++++ b/target/debug/deps/bowling-4c500bb939b3fa80.d
+@@ -0,0 +1,5 @@
++/testbed/target/debug/deps/bowling-4c500bb939b3fa80: src/lib.rs
++
++/testbed/target/debug/deps/bowling-4c500bb939b3fa80.d: src/lib.rs
++
++src/lib.rs:
+diff --git a/target/debug/deps/bowling-8f1edbcfdb614960.d b/target/debug/deps/bowling-8f1edbcfdb614960.d
+new file mode 100644
+index 0000000..d72c84a
+--- /dev/null
++++ b/target/debug/deps/bowling-8f1edbcfdb614960.d
+@@ -0,0 +1,7 @@
++/testbed/target/debug/deps/libbowling-8f1edbcfdb614960.rmeta: src/lib.rs
++
++/testbed/target/debug/deps/libbowling-8f1edbcfdb614960.rlib: src/lib.rs
++
++/testbed/target/debug/deps/bowling-8f1edbcfdb614960.d: src/lib.rs
++
++src/lib.rs:
+diff --git a/target/debug/deps/libbowling-8f1edbcfdb614960.rlib b/target/debug/deps/libbowling-8f1edbcfdb614960.rlib
+new file mode 100644
+index 0000000..422d8bc
+Binary files /dev/null and b/target/debug/deps/libbowling-8f1edbcfdb614960.rlib differ
+diff --git a/target/debug/deps/libbowling-8f1edbcfdb614960.rmeta b/target/debug/deps/libbowling-8f1edbcfdb614960.rmeta
+new file mode 100644
+index 0000000..f8c1ae6
+Binary files /dev/null and b/target/debug/deps/libbowling-8f1edbcfdb614960.rmeta differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/0n67yifsnd5sfimh4ow9w7xdx.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/0n67yifsnd5sfimh4ow9w7xdx.o
+new file mode 100644
+index 0000000..fa6ee31
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/0n67yifsnd5sfimh4ow9w7xdx.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/0na0mu8ghtxbyvxy6mxovxxv7.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/0na0mu8ghtxbyvxy6mxovxxv7.o
+new file mode 100644
+index 0000000..2d2ab92
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/0na0mu8ghtxbyvxy6mxovxxv7.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/18ecnmfolpcvbyuihh79d56g6.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/18ecnmfolpcvbyuihh79d56g6.o
+new file mode 100644
+index 0000000..83291aa
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/18ecnmfolpcvbyuihh79d56g6.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/1lt7qazc6cx1w7wol0ie8b2zw.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/1lt7qazc6cx1w7wol0ie8b2zw.o
+new file mode 100644
+index 0000000..2809867
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/1lt7qazc6cx1w7wol0ie8b2zw.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/20eb3hg6gfv41yphvj1ig6lwf.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/20eb3hg6gfv41yphvj1ig6lwf.o
+new file mode 100644
+index 0000000..c09f669
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/20eb3hg6gfv41yphvj1ig6lwf.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/2uf382ysju61f1ka8d889e2kg.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/2uf382ysju61f1ka8d889e2kg.o
+new file mode 100644
+index 0000000..f7c188a
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/2uf382ysju61f1ka8d889e2kg.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/33vlpm7nfwlezwgb3vjtvai2p.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/33vlpm7nfwlezwgb3vjtvai2p.o
+new file mode 100644
+index 0000000..f1c7da0
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/33vlpm7nfwlezwgb3vjtvai2p.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/3emzrlydj19vuo3tlh97izmil.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/3emzrlydj19vuo3tlh97izmil.o
+new file mode 100644
+index 0000000..37bc0fd
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/3emzrlydj19vuo3tlh97izmil.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/3otophe4ovlqih7kjk62pbi10.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/3otophe4ovlqih7kjk62pbi10.o
+new file mode 100644
+index 0000000..18817d1
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/3otophe4ovlqih7kjk62pbi10.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/4jeet548klatojscx0wcr3ixe.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/4jeet548klatojscx0wcr3ixe.o
+new file mode 100644
+index 0000000..0a8f4fd
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/4jeet548klatojscx0wcr3ixe.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/587ynh97np2pnd4hmykmdycit.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/587ynh97np2pnd4hmykmdycit.o
+new file mode 100644
+index 0000000..0b484eb
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/587ynh97np2pnd4hmykmdycit.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/6e43ex9i11kcdg5773kl4kl7v.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/6e43ex9i11kcdg5773kl4kl7v.o
+new file mode 100644
+index 0000000..bf7c3ff
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/6e43ex9i11kcdg5773kl4kl7v.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/774ezv0ze6soiyodipxw5mu4x.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/774ezv0ze6soiyodipxw5mu4x.o
+new file mode 100644
+index 0000000..fb17186
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/774ezv0ze6soiyodipxw5mu4x.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/8blcv5bza0ikyvil9d5rbq9h4.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/8blcv5bza0ikyvil9d5rbq9h4.o
+new file mode 100644
+index 0000000..ac63240
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/8blcv5bza0ikyvil9d5rbq9h4.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/8pykxoqqkvczfad6k1r7edgb0.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/8pykxoqqkvczfad6k1r7edgb0.o
+new file mode 100644
+index 0000000..83eb0be
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/8pykxoqqkvczfad6k1r7edgb0.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/92hahl2nkx49iuvgy8aqww3ey.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/92hahl2nkx49iuvgy8aqww3ey.o
+new file mode 100644
+index 0000000..4ebf3d7
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/92hahl2nkx49iuvgy8aqww3ey.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9if8xgerbun2rf8z3u4f6lqyk.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9if8xgerbun2rf8z3u4f6lqyk.o
+new file mode 100644
+index 0000000..a855d08
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9if8xgerbun2rf8z3u4f6lqyk.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9nxrd8nfp3z1wgnvbj462z823.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9nxrd8nfp3z1wgnvbj462z823.o
+new file mode 100644
+index 0000000..573f47a
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9nxrd8nfp3z1wgnvbj462z823.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9uajxj8tvq4dq9mkc3nugs16a.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9uajxj8tvq4dq9mkc3nugs16a.o
+new file mode 100644
+index 0000000..a4b75c0
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/9uajxj8tvq4dq9mkc3nugs16a.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/bk04jvfk7c1408n12oqujyl7h.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/bk04jvfk7c1408n12oqujyl7h.o
+new file mode 100644
+index 0000000..e7a77ff
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/bk04jvfk7c1408n12oqujyl7h.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/cq8c2y57je7zjuzxiccuyn5z8.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/cq8c2y57je7zjuzxiccuyn5z8.o
+new file mode 100644
+index 0000000..e856359
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/cq8c2y57je7zjuzxiccuyn5z8.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/cunfg70zi6dg5pko0ihlqth5x.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/cunfg70zi6dg5pko0ihlqth5x.o
+new file mode 100644
+index 0000000..cae4e69
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/cunfg70zi6dg5pko0ihlqth5x.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/d702ynkjjysw0rjfm14jvgrh7.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/d702ynkjjysw0rjfm14jvgrh7.o
+new file mode 100644
+index 0000000..c31df9b
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/d702ynkjjysw0rjfm14jvgrh7.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/dep-graph.bin b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/dep-graph.bin
+new file mode 100644
+index 0000000..cc22d9c
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/dep-graph.bin differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/dq6kp9snurmva3ruqwosl4yax.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/dq6kp9snurmva3ruqwosl4yax.o
+new file mode 100644
+index 0000000..466ab64
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/dq6kp9snurmva3ruqwosl4yax.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/ezmzqjow68vwlutaxc4hqfy19.o b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/ezmzqjow68vwlutaxc4hqfy19.o
+new file mode 100644
+index 0000000..ed7ae04
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/ezmzqjow68vwlutaxc4hqfy19.o differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/query-cache.bin b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/query-cache.bin
+new file mode 100644
+index 0000000..9675c71
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/query-cache.bin differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/work-products.bin b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/work-products.bin
+new file mode 100644
+index 0000000..ead945d
+Binary files /dev/null and b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556-abk7w2iykb9c63pbuz0wb0ose/work-products.bin differ
+diff --git a/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556.lock b/target/debug/incremental/bowling-2xo49r1ntu45w/s-h77dla7dbb-0jy8556.lock
+new file mode 100644
+index 0000000..e69de29
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/16bybcwwwgcy07075mox7g3py.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/16bybcwwwgcy07075mox7g3py.o
+new file mode 100644
+index 0000000..eae5929
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/16bybcwwwgcy07075mox7g3py.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/3vmsiya13buklyievtrtvbmz8.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/3vmsiya13buklyievtrtvbmz8.o
+new file mode 100644
+index 0000000..371440a
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/3vmsiya13buklyievtrtvbmz8.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/54rpslkba2s1zqynpznyow5p7.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/54rpslkba2s1zqynpznyow5p7.o
+new file mode 100644
+index 0000000..2ce8eb5
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/54rpslkba2s1zqynpznyow5p7.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/590lk1tox6omnhrgth0wbrmss.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/590lk1tox6omnhrgth0wbrmss.o
+new file mode 100644
+index 0000000..1b751c9
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/590lk1tox6omnhrgth0wbrmss.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/7j17t52bcawdyysijcjglmkie.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/7j17t52bcawdyysijcjglmkie.o
+new file mode 100644
+index 0000000..5b72d2f
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/7j17t52bcawdyysijcjglmkie.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/9hqi4jcdxl07je0n5vy2uf6po.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/9hqi4jcdxl07je0n5vy2uf6po.o
+new file mode 100644
+index 0000000..30da075
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/9hqi4jcdxl07je0n5vy2uf6po.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/9k0t9nmmkxp04cbpat42p9jql.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/9k0t9nmmkxp04cbpat42p9jql.o
+new file mode 100644
+index 0000000..f77ddd5
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/9k0t9nmmkxp04cbpat42p9jql.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/bxvhsa16jzsd5ihwr499l4iqq.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/bxvhsa16jzsd5ihwr499l4iqq.o
+new file mode 100644
+index 0000000..db23e69
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/bxvhsa16jzsd5ihwr499l4iqq.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/c11a8hjkfwjgm359xplvfu04l.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/c11a8hjkfwjgm359xplvfu04l.o
+new file mode 100644
+index 0000000..e89a817
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/c11a8hjkfwjgm359xplvfu04l.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/ci4c51w524eqpcob9ocf4q7e1.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/ci4c51w524eqpcob9ocf4q7e1.o
+new file mode 100644
+index 0000000..ae08ff1
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/ci4c51w524eqpcob9ocf4q7e1.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/cq82i0h6098ut49gi0xrny79h.o b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/cq82i0h6098ut49gi0xrny79h.o
+new file mode 100644
+index 0000000..1355c30
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/cq82i0h6098ut49gi0xrny79h.o differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/dep-graph.bin b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/dep-graph.bin
+new file mode 100644
+index 0000000..e64c679
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/dep-graph.bin differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/query-cache.bin b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/query-cache.bin
+new file mode 100644
+index 0000000..93aae5c
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/query-cache.bin differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/work-products.bin b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/work-products.bin
+new file mode 100644
+index 0000000..242bf57
+Binary files /dev/null and b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui-25lw88kxxpw0lvfqyze26qpp4/work-products.bin differ
+diff --git a/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui.lock b/target/debug/incremental/bowling-3olb9952o76cr/s-h77dla7dxy-0q4f0ui.lock
+new file mode 100644
+index 0000000..e69de29
+
+2025-05-10 02:46:16,465 - ThreadPoolExecutor-0_24 - INFO - Container output: Saved working directory and index state WIP on master: 40492c2 Initial commit
+
+2025-05-10 02:46:17,706 - ThreadPoolExecutor-0_24 - INFO - Container output: HEAD is now at dc222eb all files
+
+2025-05-10 02:46:18,232 - ThreadPoolExecutor-0_24 - INFO - Container output: Removing Cargo.lock
+Removing target/
+
+2025-05-10 02:46:18,570 - ThreadPoolExecutor-0_24 - INFO - Container output: On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/lib.rs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (c2f25c34c8a2ac3b0615939b450b6acc05a3c7ca)
+
+2025-05-10 02:46:18,571 - ThreadPoolExecutor-0_24 - INFO - Running the eval
+2025-05-10 02:46:18,896 - ThreadPoolExecutor-0_24 - INFO - Copying polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__bowling_eval.sh to container at /testbed/eval.sh
+2025-05-10 02:46:18,980 - ThreadPoolExecutor-0_24 - INFO - Successfully copied polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__bowling_eval.sh to container
+2025-05-10 02:46:19,173 - ThreadPoolExecutor-0_24 - INFO - Container output: /testbed:
+Cargo.toml
+eval.sh
+src
+tests
+
+/testbed/src:
+lib.rs
+
+/testbed/tests:
+bowling.rs
+
+2025-05-10 02:46:19,290 - ThreadPoolExecutor-0_24 - INFO - Container output: 
+2025-05-10 02:46:22,558 - ThreadPoolExecutor-0_24 - INFO - Container output: + cargo test -- --include-ignored
+   Compiling bowling v1.2.0 (/testbed)
+error[E0433]: failed to resolve: use of undeclared type `Error`
+  --> tests/bowling.rs:14:35
+   |
+14 |     assert_eq!(game.roll(11), Err(Error::NotEnoughPinsLeft));
+   |                                   ^^^^^ use of undeclared type `Error`
+   |
+help: consider importing one of these items
+   |
+1  + use std::error::Error;
+   |
+1  + use std::fmt::Error;
+   |
+1  + use std::io::Error;
+   |
+1  + use core::error::Error;
+   |
+     and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+  --> tests/bowling.rs:61:34
+   |
+61 |     assert_eq!(game.roll(0), Err(Error::GameComplete));
+   |                                  ^^^^^ use of undeclared type `Error`
+   |
+help: consider importing one of these items
+   |
+1  + use std::error::Error;
+   |
+1  + use std::fmt::Error;
+   |
+1  + use std::io::Error;
+   |
+1  + use core::error::Error;
+   |
+     and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:284:34
+    |
+284 |     assert_eq!(game.roll(6), Err(Error::NotEnoughPinsLeft));
+    |                                  ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:298:35
+    |
+298 |     assert_eq!(game.roll(11), Err(Error::NotEnoughPinsLeft));
+    |                                   ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:313:34
+    |
+313 |     assert_eq!(game.roll(6), Err(Error::NotEnoughPinsLeft));
+    |                                  ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:343:35
+    |
+343 |     assert_eq!(game.roll(10), Err(Error::NotEnoughPinsLeft));
+    |                                   ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:359:35
+    |
+359 |     assert_eq!(game.roll(11), Err(Error::NotEnoughPinsLeft));
+    |                                   ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:416:34
+    |
+416 |     assert_eq!(game.roll(2), Err(Error::GameComplete));
+    |                                  ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0433]: failed to resolve: use of undeclared type `Error`
+   --> tests/bowling.rs:432:34
+    |
+432 |     assert_eq!(game.roll(2), Err(Error::GameComplete));
+    |                                  ^^^^^ use of undeclared type `Error`
+    |
+help: consider importing one of these items
+    |
+1   + use std::error::Error;
+    |
+1   + use std::fmt::Error;
+    |
+1   + use std::io::Error;
+    |
+1   + use core::error::Error;
+    |
+      and 1 other candidate
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+ --> tests/bowling.rs:6:26
+  |
+6 |     assert!(game.roll(0).is_ok());
+  |                          ^^^^^ method not found in `()`
+  |
+note: method `roll` modifies its receiver in-place
+ --> tests/bowling.rs:6:18
+  |
+6 |     assert!(game.roll(0).is_ok());
+  |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_some` found for type `u32` in the current scope
+  --> tests/bowling.rs:27:26
+   |
+27 |     assert!(game.score().is_some());
+   |                          ^^^^^^^ method not found in `u32`
+
+error[E0308]: mismatched types
+  --> tests/bowling.rs:35:30
+   |
+35 |     assert_eq!(game.score(), None);
+   |                              ^^^^ expected `u32`, found `Option<_>`
+   |
+   = note: expected type `u32`
+              found enum `Option<_>`
+
+error[E0308]: mismatched types
+  --> tests/bowling.rs:48:30
+   |
+48 |     assert_eq!(game.score(), None);
+   |                              ^^^^ expected `u32`, found `Option<_>`
+   |
+   = note: expected type `u32`
+              found enum `Option<_>`
+
+error[E0308]: mismatched types
+  --> tests/bowling.rs:73:30
+   |
+73 |     assert_eq!(game.score(), Some(0));
+   |                              ^^^^^^^ expected `u32`, found `Option<{integer}>`
+   |
+   = note: expected type `u32`
+              found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+  --> tests/bowling.rs:86:30
+   |
+86 |     assert_eq!(game.score(), Some(90));
+   |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+   |
+   = note: expected type `u32`
+              found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:101:30
+    |
+101 |     assert_eq!(game.score(), Some(10));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:117:30
+    |
+117 |     assert_eq!(game.score(), Some(16));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:135:30
+    |
+135 |     assert_eq!(game.score(), Some(31));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:151:30
+    |
+151 |     assert_eq!(game.score(), Some(17));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:165:30
+    |
+165 |     assert_eq!(game.score(), Some(10));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:181:30
+    |
+181 |     assert_eq!(game.score(), Some(26));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:199:30
+    |
+199 |     assert_eq!(game.score(), Some(81));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:215:30
+    |
+215 |     assert_eq!(game.score(), Some(18));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:231:30
+    |
+231 |     assert_eq!(game.score(), Some(20));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:247:30
+    |
+247 |     assert_eq!(game.score(), Some(30));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:263:30
+    |
+263 |     assert_eq!(game.score(), Some(20));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:275:30
+    |
+275 |     assert_eq!(game.score(), Some(300));
+    |                              ^^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:283:26
+    |
+283 |     assert!(game.roll(5).is_ok());
+    |                          ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:283:18
+    |
+283 |     assert!(game.roll(5).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:312:26
+    |
+312 |     assert!(game.roll(5).is_ok());
+    |                          ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:312:18
+    |
+312 |     assert!(game.roll(5).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:327:27
+    |
+327 |     assert!(game.roll(10).is_ok());
+    |                           ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:327:18
+    |
+327 |     assert!(game.roll(10).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:328:26
+    |
+328 |     assert!(game.roll(6).is_ok());
+    |                          ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:328:18
+    |
+328 |     assert!(game.roll(6).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:342:26
+    |
+342 |     assert!(game.roll(6).is_ok());
+    |                          ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:342:18
+    |
+342 |     assert!(game.roll(6).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:358:27
+    |
+358 |     assert!(game.roll(10).is_ok());
+    |                           ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:358:18
+    |
+358 |     assert!(game.roll(10).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:373:30
+    |
+373 |     assert_eq!(game.score(), None);
+    |                              ^^^^ expected `u32`, found `Option<_>`
+    |
+    = note: expected type `u32`
+               found enum `Option<_>`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:377:30
+    |
+377 |     assert_eq!(game.score(), None);
+    |                              ^^^^ expected `u32`, found `Option<_>`
+    |
+    = note: expected type `u32`
+               found enum `Option<_>`
+
+error[E0599]: no method named `is_some` found for type `u32` in the current scope
+   --> tests/bowling.rs:381:26
+    |
+381 |     assert!(game.score().is_some());
+    |                          ^^^^^^^ method not found in `u32`
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:396:30
+    |
+396 |     assert_eq!(game.score(), None);
+    |                              ^^^^ expected `u32`, found `Option<_>`
+    |
+    = note: expected type `u32`
+               found enum `Option<_>`
+
+error[E0599]: no method named `is_some` found for type `u32` in the current scope
+   --> tests/bowling.rs:400:26
+    |
+400 |     assert!(game.score().is_some());
+    |                          ^^^^^^^ method not found in `u32`
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:414:26
+    |
+414 |     assert!(game.roll(2).is_ok());
+    |                          ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:414:18
+    |
+414 |     assert!(game.roll(2).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0599]: no method named `is_ok` found for unit type `()` in the current scope
+   --> tests/bowling.rs:430:26
+    |
+430 |     assert!(game.roll(2).is_ok());
+    |                          ^^^^^ method not found in `()`
+    |
+note: method `roll` modifies its receiver in-place
+   --> tests/bowling.rs:430:18
+    |
+430 |     assert!(game.roll(2).is_ok());
+    |                  ^^^^ this call modifies `game` in-place
+
+error[E0308]: mismatched types
+   --> tests/bowling.rs:447:30
+    |
+447 |     assert_eq!(game.score(), Some(31));
+    |                              ^^^^^^^^ expected `u32`, found `Option<{integer}>`
+    |
+    = note: expected type `u32`
+               found enum `Option<{integer}>`
+
+Some errors have detailed explanations: E0308, E0433, E0599.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `bowling` (test "bowling") due to 41 previous errors
+
+2025-05-10 02:46:22,593 - ThreadPoolExecutor-0_24 - INFO - Attempting to stop container pb.eval.rust__bowling.20250510_024149_166715...
+2025-05-10 02:46:42,843 - ThreadPoolExecutor-0_24 - INFO - Attempting to remove container pb.eval.rust__bowling.20250510_024149_166715...
+2025-05-10 02:46:53,325 - ThreadPoolExecutor-0_24 - INFO - Container pb.eval.rust__bowling.20250510_024149_166715 removed.

@@ -1,0 +1,1329 @@
+2025-03-14 14:11:47,426 - ThreadPoolExecutor-4_3 - INFO - No existing container with name sweb.eval.django__django-13279.20250314_141147_421274 found.
+2025-03-14 14:11:47,427 - ThreadPoolExecutor-4_3 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13279
+Building instance image sweb.eval.x86_64.django__django-13279:latest for django__django-13279
+2025-03-14 14:11:47,430 - ThreadPoolExecutor-4_3 - INFO - Image sweb.eval.x86_64.django__django-13279:latest already exists, skipping build.
+2025-03-14 14:11:47,434 - ThreadPoolExecutor-4_3 - INFO - Creating container for django__django-13279...
+2025-03-14 14:11:47,464 - ThreadPoolExecutor-4_3 - INFO - Container for django__django-13279 created: cff57f2c841abbfed1f5d722566ee6eaae4d26b5784956414f5d10784290e08c
+2025-03-14 14:11:47,656 - ThreadPoolExecutor-4_3 - INFO - Copying coding_agent.py to container at /dgm/coding_agent.py
+2025-03-14 14:11:47,658 - ThreadPoolExecutor-4_3 - INFO - Successfully copied coding_agent.py to container
+2025-03-14 14:11:47,701 - ThreadPoolExecutor-4_3 - INFO - Copying requirements.txt to container at /dgm/requirements.txt
+2025-03-14 14:11:47,703 - ThreadPoolExecutor-4_3 - INFO - Successfully copied requirements.txt to container
+2025-03-14 14:11:47,737 - ThreadPoolExecutor-4_3 - INFO - Copying pytest.ini to container at /dgm/pytest.ini
+2025-03-14 14:11:47,738 - ThreadPoolExecutor-4_3 - INFO - Successfully copied pytest.ini to container
+2025-03-14 14:11:47,779 - ThreadPoolExecutor-4_3 - INFO - Copying tools to container at /dgm/tools
+2025-03-14 14:11:47,781 - ThreadPoolExecutor-4_3 - INFO - Successfully copied tools to container
+2025-03-14 14:11:47,838 - ThreadPoolExecutor-4_3 - INFO - Copying utils to container at /dgm/utils
+2025-03-14 14:11:47,842 - ThreadPoolExecutor-4_3 - INFO - Successfully copied utils to container
+2025-03-14 14:11:47,887 - ThreadPoolExecutor-4_3 - INFO - Copying tests to container at /dgm/tests
+2025-03-14 14:11:47,889 - ThreadPoolExecutor-4_3 - INFO - Successfully copied tests to container
+2025-03-14 14:11:47,940 - ThreadPoolExecutor-4_3 - INFO - Copying prompts to container at /dgm/prompts
+2025-03-14 14:11:47,943 - ThreadPoolExecutor-4_3 - INFO - Successfully copied prompts to container
+2025-03-14 14:11:47,985 - ThreadPoolExecutor-4_3 - INFO - Copying llm.py to container at /dgm/llm.py
+2025-03-14 14:11:47,987 - ThreadPoolExecutor-4_3 - INFO - Successfully copied llm.py to container
+2025-03-14 14:11:48,033 - ThreadPoolExecutor-4_3 - INFO - Copying llm_withtools.py to container at /dgm/llm_withtools.py
+2025-03-14 14:11:48,035 - ThreadPoolExecutor-4_3 - INFO - Successfully copied llm_withtools.py to container
+2025-03-14 14:11:48,038 - ThreadPoolExecutor-4_3 - INFO - Setting up environment
+2025-03-14 14:11:48,093 - ThreadPoolExecutor-4_3 - INFO - Copying swe_bench/predictions/nerf_editwholefiles_0/django__django-13279_eval.sh to container at /eval.sh
+2025-03-14 14:11:48,096 - ThreadPoolExecutor-4_3 - INFO - Successfully copied swe_bench/predictions/nerf_editwholefiles_0/django__django-13279_eval.sh to container
+2025-03-14 14:11:53,142 - ThreadPoolExecutor-4_3 - INFO - Container output: + source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
++++++ dirname /opt/miniconda3/bin/conda
+++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1=
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ cd /testbed
++ sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen
++ locale-gen
+Generating locales (this might take a while)...
+  en_US.UTF-8... done
+Generation complete.
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ export LANGUAGE=en_US:en
++ LANGUAGE=en_US:en
++ export LC_ALL=en_US.UTF-8
++ LC_ALL=en_US.UTF-8
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+nothing to commit, working tree clean
++ git show
+commit 6e9c5ee88fc948e05b4a7d9f82a8861ed2b0343d
+Author: Adam Alton <adamalton@gmail.com>
+Date:   Fri Aug 7 06:05:47 2020 +0000
+
+    Removed unnecessary sentence in QuerySet docs.
+
+diff --git a/docs/ref/models/querysets.txt b/docs/ref/models/querysets.txt
+index adc070ec99..e5c0038528 100644
+--- a/docs/ref/models/querysets.txt
++++ b/docs/ref/models/querysets.txt
+@@ -151,8 +151,7 @@ Here's the formal declaration of a ``QuerySet``:
+         The ``query`` parameter to :class:`QuerySet` exists so that specialized
+         query subclasses can reconstruct internal query state. The value of the
+         parameter is an opaque representation of that query state and is not
+-        part of a public API. To put it another way: if you need to ask, you
+-        don't need to use it.
++        part of a public API.
+ 
+ .. currentmodule:: django.db.models.query.QuerySet
+ 
++ git diff 6e9c5ee88fc948e05b4a7d9f82a8861ed2b0343d
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z x ']'
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1='(testbed) '
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=3
++++ CONDA_SHLVL=3
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=4
+++ CONDA_SHLVL=4
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_3=/opt/miniconda3
+++ CONDA_PREFIX_3=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python -m pip install -e .
+Obtaining file:///testbed
+Requirement already satisfied: asgiref>=3.2.10 in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (from Django==3.2) (3.4.1)
+Requirement already satisfied: pytz in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (from Django==3.2) (2024.2)
+Requirement already satisfied: sqlparse>=0.2.2 in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (from Django==3.2) (0.4.4)
+Requirement already satisfied: typing-extensions in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (from asgiref>=3.2.10->Django==3.2) (4.1.1)
+Installing collected packages: Django
+  Attempting uninstall: Django
+    Found existing installation: Django 3.2
+    Uninstalling Django-3.2:
+      Successfully uninstalled Django-3.2
+  Running setup.py develop for Django
+Successfully installed Django-3.2
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ git checkout 6e9c5ee88fc948e05b4a7d9f82a8861ed2b0343d tests/sessions_tests/tests.py
+Updated 0 paths from 4c027686e4
++ git apply -v -
+Checking patch tests/sessions_tests/tests.py...
+Applied patch tests/sessions_tests/tests.py cleanly.
++ ./tests/runtests.py --verbosity 2 --settings=test_sqlite --parallel 1 sessions_tests.tests
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_actual_expiry (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_clear (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_cycle (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_decode (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_decode_legacy (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_default_expiry (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CacheDBSessionTests) ... ERROR
+test_delete (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_exists_searches_cache_first (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_flush (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_get_empty (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_has_key (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_invalid_key (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_items (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_keys (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_load_overlong_key (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_new_session (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_non_default_cache (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_pop (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_pop_default (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_save (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.CacheDBSessionTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.CacheDBSessionTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.CacheDBSessionTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_setdefault (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_store (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_update (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_values (sessions_tests.tests.CacheDBSessionTests) ... ok
+test_actual_expiry (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_clear (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_cycle (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_decode (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_decode_legacy (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_default_expiry (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ERROR
+test_delete (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_exists_searches_cache_first (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_flush (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_get_empty (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_has_key (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_invalid_key (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_items (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_keys (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_load_overlong_key (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_new_session (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_non_default_cache (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_pop (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_pop_default (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_save (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.CacheDBSessionWithTimeZoneTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.CacheDBSessionWithTimeZoneTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.CacheDBSessionWithTimeZoneTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_setdefault (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_store (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_update (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_values (sessions_tests.tests.CacheDBSessionWithTimeZoneTests) ... ok
+test_actual_expiry (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_clear (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_clearsessions_command (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_cycle (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_decode (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_decode_legacy (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_default_expiry (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CustomDatabaseSessionTests) ... ERROR
+test_delete (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_extra_session_field (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_flush (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_get_empty (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_has_key (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_invalid_key (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_items (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_keys (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_new_session (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_pop (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_pop_default (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_save (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_session_get_decoded (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.CustomDatabaseSessionTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.CustomDatabaseSessionTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.CustomDatabaseSessionTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_session_str (sessions_tests.tests.CustomDatabaseSessionTests)
+Session repr should be the session key. ... ok
+test_sessionmanager_save (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_setdefault (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_store (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_update (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_values (sessions_tests.tests.CustomDatabaseSessionTests) ... ok
+test_actual_expiry (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_clear (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_clearsessions_command (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_cycle (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_decode (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_decode_legacy (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_default_expiry (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.DatabaseSessionTests) ... ERROR
+test_delete (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_flush (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_get_empty (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_has_key (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_invalid_key (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_items (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_keys (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_new_session (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_pop (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_pop_default (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_save (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_session_get_decoded (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.DatabaseSessionTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.DatabaseSessionTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.DatabaseSessionTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_session_str (sessions_tests.tests.DatabaseSessionTests)
+Session repr should be the session key. ... ok
+test_sessionmanager_save (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_setdefault (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_store (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_update (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_values (sessions_tests.tests.DatabaseSessionTests) ... ok
+test_actual_expiry (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_clear (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_clearsessions_command (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_cycle (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_decode (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_decode_legacy (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_default_expiry (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ERROR
+test_delete (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_flush (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_get_empty (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_has_key (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_invalid_key (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_items (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_keys (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_new_session (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_pop (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_pop_default (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_save (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_session_get_decoded (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.DatabaseSessionWithTimeZoneTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.DatabaseSessionWithTimeZoneTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.DatabaseSessionWithTimeZoneTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_session_str (sessions_tests.tests.DatabaseSessionWithTimeZoneTests)
+Session repr should be the session key. ... ok
+test_sessionmanager_save (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_setdefault (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_store (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_update (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_values (sessions_tests.tests.DatabaseSessionWithTimeZoneTests) ... ok
+test_empty_session_saved (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_flush_empty_without_session_cookie_doesnt_set_cookie (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_httponly_session_cookie (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_no_httponly_session_cookie (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_samesite_session_cookie (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_secure_session_cookie (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_session_delete_on_end (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_session_delete_on_end_with_custom_domain_and_path (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_session_save_on_500 (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_session_update_error_redirect (sessions_tests.tests.SessionMiddlewareTests) ... ok
+test_actual_expiry (sessions_tests.tests.CacheSessionTests) ... ok
+test_clear (sessions_tests.tests.CacheSessionTests) ... ok
+test_create_and_save (sessions_tests.tests.CacheSessionTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.CacheSessionTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.CacheSessionTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.CacheSessionTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.CacheSessionTests) ... ok
+test_cycle (sessions_tests.tests.CacheSessionTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.CacheSessionTests) ... ok
+test_decode (sessions_tests.tests.CacheSessionTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.CacheSessionTests) ... ok
+test_decode_legacy (sessions_tests.tests.CacheSessionTests) ... ok
+test_default_cache (sessions_tests.tests.CacheSessionTests) ... ok
+test_default_expiry (sessions_tests.tests.CacheSessionTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CacheSessionTests) ... ERROR
+test_delete (sessions_tests.tests.CacheSessionTests) ... ok
+test_flush (sessions_tests.tests.CacheSessionTests) ... ok
+test_get_empty (sessions_tests.tests.CacheSessionTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.CacheSessionTests) ... ok
+test_has_key (sessions_tests.tests.CacheSessionTests) ... ok
+test_invalid_key (sessions_tests.tests.CacheSessionTests) ... ok
+test_items (sessions_tests.tests.CacheSessionTests) ... ok
+test_keys (sessions_tests.tests.CacheSessionTests) ... ok
+test_load_overlong_key (sessions_tests.tests.CacheSessionTests) ... ok
+test_new_session (sessions_tests.tests.CacheSessionTests) ... ok
+test_non_default_cache (sessions_tests.tests.CacheSessionTests) ... ok
+test_pop (sessions_tests.tests.CacheSessionTests) ... ok
+test_pop_default (sessions_tests.tests.CacheSessionTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.CacheSessionTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.CacheSessionTests) ... ok
+test_save (sessions_tests.tests.CacheSessionTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.CacheSessionTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.CacheSessionTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.CacheSessionTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.CacheSessionTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.CacheSessionTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.CacheSessionTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.CacheSessionTests) ... ok
+test_setdefault (sessions_tests.tests.CacheSessionTests) ... ok
+test_store (sessions_tests.tests.CacheSessionTests) ... ok
+test_update (sessions_tests.tests.CacheSessionTests) ... ok
+test_values (sessions_tests.tests.CacheSessionTests) ... ok
+test_actual_expiry (sessions_tests.tests.CookieSessionTests) ... expected failure
+test_clear (sessions_tests.tests.CookieSessionTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.CookieSessionTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.CookieSessionTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.CookieSessionTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.CookieSessionTests) ... ok
+test_cycle (sessions_tests.tests.CookieSessionTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.CookieSessionTests) ... ok
+test_decode (sessions_tests.tests.CookieSessionTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.CookieSessionTests) ... ok
+test_decode_legacy (sessions_tests.tests.CookieSessionTests) ... ok
+test_default_expiry (sessions_tests.tests.CookieSessionTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CookieSessionTests) ... ERROR
+test_delete (sessions_tests.tests.CookieSessionTests) ... ok
+test_flush (sessions_tests.tests.CookieSessionTests) ... ok
+test_get_empty (sessions_tests.tests.CookieSessionTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.CookieSessionTests) ... ok
+test_has_key (sessions_tests.tests.CookieSessionTests) ... ok
+test_invalid_key (sessions_tests.tests.CookieSessionTests) ... ok
+test_items (sessions_tests.tests.CookieSessionTests) ... ok
+test_keys (sessions_tests.tests.CookieSessionTests) ... ok
+test_new_session (sessions_tests.tests.CookieSessionTests) ... ok
+test_pop (sessions_tests.tests.CookieSessionTests) ... ok
+test_pop_default (sessions_tests.tests.CookieSessionTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.CookieSessionTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.CookieSessionTests) ... ok
+test_save (sessions_tests.tests.CookieSessionTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.CookieSessionTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.CookieSessionTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.CookieSessionTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.CookieSessionTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.CookieSessionTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.CookieSessionTests) ... skipped "Cookie backend doesn't have an external store to create records in."
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.CookieSessionTests) ... skipped 'CookieSession is stored in the client and there is no way to query it.'
+test_setdefault (sessions_tests.tests.CookieSessionTests) ... ok
+test_store (sessions_tests.tests.CookieSessionTests) ... ok
+test_unpickling_exception (sessions_tests.tests.CookieSessionTests) ... ok
+test_update (sessions_tests.tests.CookieSessionTests) ... ok
+test_values (sessions_tests.tests.CookieSessionTests) ... ok
+test_actual_expiry (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_clear (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_clearsessions_command (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_configuration_check (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_cycle (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_decode (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_decode_legacy (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_default_expiry (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.FileSessionPathLibTests) ... ERROR
+test_delete (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_flush (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_get_empty (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_has_key (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_invalid_key (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_invalid_key_backslash (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_invalid_key_forwardslash (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_items (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_keys (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_new_session (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_pop (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_pop_default (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_save (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.FileSessionPathLibTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.FileSessionPathLibTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.FileSessionPathLibTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_setdefault (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_store (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_update (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_values (sessions_tests.tests.FileSessionPathLibTests) ... ok
+test_actual_expiry (sessions_tests.tests.FileSessionTests) ... ok
+test_clear (sessions_tests.tests.FileSessionTests) ... ok
+test_clearsessions_command (sessions_tests.tests.FileSessionTests) ... ok
+test_configuration_check (sessions_tests.tests.FileSessionTests) ... ok
+test_custom_expiry_datetime (sessions_tests.tests.FileSessionTests) ... ok
+test_custom_expiry_reset (sessions_tests.tests.FileSessionTests) ... ok
+test_custom_expiry_seconds (sessions_tests.tests.FileSessionTests) ... ok
+test_custom_expiry_timedelta (sessions_tests.tests.FileSessionTests) ... ok
+test_cycle (sessions_tests.tests.FileSessionTests) ... ok
+test_cycle_with_no_session_cache (sessions_tests.tests.FileSessionTests) ... ok
+test_decode (sessions_tests.tests.FileSessionTests) ... ok
+test_decode_failure_logged_to_security (sessions_tests.tests.FileSessionTests) ... ok
+test_decode_legacy (sessions_tests.tests.FileSessionTests) ... ok
+test_default_expiry (sessions_tests.tests.FileSessionTests) ... ok
+test_default_hashing_algorith_legacy_decode (sessions_tests.tests.FileSessionTests) ... ERROR
+test_delete (sessions_tests.tests.FileSessionTests) ... ok
+test_flush (sessions_tests.tests.FileSessionTests) ... ok
+test_get_empty (sessions_tests.tests.FileSessionTests) ... ok
+test_get_expire_at_browser_close (sessions_tests.tests.FileSessionTests) ... ok
+test_has_key (sessions_tests.tests.FileSessionTests) ... ok
+test_invalid_key (sessions_tests.tests.FileSessionTests) ... ok
+test_invalid_key_backslash (sessions_tests.tests.FileSessionTests) ... ok
+test_invalid_key_forwardslash (sessions_tests.tests.FileSessionTests) ... ok
+test_items (sessions_tests.tests.FileSessionTests) ... ok
+test_keys (sessions_tests.tests.FileSessionTests) ... ok
+test_new_session (sessions_tests.tests.FileSessionTests) ... ok
+test_pop (sessions_tests.tests.FileSessionTests) ... ok
+test_pop_default (sessions_tests.tests.FileSessionTests) ... ok
+test_pop_default_named_argument (sessions_tests.tests.FileSessionTests) ... ok
+test_pop_no_default_keyerror_raised (sessions_tests.tests.FileSessionTests) ... ok
+test_save (sessions_tests.tests.FileSessionTests) ... ok
+test_save_doesnt_clear_data (sessions_tests.tests.FileSessionTests) ... ok
+test_session_key_empty_string_invalid (sessions_tests.tests.FileSessionTests)
+Falsey values (Such as an empty string) are rejected. ... ok
+test_session_key_is_read_only (sessions_tests.tests.FileSessionTests) ... ok
+test_session_key_too_short_invalid (sessions_tests.tests.FileSessionTests)
+Strings shorter than 8 characters are rejected. ... ok
+test_session_key_valid_string_saved (sessions_tests.tests.FileSessionTests)
+Strings of length 8 and up are accepted and stored. ... ok
+test_session_load_does_not_create_record (sessions_tests.tests.FileSessionTests) ... ok
+test_session_save_does_not_resurrect_session_logged_out_in_other_context (sessions_tests.tests.FileSessionTests) ... ok
+test_setdefault (sessions_tests.tests.FileSessionTests) ... ok
+test_store (sessions_tests.tests.FileSessionTests) ... ok
+test_update (sessions_tests.tests.FileSessionTests) ... ok
+test_values (sessions_tests.tests.FileSessionTests) ... Testing against Django installed in '/testbed/django'
+Importing application sessions_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, sessions_tests, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table sessions_tests_customsession
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ok
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CacheDBSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CacheDBSessionWithTimeZoneTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CustomDatabaseSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.DatabaseSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.DatabaseSessionWithTimeZoneTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CacheSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.CookieSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.FileSessionPathLibTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+======================================================================
+ERROR: test_default_hashing_algorith_legacy_decode (sessions_tests.tests.FileSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/test/utils.py", line 381, in inner
+    return func(*args, **kwargs)
+  File "/testbed/tests/sessions_tests/tests.py", line 333, in test_default_hashing_algorith_legacy_decode
+    self.assertEqual(self.session._legacy_decode(encoded), data)
+  File "/testbed/django/contrib/sessions/backends/base.py", line 126, in _legacy_decode
+    encoded_data = base64.b64decode(session_data.encode('ascii'))
+  File "/opt/miniconda3/envs/testbed/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+----------------------------------------------------------------------
+Ran 384 tests in 0.266s
+
+FAILED (errors=9, skipped=2, expected failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
++ git checkout 6e9c5ee88fc948e05b4a7d9f82a8861ed2b0343d tests/sessions_tests/tests.py
+Updated 1 path from 4c027686e4
+
+2025-03-14 14:11:53,195 - ThreadPoolExecutor-4_3 - INFO - Container output: 
+2025-03-14 14:11:53,195 - ThreadPoolExecutor-4_3 - INFO - Installing more requirements
+2025-03-14 14:12:15,042 - ThreadPoolExecutor-4_3 - INFO - Container output: Collecting datasets (from -r /dgm/requirements.txt (line 1))
+  Downloading datasets-3.3.2-py3-none-any.whl.metadata (19 kB)
+Collecting anthropic (from -r /dgm/requirements.txt (line 2))
+  Downloading anthropic-0.49.0-py3-none-any.whl.metadata (24 kB)
+Collecting backoff (from -r /dgm/requirements.txt (line 4))
+  Downloading backoff-2.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting botocore (from -r /dgm/requirements.txt (line 5))
+  Downloading botocore-1.37.12-py3-none-any.whl.metadata (5.7 kB)
+Collecting boto3 (from -r /dgm/requirements.txt (line 6))
+  Downloading boto3-1.37.12-py3-none-any.whl.metadata (6.7 kB)
+Collecting openai (from -r /dgm/requirements.txt (line 7))
+  Downloading openai-1.66.3-py3-none-any.whl.metadata (25 kB)
+Collecting beautifulsoup4 (from -r /dgm/requirements.txt (line 10))
+  Downloading beautifulsoup4-4.13.3-py3-none-any.whl.metadata (3.8 kB)
+Collecting chardet (from -r /dgm/requirements.txt (line 11))
+  Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting docker (from -r /dgm/requirements.txt (line 12))
+  Downloading docker-7.1.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting ghapi (from -r /dgm/requirements.txt (line 13))
+  Downloading ghapi-1.0.6-py3-none-any.whl.metadata (13 kB)
+Collecting GitPython (from -r /dgm/requirements.txt (line 14))
+  Downloading GitPython-3.1.44-py3-none-any.whl.metadata (13 kB)
+Collecting pre-commit (from -r /dgm/requirements.txt (line 15))
+  Downloading pre_commit-4.1.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting python-dotenv (from -r /dgm/requirements.txt (line 16))
+  Downloading python_dotenv-1.0.1-py3-none-any.whl.metadata (23 kB)
+Collecting rich (from -r /dgm/requirements.txt (line 17))
+  Downloading rich-13.9.4-py3-none-any.whl.metadata (18 kB)
+Collecting unidiff (from -r /dgm/requirements.txt (line 18))
+  Downloading unidiff-0.7.5-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting pytest (from -r /dgm/requirements.txt (line 21))
+  Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-asyncio (from -r /dgm/requirements.txt (line 22))
+  Downloading pytest_asyncio-0.25.3-py3-none-any.whl.metadata (3.9 kB)
+Collecting filelock (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting numpy>=1.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading numpy-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 15.1 MB/s eta 0:00:00
+Collecting pyarrow>=15.0.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pyarrow-19.0.1-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Collecting pandas (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (89 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 kB 20.1 MB/s eta 0:00:00
+Collecting requests>=2.32.2 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.66.3 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 15.1 MB/s eta 0:00:00
+Collecting xxhash (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess<0.70.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multiprocess-0.70.16-py311-none-any.whl.metadata (7.2 kB)
+Collecting fsspec<=2024.12.0,>=2023.1.0 (from fsspec[http]<=2024.12.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading fsspec-2024.12.0-py3-none-any.whl.metadata (11 kB)
+Collecting aiohttp (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohttp-3.11.13-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting huggingface-hub>=0.24.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading huggingface_hub-0.29.3-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: packaging in /opt/miniconda3/lib/python3.11/site-packages (from datasets->-r /dgm/requirements.txt (line 1)) (23.1)
+Collecting pyyaml>=5.1 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting anyio<5,>=3.5.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading anyio-4.8.0-py3-none-any.whl.metadata (4.6 kB)
+Requirement already satisfied: distro<2,>=1.7.0 in /opt/miniconda3/lib/python3.11/site-packages (from anthropic->-r /dgm/requirements.txt (line 2)) (1.8.0)
+Collecting httpx<1,>=0.23.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.4.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic-2.10.6-py3-none-any.whl.metadata (30 kB)
+Collecting sniffio (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting typing-extensions<5,>=4.10 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/miniconda3/lib/python3.11/site-packages (from botocore->-r /dgm/requirements.txt (line 5)) (1.26.18)
+Collecting s3transfer<0.12.0,>=0.11.0 (from boto3->-r /dgm/requirements.txt (line 6))
+  Downloading s3transfer-0.11.4-py3-none-any.whl.metadata (1.7 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4->-r /dgm/requirements.txt (line 10))
+  Downloading soupsieve-2.6-py3-none-any.whl.metadata (4.6 kB)
+Collecting fastcore>=1.7.2 (from ghapi->-r /dgm/requirements.txt (line 13))
+  Downloading fastcore-1.7.29-py3-none-any.whl.metadata (3.6 kB)
+Collecting gitdb<5,>=4.0.1 (from GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+Collecting cfgv>=2.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading cfgv-3.4.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting identify>=1.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading identify-2.6.9-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading nodeenv-1.9.1-py2.py3-none-any.whl.metadata (21 kB)
+Collecting virtualenv>=20.10.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading virtualenv-20.29.3-py3-none-any.whl.metadata (4.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting iniconfig (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting pluggy<2,>=1.5 (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: idna>=2.8 in /opt/miniconda3/lib/python3.11/site-packages (from anyio<5,>=3.5.0->anthropic->-r /dgm/requirements.txt (line 2)) (3.4)
+Collecting aiohappyeyeballs>=2.3.0 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading frozenlist-1.5.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (13 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multidict-6.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.0 kB)
+Collecting propcache>=0.2.0 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading propcache-0.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading yarl-1.18.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.2/69.2 kB 11.7 MB/s eta 0:00:00
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading smmap-5.0.2-py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: certifi in /opt/miniconda3/lib/python3.11/site-packages (from httpx<1,>=0.23.0->anthropic->-r /dgm/requirements.txt (line 2)) (2023.11.17)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpcore-1.0.7-py3-none-any.whl.metadata (21 kB)
+Collecting h11<0.15,>=0.13 (from httpcore==1.*->httpx<1,>=0.23.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading h11-0.14.0-py3-none-any.whl.metadata (8.2 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->-r /dgm/requirements.txt (line 17))
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.27.2 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic_core-2.27.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore->-r /dgm/requirements.txt (line 5))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: charset-normalizer<4,>=2 in /opt/miniconda3/lib/python3.11/site-packages (from requests>=2.32.2->datasets->-r /dgm/requirements.txt (line 1)) (2.0.4)
+Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in /opt/miniconda3/lib/python3.11/site-packages (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15)) (3.10.0)
+Collecting pytz>=2020.1 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pytz-2025.1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tzdata-2025.1-py2.py3-none-any.whl.metadata (1.4 kB)
+Downloading datasets-3.3.2-py3-none-any.whl (485 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 485.4/485.4 kB 53.2 MB/s eta 0:00:00
+Downloading anthropic-0.49.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.4/243.4 kB 51.5 MB/s eta 0:00:00
+Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+Downloading botocore-1.37.12-py3-none-any.whl (13.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.4/13.4 MB 193.0 MB/s eta 0:00:00
+Downloading boto3-1.37.12-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.6/139.6 kB 34.8 MB/s eta 0:00:00
+Downloading openai-1.66.3-py3-none-any.whl (567 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 567.4/567.4 kB 85.6 MB/s eta 0:00:00
+Downloading beautifulsoup4-4.13.3-py3-none-any.whl (186 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 186.0/186.0 kB 50.2 MB/s eta 0:00:00
+Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.4/199.4 kB 59.2 MB/s eta 0:00:00
+Downloading docker-7.1.0-py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 7.1 MB/s eta 0:00:00
+Downloading ghapi-1.0.6-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 14.4 MB/s eta 0:00:00
+Downloading GitPython-3.1.44-py3-none-any.whl (207 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 207.6/207.6 kB 37.4 MB/s eta 0:00:00
+Downloading pre_commit-4.1.0-py2.py3-none-any.whl (220 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.6/220.6 kB 47.8 MB/s eta 0:00:00
+Downloading python_dotenv-1.0.1-py3-none-any.whl (19 kB)
+Downloading rich-13.9.4-py3-none-any.whl (242 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 242.4/242.4 kB 56.0 MB/s eta 0:00:00
+Downloading unidiff-0.7.5-py2.py3-none-any.whl (14 kB)
+Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 343.6/343.6 kB 70.7 MB/s eta 0:00:00
+Downloading pytest_asyncio-0.25.3-py3-none-any.whl (19 kB)
+Downloading anyio-4.8.0-py3-none-any.whl (96 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.0/96.0 kB 28.2 MB/s eta 0:00:00
+Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 28.3 MB/s eta 0:00:00
+Downloading fastcore-1.7.29-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.2/84.2 kB 25.4 MB/s eta 0:00:00
+Downloading fsspec-2024.12.0-py3-none-any.whl (183 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 183.9/183.9 kB 33.9 MB/s eta 0:00:00
+Downloading aiohttp-3.11.13-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 142.2 MB/s eta 0:00:00
+Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.8/62.8 kB 17.1 MB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 21.3 MB/s eta 0:00:00
+Downloading httpcore-1.0.7-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.6/78.6 kB 21.8 MB/s eta 0:00:00
+Downloading huggingface_hub-0.29.3-py3-none-any.whl (468 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 469.0/469.0 kB 98.6 MB/s eta 0:00:00
+Downloading identify-2.6.9-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 31.5 MB/s eta 0:00:00
+Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (351 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.8/351.8 kB 75.0 MB/s eta 0:00:00
+Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 20.0 MB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py311-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.5/143.5 kB 40.6 MB/s eta 0:00:00
+Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+Downloading numpy-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.4/16.4 MB 136.9 MB/s eta 0:00:00
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Downloading pyarrow-19.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (42.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.1/42.1 MB 90.6 MB/s eta 0:00:00
+Downloading pydantic-2.10.6-py3-none-any.whl (431 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 431.7/431.7 kB 54.2 MB/s eta 0:00:00
+Downloading pydantic_core-2.27.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 144.4 MB/s eta 0:00:00
+Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 24.8 MB/s eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 52.0 MB/s eta 0:00:00
+Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (762 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 763.0/763.0 kB 95.7 MB/s eta 0:00:00
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 20.7 MB/s eta 0:00:00
+Downloading s3transfer-0.11.4-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.4/84.4 kB 20.8 MB/s eta 0:00:00
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.6-py3-none-any.whl (36 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 19.8 MB/s eta 0:00:00
+Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+Downloading virtualenv-20.29.3-py3-none-any.whl (4.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 183.8 MB/s eta 0:00:00
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 90.8 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.8/194.8 kB 12.9 MB/s eta 0:00:00
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 12.5 MB/s eta 0:00:00
+Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 469.0/469.0 kB 92.5 MB/s eta 0:00:00
+Downloading frozenlist-1.5.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (274 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 274.9/274.9 kB 46.7 MB/s eta 0:00:00
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading multidict-6.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (129 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 129.0/129.0 kB 32.5 MB/s eta 0:00:00
+Downloading propcache-0.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (231 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 231.3/231.3 kB 58.4 MB/s eta 0:00:00
+Downloading pytz-2025.1-py2.py3-none-any.whl (507 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 507.9/507.9 kB 95.2 MB/s eta 0:00:00
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading smmap-5.0.2-py3-none-any.whl (24 kB)
+Downloading tzdata-2025.1-py2.py3-none-any.whl (346 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 346.8/346.8 kB 69.2 MB/s eta 0:00:00
+Downloading yarl-1.18.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (344 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 344.1/344.1 kB 54.8 MB/s eta 0:00:00
+Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 kB 16.4 MB/s eta 0:00:00
+Installing collected packages: unidiff, pytz, distlib, xxhash, tzdata, typing-extensions, tqdm, soupsieve, sniffio, smmap, six, requests, pyyaml, python-dotenv, pygments, pyarrow, propcache, pluggy, numpy, nodeenv, multidict, mdurl, jmespath, jiter, iniconfig, identify, h11, fsspec, frozenlist, filelock, fastcore, dill, chardet, cfgv, backoff, attrs, annotated-types, aiohappyeyeballs, yarl, virtualenv, python-dateutil, pytest, pydantic-core, multiprocess, markdown-it-py, huggingface-hub, httpcore, gitdb, ghapi, docker, beautifulsoup4, anyio, aiosignal, rich, pytest-asyncio, pydantic, pre-commit, pandas, httpx, GitPython, botocore, aiohttp, s3transfer, openai, anthropic, datasets, boto3
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.65.0
+    Uninstalling tqdm-4.65.0:
+      Successfully uninstalled tqdm-4.65.0
+  Attempting uninstall: requests
+    Found existing installation: requests 2.31.0
+    Uninstalling requests-2.31.0:
+      Successfully uninstalled requests-2.31.0
+  Attempting uninstall: pluggy
+    Found existing installation: pluggy 1.0.0
+    Uninstalling pluggy-1.0.0:
+      Successfully uninstalled pluggy-1.0.0
+Successfully installed GitPython-3.1.44 aiohappyeyeballs-2.6.1 aiohttp-3.11.13 aiosignal-1.3.2 annotated-types-0.7.0 anthropic-0.49.0 anyio-4.8.0 attrs-25.3.0 backoff-2.2.1 beautifulsoup4-4.13.3 boto3-1.37.12 botocore-1.37.12 cfgv-3.4.0 chardet-5.2.0 datasets-3.3.2 dill-0.3.8 distlib-0.3.9 docker-7.1.0 fastcore-1.7.29 filelock-3.18.0 frozenlist-1.5.0 fsspec-2024.12.0 ghapi-1.0.6 gitdb-4.0.12 h11-0.14.0 httpcore-1.0.7 httpx-0.28.1 huggingface-hub-0.29.3 identify-2.6.9 iniconfig-2.0.0 jiter-0.9.0 jmespath-1.0.1 markdown-it-py-3.0.0 mdurl-0.1.2 multidict-6.1.0 multiprocess-0.70.16 nodeenv-1.9.1 numpy-2.2.3 openai-1.66.3 pandas-2.2.3 pluggy-1.5.0 pre-commit-4.1.0 propcache-0.3.0 pyarrow-19.0.1 pydantic-2.10.6 pydantic-core-2.27.2 pygments-2.19.1 pytest-8.3.5 pytest-asyncio-0.25.3 python-dateutil-2.9.0.post0 python-dotenv-1.0.1 pytz-2025.1 pyyaml-6.0.2 requests-2.32.3 rich-13.9.4 s3transfer-0.11.4 six-1.17.0 smmap-5.0.2 sniffio-1.3.1 soupsieve-2.6 tqdm-4.67.1 typing-extensions-4.12.2 tzdata-2025.1 unidiff-0.7.5 virtualenv-20.29.3 xxhash-3.5.0 yarl-1.18.3
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+2025-03-14 14:12:15,047 - ThreadPoolExecutor-4_3 - INFO - Running the agent
+2025-03-14 14:25:16,903 - ThreadPoolExecutor-4_3 - INFO - Container output: Using Amazon Bedrock with model us.anthropic.claude-3-5-sonnet-20241022-v2:0.
+
+2025-03-14 14:25:16,904 - ThreadPoolExecutor-4_3 - INFO - Copying output files back to host
+2025-03-14 14:25:16,991 - ThreadPoolExecutor-4_3 - INFO - Copying from container /dgm/django__django-13279.md to local path swe_bench/predictions/nerf_editwholefiles_0/django__django-13279.md
+2025-03-14 14:25:17,036 - ThreadPoolExecutor-4_3 - INFO - Successfully copied from container to swe_bench/predictions/nerf_editwholefiles_0/django__django-13279.md
+2025-03-14 14:25:17,080 - ThreadPoolExecutor-4_3 - INFO - Getting model_patch
+2025-03-14 14:25:17,125 - ThreadPoolExecutor-4_3 - INFO - Container output: diff --git a/django/contrib/sessions/backends/base.py b/django/contrib/sessions/backends/base.py
+index b5453160a5..d049a215ca 100644
+--- a/django/contrib/sessions/backends/base.py
++++ b/django/contrib/sessions/backends/base.py
+@@ -20,6 +20,8 @@ from django.utils.translation import LANGUAGE_SESSION_KEY
+ # on case insensitive file systems.
+ VALID_KEY_CHARS = string.ascii_lowercase + string.digits
+ 
++logger = logging.getLogger('django.security.SuspiciousSession')
++
+ 
+ class CreateError(Exception):
+     """
+@@ -107,37 +109,35 @@ class SessionBase:
+         return salted_hmac(key_salt, value).hexdigest()
+ 
+     def encode(self, session_dict):
+-        "Return the given session dictionary serialized and encoded as a string."
+-        return signing.dumps(
+-            session_dict, salt=self.key_salt, serializer=self.serializer,
+-            compress=True,
+-        )
++        """Return the given session dictionary serialized and encoded as a string."""
++        serialized = self.serializer().dumps(session_dict)
++        if not isinstance(serialized, bytes):
++            serialized = serialized.encode('ascii')
++        hash = self._hash(serialized)
++        return base64.b64encode(b'%s:%s' % (hash.encode('ascii'), serialized)).decode('ascii')
+ 
+     def decode(self, session_data):
+-        try:
+-            return signing.loads(session_data, salt=self.key_salt, serializer=self.serializer)
+-        # RemovedInDjango40Warning: when the deprecation ends, handle here
+-        # exceptions similar to what _legacy_decode() does now.
+-        except Exception:
+-            return self._legacy_decode(session_data)
++        """Decode the session data and return a dictionary."""
++        if not session_data:
++            return {}
+ 
+-    def _legacy_decode(self, session_data):
+-        # RemovedInDjango40Warning: pre-Django 3.1 format will be invalid.
+-        encoded_data = base64.b64decode(session_data.encode('ascii'))
+         try:
+-            # could produce ValueError if there is no ':'
+-            hash, serialized = encoded_data.split(b':', 1)
++            encoded_data = base64.b64decode(session_data.encode('ascii'))
++            try:
++                hash, serialized = encoded_data.split(b':', 1)
++            except ValueError:
++                logger.warning("Session data corrupted")
++                return {}
++
+             expected_hash = self._hash(serialized)
+-            if not constant_time_compare(hash.decode(), expected_hash):
+-                raise SuspiciousSession("Session data corrupted")
+-            else:
+-                return self.serializer().loads(serialized)
++            if not constant_time_compare(hash.decode('ascii'), expected_hash):
++                logger.warning("Session data corrupted")
++                return {}
++
++            return self.serializer().loads(serialized)
+         except Exception as e:
+-            # ValueError, SuspiciousOperation, unpickling exceptions. If any of
+-            # these happen, just return an empty dictionary (an empty session).
+-            if isinstance(e, SuspiciousOperation):
+-                logger = logging.getLogger('django.security.%s' % e.__class__.__name__)
+-                logger.warning(str(e))
++            if isinstance(e, (SuspiciousOperation, ValueError)):
++                logger.warning(str(e) if str(e) else "Session data corrupted")
+             return {}
+ 
+     def update(self, dict_):
+@@ -165,14 +165,14 @@ class SessionBase:
+         self.modified = True
+ 
+     def is_empty(self):
+-        "Return True when there is no session_key and the session is empty."
++        """Return True when there is no session_key and the session is empty."""
+         try:
+             return not self._session_key and not self._session_cache
+         except AttributeError:
+             return True
+ 
+     def _get_new_session_key(self):
+-        "Return session key that isn't being used."
++        """Return session key that isn't being used."""
+         while True:
+             session_key = get_random_string(32, VALID_KEY_CHARS)
+             if not self.exists(session_key):
+@@ -322,7 +322,7 @@ class SessionBase:
+         Create a new session key, while retaining the current session data.
+         """
+         data = self._session
+-        key = self.session_key
++        key = self._session_key
+         self.create()
+         self._session_cache = data
+         if key:
+@@ -347,8 +347,8 @@ class SessionBase:
+     def save(self, must_create=False):
+         """
+         Save the session data. If 'must_create' is True, create a new session
+-        object (or raise CreateError). Otherwise, only update an existing
+-        object and don't create one (raise UpdateError if needed).
++        object (or raise CreateError). Otherwise, only update an existing object
++        and don't create one (raise UpdateError if needed).
+         """
+         raise NotImplementedError('subclasses of SessionBase must provide a save() method')
+ 
+@@ -363,15 +363,4 @@ class SessionBase:
+         """
+         Load the session data and return a dictionary.
+         """
+-        raise NotImplementedError('subclasses of SessionBase must provide a load() method')
+-
+-    @classmethod
+-    def clear_expired(cls):
+-        """
+-        Remove expired sessions from the session store.
+-
+-        If this operation isn't possible on a given backend, it should raise
+-        NotImplementedError. If it isn't necessary, because the backend has
+-        a built-in expiration mechanism, it should be a no-op.
+-        """
+-        raise NotImplementedError('This backend does not support clear_expired().')
++        raise NotImplementedError('subclasses of SessionBase must provide a load() method')
+\ No newline at end of file
+
+2025-03-14 14:25:17,179 - ThreadPoolExecutor-4_3 - INFO - Attempting to stop container sweb.eval.django__django-13279.20250314_141147_421274...
+2025-03-14 14:25:32,372 - ThreadPoolExecutor-4_3 - INFO - Attempting to remove container sweb.eval.django__django-13279.20250314_141147_421274...
+2025-03-14 14:25:32,692 - ThreadPoolExecutor-4_3 - INFO - Container sweb.eval.django__django-13279.20250314_141147_421274 removed.

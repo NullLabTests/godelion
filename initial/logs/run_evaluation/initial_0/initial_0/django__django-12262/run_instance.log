@@ -1,0 +1,80 @@
+2025-03-15 02:30:20,320 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12262
+Building instance image sweb.eval.x86_64.django__django-12262:latest for django__django-12262
+2025-03-15 02:30:20,321 - INFO - Image sweb.eval.x86_64.django__django-12262:latest already exists, skipping build.
+2025-03-15 02:30:20,323 - INFO - Creating container for django__django-12262...
+2025-03-15 02:30:20,363 - INFO - Container for django__django-12262 created: 3fd633d7ad3bab2ffa1641e633ab6d56d8cadecc95bb73d6ca63d40ec14e4d77
+2025-03-15 02:30:20,763 - INFO - Container for django__django-12262 started: 3fd633d7ad3bab2ffa1641e633ab6d56d8cadecc95bb73d6ca63d40ec14e4d77
+2025-03-15 02:30:20,770 - INFO - Intermediate patch for django__django-12262 written to logs/run_evaluation/000/nerf_editwholefiles_med_0/django__django-12262/patch.diff, now applying to container...
+2025-03-15 02:30:21,011 - INFO - Failed to apply patch to container, trying again...
+2025-03-15 02:30:21,077 - INFO - >>>>> Applied Patch:
+patching file django/template/library.py
+
+2025-03-15 02:30:22,237 - INFO - Git diff before:
+diff --git a/django/template/library.py b/django/template/library.py
+index 20bc86dac8..b6ef802fee 100644
+--- a/django/template/library.py
++++ b/django/template/library.py
+@@ -255,13 +255,16 @@ def parse_bits(parser, bits, params, varargs, varkw, defaults,
+         kwarg for kwarg in kwonly
+         if not kwonly_defaults or kwarg not in kwonly_defaults
+     ]
++
++    valid_param_set = set(params + list(kwonly))
++    
+     for bit in bits:
+         # First we try to extract a potential kwarg from the bit
+         kwarg = token_kwargs([bit], parser)
+         if kwarg:
+             # The kwarg was successfully extracted
+             param, value = kwarg.popitem()
+-            if param not in params and param not in unhandled_kwargs and varkw is None:
++            if param not in valid_param_set and varkw is None:
+                 # An unexpected keyword argument was supplied
+                 raise TemplateSyntaxError(
+                     "'%s' received unexpected keyword argument '%s'" %
+@@ -325,4 +328,4 @@ def import_library(name):
+     except AttributeError:
+         raise InvalidTemplateLibrary(
+             "Module  %s does not have a variable named 'register'" % name,
+-        )
++        )
+\ No newline at end of file
+2025-03-15 02:30:22,245 - INFO - Eval script for django__django-12262 written to logs/run_evaluation/000/nerf_editwholefiles_med_0/django__django-12262/eval.sh; copying to container...
+2025-03-15 02:30:27,212 - INFO - Test runtime: 4.81 seconds
+2025-03-15 02:30:27,216 - INFO - Test output for django__django-12262 written to logs/run_evaluation/000/nerf_editwholefiles_med_0/django__django-12262/test_output.txt
+2025-03-15 02:30:27,363 - INFO - Git diff after:
+diff --git a/django/template/library.py b/django/template/library.py
+index 20bc86dac8..b6ef802fee 100644
+--- a/django/template/library.py
++++ b/django/template/library.py
+@@ -255,13 +255,16 @@ def parse_bits(parser, bits, params, varargs, varkw, defaults,
+         kwarg for kwarg in kwonly
+         if not kwonly_defaults or kwarg not in kwonly_defaults
+     ]
++
++    valid_param_set = set(params + list(kwonly))
++    
+     for bit in bits:
+         # First we try to extract a potential kwarg from the bit
+         kwarg = token_kwargs([bit], parser)
+         if kwarg:
+             # The kwarg was successfully extracted
+             param, value = kwarg.popitem()
+-            if param not in params and param not in unhandled_kwargs and varkw is None:
++            if param not in valid_param_set and varkw is None:
+                 # An unexpected keyword argument was supplied
+                 raise TemplateSyntaxError(
+                     "'%s' received unexpected keyword argument '%s'" %
+@@ -325,4 +328,4 @@ def import_library(name):
+     except AttributeError:
+         raise InvalidTemplateLibrary(
+             "Module  %s does not have a variable named 'register'" % name,
+-        )
++        )
+\ No newline at end of file
+2025-03-15 02:30:27,363 - INFO - Grading answer for django__django-12262...
+2025-03-15 02:30:27,372 - INFO - report: {'django__django-12262': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_inclusion_tag_errors (template_tests.test_custom.InclusionTagTests)', 'test_inclusion_tags (template_tests.test_custom.InclusionTagTests)', 'test_simple_tag_errors (template_tests.test_custom.SimpleTagTests)', 'test_simple_tags (template_tests.test_custom.SimpleTagTests)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_decorated_filter (template_tests.test_custom.CustomFilterTests)', 'test_filter (template_tests.test_custom.CustomFilterTests)', 'test_15070_use_l10n (template_tests.test_custom.InclusionTagTests)', 'test_include_tag_missing_context (template_tests.test_custom.InclusionTagTests)', 'test_inclusion_tag_registration (template_tests.test_custom.InclusionTagTests)', 'test_inclusion_tags_from_template (template_tests.test_custom.InclusionTagTests)', 'test_no_render_side_effect (template_tests.test_custom.InclusionTagTests)', 'test_render_context_is_cleared (template_tests.test_custom.InclusionTagTests)', 'test_simple_tag_escaping_autoescape_off (template_tests.test_custom.SimpleTagTests)', 'test_simple_tag_explicit_escaping (template_tests.test_custom.SimpleTagTests)', 'test_simple_tag_format_html_escaping (template_tests.test_custom.SimpleTagTests)', 'test_simple_tag_missing_context (template_tests.test_custom.SimpleTagTests)', 'test_simple_tag_naive_escaping (template_tests.test_custom.SimpleTagTests)', 'test_simple_tag_registration (template_tests.test_custom.SimpleTagTests)', 'test_load_annotated_function (template_tests.test_custom.TemplateTagLoadingTests)', 'test_load_error (template_tests.test_custom.TemplateTagLoadingTests)', 'test_load_error_egg (template_tests.test_custom.TemplateTagLoadingTests)', 'test_load_working_egg (template_tests.test_custom.TemplateTagLoadingTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-12262: resolved: True
+2025-03-15 02:30:27,378 - INFO - Attempting to stop container sweb.eval.django__django-12262.000...
+2025-03-15 02:30:42,583 - INFO - Attempting to remove container sweb.eval.django__django-12262.000...
+2025-03-15 02:30:42,599 - INFO - Container sweb.eval.django__django-12262.000 removed.

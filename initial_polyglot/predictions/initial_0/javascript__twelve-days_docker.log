@@ -1,0 +1,1046 @@
+2025-05-10 02:35:33,175 - ThreadPoolExecutor-0_7 - INFO - No existing container with name pb.eval.javascript__twelve-days.20250510_023533_136934 found.
+2025-05-10 02:35:33,229 - ThreadPoolExecutor-0_7 - INFO - Environment image pb.env.x86_64.3bb2f0e92d01ae3d2f2ae7:latest found for javascript__twelve-days
+Building instance image pb.eval.x86_64.javascript__twelve-days:latest for javascript__twelve-days
+2025-05-10 02:35:33,235 - ThreadPoolExecutor-0_7 - INFO - Image pb.eval.x86_64.javascript__twelve-days:latest already exists, skipping build.
+2025-05-10 02:35:33,236 - ThreadPoolExecutor-0_7 - INFO - Creating container for javascript__twelve-days...
+2025-05-10 02:35:37,010 - ThreadPoolExecutor-0_7 - INFO - Container for javascript__twelve-days created: f00e76df8361a0ebb2856f931a74f89ad863fde2214a4c10dfb56dd43f34a924
+2025-05-10 02:35:41,759 - ThreadPoolExecutor-0_7 - INFO - Copying coding_agent.py to container at /dgm/coding_agent.py
+2025-05-10 02:35:41,792 - ThreadPoolExecutor-0_7 - INFO - Successfully copied coding_agent.py to container
+2025-05-10 02:35:42,185 - ThreadPoolExecutor-0_7 - INFO - Copying requirements.txt to container at /dgm/requirements.txt
+2025-05-10 02:35:42,224 - ThreadPoolExecutor-0_7 - INFO - Successfully copied requirements.txt to container
+2025-05-10 02:35:42,559 - ThreadPoolExecutor-0_7 - INFO - Copying pytest.ini to container at /dgm/pytest.ini
+2025-05-10 02:35:42,636 - ThreadPoolExecutor-0_7 - INFO - Successfully copied pytest.ini to container
+2025-05-10 02:35:43,250 - ThreadPoolExecutor-0_7 - INFO - Copying tools to container at /dgm/tools
+2025-05-10 02:35:43,596 - ThreadPoolExecutor-0_7 - INFO - Successfully copied tools to container
+2025-05-10 02:35:44,749 - ThreadPoolExecutor-0_7 - INFO - Copying utils to container at /dgm/utils
+2025-05-10 02:35:45,038 - ThreadPoolExecutor-0_7 - INFO - Successfully copied utils to container
+2025-05-10 02:35:45,879 - ThreadPoolExecutor-0_7 - INFO - Copying tests to container at /dgm/tests
+2025-05-10 02:35:45,947 - ThreadPoolExecutor-0_7 - INFO - Successfully copied tests to container
+2025-05-10 02:35:46,741 - ThreadPoolExecutor-0_7 - INFO - Copying prompts to container at /dgm/prompts
+2025-05-10 02:35:46,887 - ThreadPoolExecutor-0_7 - INFO - Successfully copied prompts to container
+2025-05-10 02:35:47,383 - ThreadPoolExecutor-0_7 - INFO - Copying llm.py to container at /dgm/llm.py
+2025-05-10 02:35:47,401 - ThreadPoolExecutor-0_7 - INFO - Successfully copied llm.py to container
+2025-05-10 02:35:47,889 - ThreadPoolExecutor-0_7 - INFO - Copying llm_withtools.py to container at /dgm/llm_withtools.py
+2025-05-10 02:35:47,954 - ThreadPoolExecutor-0_7 - INFO - Successfully copied llm_withtools.py to container
+2025-05-10 02:35:48,366 - ThreadPoolExecutor-0_7 - INFO - Container output: /testbed:
+package.json
+twelve-days.js
+
+2025-05-10 02:35:48,367 - ThreadPoolExecutor-0_7 - INFO - Installing more requirements
+2025-05-10 02:39:10,863 - ThreadPoolExecutor-0_7 - INFO - Container output: Collecting datasets (from -r /dgm/requirements.txt (line 1))
+  Downloading datasets-3.6.0-py3-none-any.whl.metadata (19 kB)
+Collecting anthropic (from -r /dgm/requirements.txt (line 2))
+  Downloading anthropic-0.51.0-py3-none-any.whl.metadata (25 kB)
+Collecting backoff (from -r /dgm/requirements.txt (line 4))
+  Downloading backoff-2.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting botocore (from -r /dgm/requirements.txt (line 5))
+  Downloading botocore-1.38.13-py3-none-any.whl.metadata (5.7 kB)
+Collecting boto3 (from -r /dgm/requirements.txt (line 6))
+  Downloading boto3-1.38.13-py3-none-any.whl.metadata (6.6 kB)
+Collecting openai (from -r /dgm/requirements.txt (line 7))
+  Downloading openai-1.78.0-py3-none-any.whl.metadata (25 kB)
+Collecting beautifulsoup4 (from -r /dgm/requirements.txt (line 10))
+  Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+Collecting chardet (from -r /dgm/requirements.txt (line 11))
+  Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting docker (from -r /dgm/requirements.txt (line 12))
+  Downloading docker-7.1.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting ghapi (from -r /dgm/requirements.txt (line 13))
+  Downloading ghapi-1.0.6-py3-none-any.whl.metadata (13 kB)
+Collecting GitPython (from -r /dgm/requirements.txt (line 14))
+  Downloading GitPython-3.1.44-py3-none-any.whl.metadata (13 kB)
+Collecting pre-commit (from -r /dgm/requirements.txt (line 15))
+  Downloading pre_commit-4.2.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting python-dotenv (from -r /dgm/requirements.txt (line 16))
+  Downloading python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
+Collecting rich (from -r /dgm/requirements.txt (line 17))
+  Downloading rich-14.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting unidiff (from -r /dgm/requirements.txt (line 18))
+  Downloading unidiff-0.7.5-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting pytest (from -r /dgm/requirements.txt (line 21))
+  Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-asyncio (from -r /dgm/requirements.txt (line 22))
+  Downloading pytest_asyncio-0.26.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting async_timeout (from -r /dgm/requirements.txt (line 23))
+  Downloading async_timeout-5.0.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting filelock (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting numpy>=1.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 660.7 kB/s eta 0:00:00
+Collecting pyarrow>=15.0.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Collecting pandas (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (89 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 kB 669.4 kB/s eta 0:00:00
+Collecting requests>=2.32.2 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.66.3 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 4.7 MB/s eta 0:00:00
+Collecting xxhash (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess<0.70.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multiprocess-0.70.16-py311-none-any.whl.metadata (7.2 kB)
+Collecting fsspec<=2025.3.0,>=2023.1.0 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading fsspec-2025.3.0-py3-none-any.whl.metadata (11 kB)
+Collecting huggingface-hub>=0.24.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading huggingface_hub-0.31.1-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: packaging in /opt/miniconda3/lib/python3.11/site-packages (from datasets->-r /dgm/requirements.txt (line 1)) (23.1)
+Collecting pyyaml>=5.1 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting anyio<5,>=3.5.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Requirement already satisfied: distro<2,>=1.7.0 in /opt/miniconda3/lib/python3.11/site-packages (from anthropic->-r /dgm/requirements.txt (line 2)) (1.8.0)
+Collecting httpx<1,>=0.25.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.4.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic-2.11.4-py3-none-any.whl.metadata (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.6/66.6 kB 211.5 kB/s eta 0:00:00
+Collecting sniffio (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting typing-extensions<5,>=4.10 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/miniconda3/lib/python3.11/site-packages (from botocore->-r /dgm/requirements.txt (line 5)) (1.26.18)
+Collecting s3transfer<0.13.0,>=0.12.0 (from boto3->-r /dgm/requirements.txt (line 6))
+  Downloading s3transfer-0.12.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4->-r /dgm/requirements.txt (line 10))
+  Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting fastcore>=1.7.2 (from ghapi->-r /dgm/requirements.txt (line 13))
+  Downloading fastcore-1.8.2-py3-none-any.whl.metadata (3.7 kB)
+Collecting gitdb<5,>=4.0.1 (from GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+Collecting cfgv>=2.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading cfgv-3.4.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting identify>=1.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading identify-2.6.10-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading nodeenv-1.9.1-py2.py3-none-any.whl.metadata (21 kB)
+Collecting virtualenv>=20.10.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading virtualenv-20.31.2-py3-none-any.whl.metadata (4.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting iniconfig (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting pluggy<2,>=1.5 (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: idna>=2.8 in /opt/miniconda3/lib/python3.11/site-packages (from anyio<5,>=3.5.0->anthropic->-r /dgm/requirements.txt (line 2)) (3.4)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading smmap-5.0.2-py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: certifi in /opt/miniconda3/lib/python3.11/site-packages (from httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2)) (2023.11.17)
+Collecting httpcore==1.* (from httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting hf-xet<2.0.0,>=1.1.0 (from huggingface-hub>=0.24.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (494 bytes)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->-r /dgm/requirements.txt (line 17))
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore->-r /dgm/requirements.txt (line 5))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: charset-normalizer<4,>=2 in /opt/miniconda3/lib/python3.11/site-packages (from requests>=2.32.2->datasets->-r /dgm/requirements.txt (line 1)) (2.0.4)
+Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in /opt/miniconda3/lib/python3.11/site-packages (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15)) (3.10.0)
+Collecting pytz>=2020.1 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting aiohappyeyeballs>=2.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (16 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (72 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.4/72.4 kB 621.4 kB/s eta 0:00:00
+Downloading datasets-3.6.0-py3-none-any.whl (491 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 491.5/491.5 kB 3.6 MB/s eta 0:00:00
+Downloading anthropic-0.51.0-py3-none-any.whl (263 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 264.0/264.0 kB 1.0 MB/s eta 0:00:00
+Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+Downloading botocore-1.38.13-py3-none-any.whl (13.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 7.0 MB/s eta 0:00:00
+Downloading boto3-1.38.13-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.9/139.9 kB 1.4 MB/s eta 0:00:00
+Downloading openai-1.78.0-py3-none-any.whl (680 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 680.4/680.4 kB 2.6 MB/s eta 0:00:00
+Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.3/187.3 kB 2.5 MB/s eta 0:00:00
+Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.4/199.4 kB 5.7 MB/s eta 0:00:00
+Downloading docker-7.1.0-py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 1.5 MB/s eta 0:00:00
+Downloading ghapi-1.0.6-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 1.4 MB/s eta 0:00:00
+Downloading GitPython-3.1.44-py3-none-any.whl (207 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 207.6/207.6 kB 3.3 MB/s eta 0:00:00
+Downloading pre_commit-4.2.0-py2.py3-none-any.whl (220 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.7/220.7 kB 2.3 MB/s eta 0:00:00
+Downloading python_dotenv-1.1.0-py3-none-any.whl (20 kB)
+Downloading rich-14.0.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.2/243.2 kB 827.1 kB/s eta 0:00:00
+Downloading unidiff-0.7.5-py2.py3-none-any.whl (14 kB)
+Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 343.6/343.6 kB 4.3 MB/s eta 0:00:00
+Downloading pytest_asyncio-0.26.0-py3-none-any.whl (19 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.9/100.9 kB 173.9 kB/s eta 0:00:00
+Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 141.7 kB/s eta 0:00:00
+Downloading fastcore-1.8.2-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.2/78.2 kB 2.9 MB/s eta 0:00:00
+Downloading fsspec-2025.3.0-py3-none-any.whl (193 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.6/193.6 kB 217.2 kB/s eta 0:00:00
+Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.8/62.8 kB 69.7 kB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 509.6 kB/s eta 0:00:00
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 1.5 MB/s eta 0:00:00
+Downloading huggingface_hub-0.31.1-py3-none-any.whl (484 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 484.3/484.3 kB 718.4 kB/s eta 0:00:00
+Downloading identify-2.6.10-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 108.2 kB/s eta 0:00:00
+Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (351 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.8/351.8 kB 870.5 kB/s eta 0:00:00
+Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 376.1 kB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py311-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.5/143.5 kB 458.6 kB/s eta 0:00:00
+Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.4/16.4 MB 14.1 MB/s eta 0:00:00
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl (42.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.3/42.3 MB 8.5 MB/s eta 0:00:00
+Downloading pydantic-2.11.4-py3-none-any.whl (443 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 kB 2.3 MB/s eta 0:00:00
+Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 7.2 MB/s eta 0:00:00
+Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 4.0 MB/s eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 1.4 MB/s eta 0:00:00
+Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (762 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 763.0/763.0 kB 5.7 MB/s eta 0:00:00
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 218.2 kB/s eta 0:00:00
+Downloading s3transfer-0.12.0-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.8/84.8 kB 1.5 MB/s eta 0:00:00
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 104.5 kB/s eta 0:00:00
+Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.8/45.8 kB 48.0 kB/s eta 0:00:00
+Downloading virtualenv-20.31.2-py3-none-any.whl (6.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 5.5 MB/s eta 0:00:00
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 14.7 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.8/194.8 kB 1.7 MB/s eta 0:00:00
+Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 3.9 MB/s eta 0:00:00
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 469.0/469.0 kB 2.5 MB/s eta 0:00:00
+Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 MB 8.4 MB/s eta 0:00:00
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 5.3 MB/s eta 0:00:00
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading smmap-5.0.2-py3-none-any.whl (24 kB)
+Downloading typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 347.8/347.8 kB 2.4 MB/s eta 0:00:00
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 1.2 MB/s eta 0:00:00
+Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (313 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.6/313.6 kB 1.7 MB/s eta 0:00:00
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 223.5/223.5 kB 1.3 MB/s eta 0:00:00
+Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.5/232.5 kB 1.9 MB/s eta 0:00:00
+Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (358 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 358.1/358.1 kB 3.0 MB/s eta 0:00:00
+Installing collected packages: unidiff, pytz, distlib, xxhash, tzdata, typing-extensions, tqdm, soupsieve, sniffio, smmap, six, requests, pyyaml, python-dotenv, pygments, pyarrow, propcache, pluggy, numpy, nodeenv, multidict, mdurl, jmespath, jiter, iniconfig, identify, hf-xet, h11, fsspec, frozenlist, filelock, fastcore, dill, chardet, cfgv, backoff, attrs, async_timeout, annotated-types, aiohappyeyeballs, yarl, virtualenv, typing-inspection, python-dateutil, pytest, pydantic-core, multiprocess, markdown-it-py, huggingface-hub, httpcore, gitdb, ghapi, docker, beautifulsoup4, anyio, aiosignal, rich, pytest-asyncio, pydantic, pre-commit, pandas, httpx, GitPython, botocore, aiohttp, s3transfer, openai, anthropic, datasets, boto3
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.65.0
+    Uninstalling tqdm-4.65.0:
+      Successfully uninstalled tqdm-4.65.0
+  Attempting uninstall: requests
+    Found existing installation: requests 2.31.0
+    Uninstalling requests-2.31.0:
+      Successfully uninstalled requests-2.31.0
+  Attempting uninstall: pluggy
+    Found existing installation: pluggy 1.0.0
+    Uninstalling pluggy-1.0.0:
+      Successfully uninstalled pluggy-1.0.0
+Successfully installed GitPython-3.1.44 aiohappyeyeballs-2.6.1 aiohttp-3.11.18 aiosignal-1.3.2 annotated-types-0.7.0 anthropic-0.51.0 anyio-4.9.0 async_timeout-5.0.1 attrs-25.3.0 backoff-2.2.1 beautifulsoup4-4.13.4 boto3-1.38.13 botocore-1.38.13 cfgv-3.4.0 chardet-5.2.0 datasets-3.6.0 dill-0.3.8 distlib-0.3.9 docker-7.1.0 fastcore-1.8.2 filelock-3.18.0 frozenlist-1.6.0 fsspec-2025.3.0 ghapi-1.0.6 gitdb-4.0.12 h11-0.16.0 hf-xet-1.1.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-0.31.1 identify-2.6.10 iniconfig-2.1.0 jiter-0.9.0 jmespath-1.0.1 markdown-it-py-3.0.0 mdurl-0.1.2 multidict-6.4.3 multiprocess-0.70.16 nodeenv-1.9.1 numpy-2.2.5 openai-1.78.0 pandas-2.2.3 pluggy-1.5.0 pre-commit-4.2.0 propcache-0.3.1 pyarrow-20.0.0 pydantic-2.11.4 pydantic-core-2.33.2 pygments-2.19.1 pytest-8.3.5 pytest-asyncio-0.26.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 pytz-2025.2 pyyaml-6.0.2 requests-2.32.3 rich-14.0.0 s3transfer-0.12.0 six-1.17.0 smmap-5.0.2 sniffio-1.3.1 soupsieve-2.7 tqdm-4.67.1 typing-extensions-4.13.2 typing-inspection-0.4.0 tzdata-2025.2 unidiff-0.7.5 virtualenv-20.31.2 xxhash-3.5.0 yarl-1.20.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+2025-05-10 02:39:10,887 - ThreadPoolExecutor-0_7 - INFO - Running the agent
+2025-05-10 02:39:43,538 - ThreadPoolExecutor-0_7 - INFO - Container output: Using OpenAI API with model o3-mini-2025-01-31.
+
+2025-05-10 02:39:43,539 - ThreadPoolExecutor-0_7 - INFO - Copying output files back to host
+2025-05-10 02:39:44,506 - ThreadPoolExecutor-0_7 - INFO - Copying from container /dgm/javascript__twelve-days.md to local path polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/javascript__twelve-days.md
+2025-05-10 02:39:44,670 - ThreadPoolExecutor-0_7 - INFO - Successfully copied from container to polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/javascript__twelve-days.md
+2025-05-10 02:39:45,355 - ThreadPoolExecutor-0_7 - INFO - Getting model_patch
+2025-05-10 02:39:45,906 - ThreadPoolExecutor-0_7 - INFO - Container output: diff --git a/twelve-days.js b/twelve-days.js
+index b3ac658..865f9e5 100644
+--- a/twelve-days.js
++++ b/twelve-days.js
+@@ -4,5 +4,27 @@
+ //
+ 
+ export const recite = () => {
+-  throw new Error('Remove this statement and implement this function');
++  return `On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
++
++On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
++
++On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.`;
+ };
+
+2025-05-10 02:39:47,929 - ThreadPoolExecutor-0_7 - INFO - Container output: Saved working directory and index state WIP on master: 94575d0 Initial commit
+
+2025-05-10 02:39:49,007 - ThreadPoolExecutor-0_7 - INFO - Container output: HEAD is now at 19f290b all files
+
+2025-05-10 02:39:49,580 - ThreadPoolExecutor-0_7 - INFO - Container output: 
+2025-05-10 02:39:50,479 - ThreadPoolExecutor-0_7 - INFO - Container output: On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   twelve-days.js
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (d6e21b7cca43c2339283f30beb7214ce3e18a47a)
+
+2025-05-10 02:39:50,482 - ThreadPoolExecutor-0_7 - INFO - Running the eval
+2025-05-10 02:39:51,100 - ThreadPoolExecutor-0_7 - INFO - Copying polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/javascript__twelve-days_eval.sh to container at /testbed/eval.sh
+2025-05-10 02:39:51,253 - ThreadPoolExecutor-0_7 - INFO - Successfully copied polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/javascript__twelve-days_eval.sh to container
+2025-05-10 02:39:51,746 - ThreadPoolExecutor-0_7 - INFO - Container output: /testbed:
+LICENSE
+babel.config.js
+eval.sh
+package.json
+twelve-days.js
+twelve-days.spec.js
+
+2025-05-10 02:39:52,167 - ThreadPoolExecutor-0_7 - INFO - Container output: 
+2025-05-10 02:40:03,350 - ThreadPoolExecutor-0_7 - INFO - Container output: + set -e
++ '[' '!' -e node_modules ']'
++ ln -s /npm-install/node_modules .
++ '[' '!' -e package-lock.json ']'
++ ln -s /npm-install/package-lock.json .
++ sed -i 's/\bxtest(/test(/g' twelve-days.spec.js
++ npm run test
+
+> test
+> jest ./*
+
+FAIL ./twelve-days.spec.js
+  TwelveDays
+    ✕ test verse first day a partridge in a pear tree (25 ms)
+    ✕ test verse second day two turtle doves (48 ms)
+    ✕ test verse third day three french hens (23 ms)
+    ✕ test verse fourth day four calling birds (7 ms)
+    ✕ test verse fifth day five gold rings (13 ms)
+    ✕ test verse sixth day six geese-a-laying (21 ms)
+    ✕ test verse seventh day seven swans-a-swimming (18 ms)
+    ✕ test verse eighth day eight maids-a-milking (114 ms)
+    ✕ test verse ninth day nine ladies dancing (26 ms)
+    ✕ test verse tenth day ten lords-a-leaping (45 ms)
+    ✕ test verse eleventh day eleven pipers piping (4 ms)
+    ✕ test verse twelfth day twelve drummers drumming (14 ms)
+    ✕ test lyrics recites first three verses of the song (1 ms)
+    ✕ test lyrics recites three verses from the middle of the song (7 ms)
+    ✕ test lyrics recites the whole song (3 ms)
+
+  ● TwelveDays › test verse first day a partridge in a pear tree
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 21
+
+      On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+       5 |     const expectedVerseOne =
+       6 |       'On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.\n';
+    >  7 |     expect(recite(1)).toEqual(expectedVerseOne);
+         |                       ^
+       8 |   });
+       9 |
+      10 |   test('test verse second day two turtle doves', () => {
+
+      at Object.toEqual (twelve-days.spec.js:7:23)
+
+  ● TwelveDays › test verse second day two turtle doves
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      11 |     const expectedVerseTwo =
+      12 |       'On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 13 |     expect(recite(2)).toEqual(expectedVerseTwo);
+         |                       ^
+      14 |   });
+      15 |
+      16 |   test('test verse third day three french hens', () => {
+
+      at Object.toEqual (twelve-days.spec.js:13:23)
+
+  ● TwelveDays › test verse third day three french hens
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      17 |     const expectedVerseThree =
+      18 |       'On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 19 |     expect(recite(3)).toEqual(expectedVerseThree);
+         |                       ^
+      20 |   });
+      21 |
+      22 |   test('test verse fourth day four calling birds', () => {
+
+      at Object.toEqual (twelve-days.spec.js:19:23)
+
+  ● TwelveDays › test verse fourth day four calling birds
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    - On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      23 |     const expectedVerseFour =
+      24 |       'On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 25 |     expect(recite(4)).toEqual(expectedVerseFour);
+         |                       ^
+      26 |   });
+      27 |
+      28 |   test('test verse fifth day five gold rings', () => {
+
+      at Object.toEqual (twelve-days.spec.js:25:23)
+
+  ● TwelveDays › test verse fifth day five gold rings
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      29 |     const expectedVerseFive =
+      30 |       'On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 31 |     expect(recite(5)).toEqual(expectedVerseFive);
+         |                       ^
+      32 |   });
+      33 |
+      34 |   test('test verse sixth day six geese-a-laying', () => {
+
+      at Object.toEqual (twelve-days.spec.js:31:23)
+
+  ● TwelveDays › test verse sixth day six geese-a-laying
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      35 |     const expectedVerseSix =
+      36 |       'On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 37 |     expect(recite(6)).toEqual(expectedVerseSix);
+         |                       ^
+      38 |   });
+      39 |
+      40 |   test('test verse seventh day seven swans-a-swimming', () => {
+
+      at Object.toEqual (twelve-days.spec.js:37:23)
+
+  ● TwelveDays › test verse seventh day seven swans-a-swimming
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    - On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      41 |     const expectedVerseSeven =
+      42 |       'On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 43 |     expect(recite(7)).toEqual(expectedVerseSeven);
+         |                       ^
+      44 |   });
+      45 |
+      46 |   test('test verse eighth day eight maids-a-milking', () => {
+
+      at Object.toEqual (twelve-days.spec.js:43:23)
+
+  ● TwelveDays › test verse eighth day eight maids-a-milking
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      47 |     const expectedVerseEight =
+      48 |       'On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 49 |     expect(recite(8)).toEqual(expectedVerseEight);
+         |                       ^
+      50 |   });
+      51 |
+      52 |   test('test verse ninth day nine ladies dancing', () => {
+
+      at Object.toEqual (twelve-days.spec.js:49:23)
+
+  ● TwelveDays › test verse ninth day nine ladies dancing
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      53 |     const expectedVerseNine =
+      54 |       'On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 55 |     expect(recite(9)).toEqual(expectedVerseNine);
+         |                       ^
+      56 |   });
+      57 |
+      58 |   test('test verse tenth day ten lords-a-leaping', () => {
+
+      at Object.toEqual (twelve-days.spec.js:55:23)
+
+  ● TwelveDays › test verse tenth day ten lords-a-leaping
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    - On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      59 |     const expectedVerseTen =
+      60 |       'On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 61 |     expect(recite(10)).toEqual(expectedVerseTen);
+         |                        ^
+      62 |   });
+      63 |
+      64 |   test('test verse eleventh day eleven pipers piping', () => {
+
+      at Object.toEqual (twelve-days.spec.js:61:24)
+
+  ● TwelveDays › test verse eleventh day eleven pipers piping
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      65 |     const expectedVerseEleven =
+      66 |       'On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 67 |     expect(recite(11)).toEqual(expectedVerseEleven);
+         |                        ^
+      68 |   });
+      69 |
+      70 |   test('test verse twelfth day twelve drummers drumming', () => {
+
+      at Object.toEqual (twelve-days.spec.js:67:24)
+
+  ● TwelveDays › test verse twelfth day twelve drummers drumming
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 23
+
+    - On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      71 |     const expectedVerseTwelve =
+      72 |       'On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 73 |     expect(recite(12)).toEqual(expectedVerseTwelve);
+         |                        ^
+      74 |   });
+      75 |
+      76 |   test('test lyrics recites first three verses of the song', () => {
+
+      at Object.toEqual (twelve-days.spec.js:73:24)
+
+  ● TwelveDays › test lyrics recites first three verses of the song
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 17
+
+    @@ -2,5 +2,22 @@
+
+      On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+
+      On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+    + On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      79 |       'On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.\n\n' +
+      80 |       'On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 81 |     expect(recite(1, 3)).toEqual(expectedVerseOneToThree);
+         |                          ^
+      82 |   });
+      83 |
+      84 |   test('test lyrics recites three verses from the middle of the song', () => {
+
+      at Object.toEqual (twelve-days.spec.js:81:26)
+
+  ● TwelveDays › test lyrics recites three verses from the middle of the song
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 17
+
+    + On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
+    +
+    + On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+      On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+    + On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    +
+    + On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      87 |       'On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n\n' +
+      88 |       'On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 89 |     expect(recite(4, 6)).toEqual(expectedVerseFourToSix);
+         |                          ^
+      90 |   });
+      91 |
+      92 |   test('test lyrics recites the whole song', () => {
+
+      at Object.toEqual (twelve-days.spec.js:89:26)
+
+  ● TwelveDays › test lyrics recites the whole song
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+    @@ -19,6 +19,5 @@
+      On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+
+      On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    -
+
+      104 |       'On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n\n' +
+      105 |       'On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.\n';
+    > 106 |     expect(recite(1, 12)).toEqual(expectedSong);
+          |                           ^
+      107 |   });
+      108 | });
+      109 |
+
+      at Object.toEqual (twelve-days.spec.js:106:27)
+
+Test Suites: 1 failed, 1 total
+Tests:       15 failed, 15 total
+Snapshots:   0 total
+Time:        4.927 s
+Ran all test suites matching /.\/LICENSE|.\/babel.config.js|.\/eval.sh|.\/node_modules|.\/package-lock.json|.\/package.json|.\/twelve-days.js|.\/twelve-days.spec.js/i.
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.3.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.3.0
+npm notice To update run: npm install -g npm@11.3.0
+npm notice
+
+2025-05-10 02:40:04,755 - ThreadPoolExecutor-0_7 - INFO - Attempting to stop container pb.eval.javascript__twelve-days.20250510_023533_136934...
+2025-05-10 02:40:22,990 - ThreadPoolExecutor-0_7 - INFO - Attempting to remove container pb.eval.javascript__twelve-days.20250510_023533_136934...
+2025-05-10 02:40:42,051 - ThreadPoolExecutor-0_7 - INFO - Container pb.eval.javascript__twelve-days.20250510_023533_136934 removed.

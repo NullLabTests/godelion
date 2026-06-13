@@ -1,0 +1,1964 @@
+2025-05-10 02:13:28,815 - ThreadPoolExecutor-0_15 - INFO - No existing container with name pb.eval.cpp__meetup.20250510_021328_798264 found.
+2025-05-10 02:13:28,929 - ThreadPoolExecutor-0_15 - INFO - Environment image pb.env.x86_64.3bb2f0e92d01ae3d2f2ae7:latest found for cpp__meetup
+Building instance image pb.eval.x86_64.cpp__meetup:latest for cpp__meetup
+2025-05-10 02:13:29,157 - ThreadPoolExecutor-0_15 - INFO - Image pb.eval.x86_64.cpp__meetup:latest already exists, skipping build.
+2025-05-10 02:13:29,315 - ThreadPoolExecutor-0_15 - INFO - Creating container for cpp__meetup...
+2025-05-10 02:13:30,110 - ThreadPoolExecutor-0_15 - INFO - Container for cpp__meetup created: a1b8c94eca8b32374df62f7fe0d34317b64f2adbd65fd87db1274430a1477d14
+2025-05-10 02:13:32,492 - ThreadPoolExecutor-0_15 - INFO - Copying coding_agent.py to container at /guava/coding_agent.py
+2025-05-10 02:13:32,559 - ThreadPoolExecutor-0_15 - INFO - Successfully copied coding_agent.py to container
+2025-05-10 02:13:33,005 - ThreadPoolExecutor-0_15 - INFO - Copying requirements.txt to container at /guava/requirements.txt
+2025-05-10 02:13:33,096 - ThreadPoolExecutor-0_15 - INFO - Successfully copied requirements.txt to container
+2025-05-10 02:13:33,512 - ThreadPoolExecutor-0_15 - INFO - Copying pytest.ini to container at /guava/pytest.ini
+2025-05-10 02:13:33,541 - ThreadPoolExecutor-0_15 - INFO - Successfully copied pytest.ini to container
+2025-05-10 02:13:34,393 - ThreadPoolExecutor-0_15 - INFO - Copying tools to container at /guava/tools
+2025-05-10 02:13:34,531 - ThreadPoolExecutor-0_15 - INFO - Successfully copied tools to container
+2025-05-10 02:13:35,271 - ThreadPoolExecutor-0_15 - INFO - Copying utils to container at /guava/utils
+2025-05-10 02:13:35,281 - ThreadPoolExecutor-0_15 - INFO - Successfully copied utils to container
+2025-05-10 02:13:35,870 - ThreadPoolExecutor-0_15 - INFO - Copying tests to container at /guava/tests
+2025-05-10 02:13:36,085 - ThreadPoolExecutor-0_15 - INFO - Successfully copied tests to container
+2025-05-10 02:13:37,090 - ThreadPoolExecutor-0_15 - INFO - Copying prompts to container at /guava/prompts
+2025-05-10 02:13:37,419 - ThreadPoolExecutor-0_15 - INFO - Successfully copied prompts to container
+2025-05-10 02:13:38,060 - ThreadPoolExecutor-0_15 - INFO - Copying llm.py to container at /guava/llm.py
+2025-05-10 02:13:38,403 - ThreadPoolExecutor-0_15 - INFO - Successfully copied llm.py to container
+2025-05-10 02:13:38,974 - ThreadPoolExecutor-0_15 - INFO - Copying llm_withtools.py to container at /guava/llm_withtools.py
+2025-05-10 02:13:39,267 - ThreadPoolExecutor-0_15 - INFO - Successfully copied llm_withtools.py to container
+2025-05-10 02:13:40,109 - ThreadPoolExecutor-0_15 - INFO - Container output: /testbed:
+CMakeLists.txt
+meetup.cpp
+meetup.h
+test
+
+/testbed/test:
+catch.hpp
+tests-main.cpp
+
+2025-05-10 02:13:40,397 - ThreadPoolExecutor-0_15 - INFO - Installing more requirements
+2025-05-10 02:17:40,807 - ThreadPoolExecutor-0_15 - INFO - Container output: Collecting datasets (from -r /guava/requirements.txt (line 1))
+  Downloading datasets-3.6.0-py3-none-any.whl.metadata (19 kB)
+Collecting anthropic (from -r /guava/requirements.txt (line 2))
+  Downloading anthropic-0.51.0-py3-none-any.whl.metadata (25 kB)
+Collecting backoff (from -r /guava/requirements.txt (line 4))
+  Downloading backoff-2.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting botocore (from -r /guava/requirements.txt (line 5))
+  Downloading botocore-1.38.13-py3-none-any.whl.metadata (5.7 kB)
+Collecting boto3 (from -r /guava/requirements.txt (line 6))
+  Downloading boto3-1.38.13-py3-none-any.whl.metadata (6.6 kB)
+Collecting openai (from -r /guava/requirements.txt (line 7))
+  Downloading openai-1.78.0-py3-none-any.whl.metadata (25 kB)
+Collecting beautifulsoup4 (from -r /guava/requirements.txt (line 10))
+  Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+Collecting chardet (from -r /guava/requirements.txt (line 11))
+  Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting docker (from -r /guava/requirements.txt (line 12))
+  Downloading docker-7.1.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting ghapi (from -r /guava/requirements.txt (line 13))
+  Downloading ghapi-1.0.6-py3-none-any.whl.metadata (13 kB)
+Collecting GitPython (from -r /guava/requirements.txt (line 14))
+  Downloading GitPython-3.1.44-py3-none-any.whl.metadata (13 kB)
+Collecting pre-commit (from -r /guava/requirements.txt (line 15))
+  Downloading pre_commit-4.2.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting python-dotenv (from -r /guava/requirements.txt (line 16))
+  Downloading python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
+Collecting rich (from -r /guava/requirements.txt (line 17))
+  Downloading rich-14.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting unidiff (from -r /guava/requirements.txt (line 18))
+  Downloading unidiff-0.7.5-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting pytest (from -r /guava/requirements.txt (line 21))
+  Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-asyncio (from -r /guava/requirements.txt (line 22))
+  Downloading pytest_asyncio-0.26.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting async_timeout (from -r /guava/requirements.txt (line 23))
+  Downloading async_timeout-5.0.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting filelock (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting numpy>=1.17 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 1.2 MB/s eta 0:00:00
+Collecting pyarrow>=15.0.0 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Collecting pandas (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (89 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 kB 249.3 kB/s eta 0:00:00
+Collecting requests>=2.32.2 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.66.3 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 290.2 kB/s eta 0:00:00
+Collecting xxhash (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess<0.70.17 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading multiprocess-0.70.16-py311-none-any.whl.metadata (7.2 kB)
+Collecting fsspec<=2025.3.0,>=2023.1.0 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading fsspec-2025.3.0-py3-none-any.whl.metadata (11 kB)
+Collecting huggingface-hub>=0.24.0 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading huggingface_hub-0.31.1-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: packaging in /opt/miniconda3/lib/python3.11/site-packages (from datasets->-r /guava/requirements.txt (line 1)) (23.1)
+Collecting pyyaml>=5.1 (from datasets->-r /guava/requirements.txt (line 1))
+  Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting anyio<5,>=3.5.0 (from anthropic->-r /guava/requirements.txt (line 2))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Requirement already satisfied: distro<2,>=1.7.0 in /opt/miniconda3/lib/python3.11/site-packages (from anthropic->-r /guava/requirements.txt (line 2)) (1.8.0)
+Collecting httpx<1,>=0.25.0 (from anthropic->-r /guava/requirements.txt (line 2))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.4.0 (from anthropic->-r /guava/requirements.txt (line 2))
+  Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from anthropic->-r /guava/requirements.txt (line 2))
+  Downloading pydantic-2.11.4-py3-none-any.whl.metadata (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.6/66.6 kB 673.8 kB/s eta 0:00:00
+Collecting sniffio (from anthropic->-r /guava/requirements.txt (line 2))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting typing-extensions<5,>=4.10 (from anthropic->-r /guava/requirements.txt (line 2))
+  Downloading typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from botocore->-r /guava/requirements.txt (line 5))
+  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore->-r /guava/requirements.txt (line 5))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/miniconda3/lib/python3.11/site-packages (from botocore->-r /guava/requirements.txt (line 5)) (1.26.18)
+Collecting s3transfer<0.13.0,>=0.12.0 (from boto3->-r /guava/requirements.txt (line 6))
+  Downloading s3transfer-0.12.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4->-r /guava/requirements.txt (line 10))
+  Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting fastcore>=1.7.2 (from ghapi->-r /guava/requirements.txt (line 13))
+  Downloading fastcore-1.8.2-py3-none-any.whl.metadata (3.7 kB)
+Collecting gitdb<5,>=4.0.1 (from GitPython->-r /guava/requirements.txt (line 14))
+  Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+Collecting cfgv>=2.0.0 (from pre-commit->-r /guava/requirements.txt (line 15))
+  Downloading cfgv-3.4.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting identify>=1.0.0 (from pre-commit->-r /guava/requirements.txt (line 15))
+  Downloading identify-2.6.10-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit->-r /guava/requirements.txt (line 15))
+  Downloading nodeenv-1.9.1-py2.py3-none-any.whl.metadata (21 kB)
+Collecting virtualenv>=20.10.0 (from pre-commit->-r /guava/requirements.txt (line 15))
+  Downloading virtualenv-20.31.2-py3-none-any.whl.metadata (4.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich->-r /guava/requirements.txt (line 17))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich->-r /guava/requirements.txt (line 17))
+  Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting iniconfig (from pytest->-r /guava/requirements.txt (line 21))
+  Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting pluggy<2,>=1.5 (from pytest->-r /guava/requirements.txt (line 21))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: idna>=2.8 in /opt/miniconda3/lib/python3.11/site-packages (from anyio<5,>=3.5.0->anthropic->-r /guava/requirements.txt (line 2)) (3.4)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->GitPython->-r /guava/requirements.txt (line 14))
+  Downloading smmap-5.0.2-py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: certifi in /opt/miniconda3/lib/python3.11/site-packages (from httpx<1,>=0.25.0->anthropic->-r /guava/requirements.txt (line 2)) (2023.11.17)
+Collecting httpcore==1.* (from httpx<1,>=0.25.0->anthropic->-r /guava/requirements.txt (line 2))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.25.0->anthropic->-r /guava/requirements.txt (line 2))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting hf-xet<2.0.0,>=1.1.0 (from huggingface-hub>=0.24.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (494 bytes)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->-r /guava/requirements.txt (line 17))
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->anthropic->-r /guava/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<3,>=1.9.0->anthropic->-r /guava/requirements.txt (line 2))
+  Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic<3,>=1.9.0->anthropic->-r /guava/requirements.txt (line 2))
+  Downloading typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore->-r /guava/requirements.txt (line 5))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: charset-normalizer<4,>=2 in /opt/miniconda3/lib/python3.11/site-packages (from requests>=2.32.2->datasets->-r /guava/requirements.txt (line 1)) (2.0.4)
+Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit->-r /guava/requirements.txt (line 15))
+  Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in /opt/miniconda3/lib/python3.11/site-packages (from virtualenv>=20.10.0->pre-commit->-r /guava/requirements.txt (line 15)) (3.10.0)
+Collecting pytz>=2020.1 (from pandas->datasets->-r /guava/requirements.txt (line 1))
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->datasets->-r /guava/requirements.txt (line 1))
+  Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting aiohappyeyeballs>=2.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (16 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /guava/requirements.txt (line 1))
+  Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (72 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.4/72.4 kB 1.6 MB/s eta 0:00:00
+Downloading datasets-3.6.0-py3-none-any.whl (491 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 491.5/491.5 kB 4.6 MB/s eta 0:00:00
+Downloading anthropic-0.51.0-py3-none-any.whl (263 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 264.0/264.0 kB 1.6 MB/s eta 0:00:00
+Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+Downloading botocore-1.38.13-py3-none-any.whl (13.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 4.1 MB/s eta 0:00:00
+Downloading boto3-1.38.13-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.9/139.9 kB 3.0 MB/s eta 0:00:00
+Downloading openai-1.78.0-py3-none-any.whl (680 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 680.4/680.4 kB 3.2 MB/s eta 0:00:00
+Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.3/187.3 kB 932.7 kB/s eta 0:00:00
+Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.4/199.4 kB 771.9 kB/s eta 0:00:00
+Downloading docker-7.1.0-py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 2.0 MB/s eta 0:00:00
+Downloading ghapi-1.0.6-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 346.8 kB/s eta 0:00:00
+Downloading GitPython-3.1.44-py3-none-any.whl (207 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 207.6/207.6 kB 861.8 kB/s eta 0:00:00
+Downloading pre_commit-4.2.0-py2.py3-none-any.whl (220 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.7/220.7 kB 3.8 MB/s eta 0:00:00
+Downloading python_dotenv-1.1.0-py3-none-any.whl (20 kB)
+Downloading rich-14.0.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.2/243.2 kB 1.2 MB/s eta 0:00:00
+Downloading unidiff-0.7.5-py2.py3-none-any.whl (14 kB)
+Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 343.6/343.6 kB 2.6 MB/s eta 0:00:00
+Downloading pytest_asyncio-0.26.0-py3-none-any.whl (19 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.9/100.9 kB 509.4 kB/s eta 0:00:00
+Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 6.3 MB/s eta 0:00:00
+Downloading fastcore-1.8.2-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.2/78.2 kB 268.5 kB/s eta 0:00:00
+Downloading fsspec-2025.3.0-py3-none-any.whl (193 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.6/193.6 kB 1.8 MB/s eta 0:00:00
+Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.8/62.8 kB 276.1 kB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 466.7 kB/s eta 0:00:00
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 7.6 MB/s eta 0:00:00
+Downloading huggingface_hub-0.31.1-py3-none-any.whl (484 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 484.3/484.3 kB 934.3 kB/s eta 0:00:00
+Downloading identify-2.6.10-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 577.2 kB/s eta 0:00:00
+Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (351 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.8/351.8 kB 822.9 kB/s eta 0:00:00
+Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 438.9 kB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py311-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.5/143.5 kB 1.1 MB/s eta 0:00:00
+Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.4/16.4 MB 3.8 MB/s eta 0:00:00
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl (42.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.3/42.3 MB 6.3 MB/s eta 0:00:00
+Downloading pydantic-2.11.4-py3-none-any.whl (443 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 kB 5.2 MB/s eta 0:00:00
+Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 2.6 MB/s eta 0:00:00
+Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 1.8 MB/s eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 638.3 kB/s eta 0:00:00
+Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (762 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 763.0/763.0 kB 5.7 MB/s eta 0:00:00
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 902.3 kB/s eta 0:00:00
+Downloading s3transfer-0.12.0-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.8/84.8 kB 1.1 MB/s eta 0:00:00
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 228.2 kB/s eta 0:00:00
+Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.8/45.8 kB 302.6 kB/s eta 0:00:00
+Downloading virtualenv-20.31.2-py3-none-any.whl (6.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 6.2 MB/s eta 0:00:00
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 4.6 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.8/194.8 kB 4.8 MB/s eta 0:00:00
+Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 8.2 MB/s eta 0:00:00
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 469.0/469.0 kB 5.2 MB/s eta 0:00:00
+Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 MB 4.7 MB/s eta 0:00:00
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 2.7 MB/s eta 0:00:00
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading smmap-5.0.2-py3-none-any.whl (24 kB)
+Downloading typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 347.8/347.8 kB 2.3 MB/s eta 0:00:00
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 1.2 MB/s eta 0:00:00
+Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (313 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.6/313.6 kB 1.4 MB/s eta 0:00:00
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 223.5/223.5 kB 8.0 MB/s eta 0:00:00
+Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.5/232.5 kB 850.4 kB/s eta 0:00:00
+Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (358 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 358.1/358.1 kB 2.1 MB/s eta 0:00:00
+Installing collected packages: unidiff, pytz, distlib, xxhash, tzdata, typing-extensions, tqdm, soupsieve, sniffio, smmap, six, requests, pyyaml, python-dotenv, pygments, pyarrow, propcache, pluggy, numpy, nodeenv, multidict, mdurl, jmespath, jiter, iniconfig, identify, hf-xet, h11, fsspec, frozenlist, filelock, fastcore, dill, chardet, cfgv, backoff, attrs, async_timeout, annotated-types, aiohappyeyeballs, yarl, virtualenv, typing-inspection, python-dateutil, pytest, pydantic-core, multiprocess, markdown-it-py, huggingface-hub, httpcore, gitdb, ghapi, docker, beautifulsoup4, anyio, aiosignal, rich, pytest-asyncio, pydantic, pre-commit, pandas, httpx, GitPython, botocore, aiohttp, s3transfer, openai, anthropic, datasets, boto3
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.65.0
+    Uninstalling tqdm-4.65.0:
+      Successfully uninstalled tqdm-4.65.0
+  Attempting uninstall: requests
+    Found existing installation: requests 2.31.0
+    Uninstalling requests-2.31.0:
+      Successfully uninstalled requests-2.31.0
+  Attempting uninstall: pluggy
+    Found existing installation: pluggy 1.0.0
+    Uninstalling pluggy-1.0.0:
+      Successfully uninstalled pluggy-1.0.0
+Successfully installed GitPython-3.1.44 aiohappyeyeballs-2.6.1 aiohttp-3.11.18 aiosignal-1.3.2 annotated-types-0.7.0 anthropic-0.51.0 anyio-4.9.0 async_timeout-5.0.1 attrs-25.3.0 backoff-2.2.1 beautifulsoup4-4.13.4 boto3-1.38.13 botocore-1.38.13 cfgv-3.4.0 chardet-5.2.0 datasets-3.6.0 dill-0.3.8 distlib-0.3.9 docker-7.1.0 fastcore-1.8.2 filelock-3.18.0 frozenlist-1.6.0 fsspec-2025.3.0 ghapi-1.0.6 gitdb-4.0.12 h11-0.16.0 hf-xet-1.1.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-0.31.1 identify-2.6.10 iniconfig-2.1.0 jiter-0.9.0 jmespath-1.0.1 markdown-it-py-3.0.0 mdurl-0.1.2 multidict-6.4.3 multiprocess-0.70.16 nodeenv-1.9.1 numpy-2.2.5 openai-1.78.0 pandas-2.2.3 pluggy-1.5.0 pre-commit-4.2.0 propcache-0.3.1 pyarrow-20.0.0 pydantic-2.11.4 pydantic-core-2.33.2 pygments-2.19.1 pytest-8.3.5 pytest-asyncio-0.26.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 pytz-2025.2 pyyaml-6.0.2 requests-2.32.3 rich-14.0.0 s3transfer-0.12.0 six-1.17.0 smmap-5.0.2 sniffio-1.3.1 soupsieve-2.7 tqdm-4.67.1 typing-extensions-4.13.2 typing-inspection-0.4.0 tzdata-2025.2 unidiff-0.7.5 virtualenv-20.31.2 xxhash-3.5.0 yarl-1.20.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+2025-05-10 02:17:40,813 - ThreadPoolExecutor-0_15 - INFO - Running the agent
+2025-05-10 02:19:02,361 - ThreadPoolExecutor-0_15 - INFO - Container output: Using OpenAI API with model o3-mini-2025-01-31.
+
+2025-05-10 02:19:02,363 - ThreadPoolExecutor-0_15 - INFO - Copying output files back to host
+2025-05-10 02:19:02,928 - ThreadPoolExecutor-0_15 - INFO - Copying from container /guava/cpp__meetup.md to local path polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/cpp__meetup.md
+2025-05-10 02:19:02,948 - ThreadPoolExecutor-0_15 - INFO - Successfully copied from container to polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/cpp__meetup.md
+2025-05-10 02:19:03,280 - ThreadPoolExecutor-0_15 - INFO - Getting model_patch
+2025-05-10 02:19:03,516 - ThreadPoolExecutor-0_15 - INFO - Container output: diff --git a/meetup.cpp b/meetup.cpp
+index 11d5857..45702c5 100644
+--- a/meetup.cpp
++++ b/meetup.cpp
+@@ -1,5 +1,84 @@
+ #include "meetup.h"
++#include <stdexcept>
+ 
+ namespace meetup {
+ 
++    // Helper function to determine if a year is a leap year
++    bool isLeapYear(int year) {
++        return ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)));
++    }
++
++    // Helper function to get the number of days in a month
++    int daysInMonth(int year, int month) {
++        switch(month) {
++            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
++                return 31;
++            case 4: case 6: case 9: case 11:
++                return 30;
++            case 2:
++                return isLeapYear(year) ? 29 : 28;
++            default:
++                throw std::domain_error("Invalid month");
++        }
++    }
++
++    // Helper function to determine the day of the week for a given date using Tomohiko Sakamoto's algorithm
++    // Returns: 0 = Sunday, 1 = Monday, ..., 6 = Saturday
++    int weekday_of_date(int year, int month, int day) {
++        static int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
++        if (month < 3) {
++            year -= 1;
++        }
++        int w = (year + year/4 - year/100 + year/400 + t[month - 1] + day) % 7;
++        return w;
++    }
++
++    Date meetup_day(int year, int month, DayOfWeek weekday, Schedule schedule) {
++        int target_weekday = static_cast<int>(weekday);
++        int dim = daysInMonth(year, month);
++        Date result {year, month, 0};
++
++        if (schedule == Schedule::Teenth) {
++            // The teenth days are 13 to 19
++            for (int day = 13; day <= 19; ++day) {
++                if (weekday_of_date(year, month, day) == target_weekday) {
++                    result.day = day;
++                    return result;
++                }
++            }
++            throw std::domain_error("No teenth day found");
++        } else if (schedule == Schedule::Last) {
++            // Start from the last day of the month and move backwards
++            for (int day = dim; day >= 1; --day) {
++                if (weekday_of_date(year, month, day) == target_weekday) {
++                    result.day = day;
++                    return result;
++                }
++            }
++            throw std::domain_error("No last day found");
++        } else {
++            // For First, Second, Third, Fourth schedules: count occurrences of the weekday
++            int occurrence = 0;
++            int target_occurrence = 0;
++            switch(schedule) {
++                case Schedule::First:  target_occurrence = 1; break;
++                case Schedule::Second: target_occurrence = 2; break;
++                case Schedule::Third:  target_occurrence = 3; break;
++                case Schedule::Fourth: target_occurrence = 4; break;
++                default:
++                    throw std::domain_error("Invalid schedule");
++            }
++            for (int day = 1; day <= dim; ++day) {
++                if (weekday_of_date(year, month, day) == target_weekday) {
++                    ++occurrence;
++                    if (occurrence == target_occurrence) {
++                        result.day = day;
++                        return result;
++                    }
++                }
++            }
++            throw std::domain_error("No matching day found for the given schedule");
++        }
++    }
++
+ }  // namespace meetup
+diff --git a/meetup.h b/meetup.h
+index 939b108..21e2fd1 100644
+--- a/meetup.h
++++ b/meetup.h
+@@ -1,8 +1,41 @@
+ #if !defined(MEETUP_H)
+ #define MEETUP_H
+ 
++#include <stdexcept>
++
+ namespace meetup {
+ 
++    // Enumeration for the days of the week. Sunday is 0, Monday is 1, ..., Saturday is 6.
++    enum class DayOfWeek {
++        Sunday = 0,
++        Monday,
++        Tuesday,
++        Wednesday,
++        Thursday,
++        Friday,
++        Saturday
++    };
++
++    // Enumeration for scheduling options
++    enum class Schedule {
++        First,
++        Second,
++        Third,
++        Fourth,
++        Last,
++        Teenth
++    };
++
++    // Date structure
++    struct Date {
++        int year;
++        int month;
++        int day;
++    };
++
++    // Returns the meetup day for the given parameters
++    Date meetup_day(int year, int month, DayOfWeek weekday, Schedule schedule);
++
+ }  // namespace meetup
+ 
+-#endif // MEETUP_H
+\ No newline at end of file
++#endif // MEETUP_H
+
+2025-05-10 02:19:03,922 - ThreadPoolExecutor-0_15 - INFO - Container output: Saved working directory and index state WIP on master: 920bf32 Initial commit
+
+2025-05-10 02:19:04,140 - ThreadPoolExecutor-0_15 - INFO - Container output: HEAD is now at b9d1348 all files
+
+2025-05-10 02:19:04,296 - ThreadPoolExecutor-0_15 - INFO - Container output: 
+2025-05-10 02:19:04,505 - ThreadPoolExecutor-0_15 - INFO - Container output: On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   meetup.cpp
+	modified:   meetup.h
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (2e28687547e655903b3554ccd4bf5b25cc1f36b5)
+
+2025-05-10 02:19:04,506 - ThreadPoolExecutor-0_15 - INFO - Running the eval
+2025-05-10 02:19:04,732 - ThreadPoolExecutor-0_15 - INFO - Copying polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/cpp__meetup_eval.sh to container at /testbed/eval.sh
+2025-05-10 02:19:04,778 - ThreadPoolExecutor-0_15 - INFO - Successfully copied polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/cpp__meetup_eval.sh to container
+2025-05-10 02:19:04,890 - ThreadPoolExecutor-0_15 - INFO - Container output: /testbed:
+CMakeLists.txt
+eval.sh
+meetup.cpp
+meetup.h
+meetup_test.cpp
+test
+
+/testbed/test:
+catch.hpp
+tests-main.cpp
+
+2025-05-10 02:19:05,065 - ThreadPoolExecutor-0_15 - INFO - Container output: 
+2025-05-10 02:19:10,009 - ThreadPoolExecutor-0_15 - INFO - Container output: + set -e
++ '[' '!' -d build ']'
++ mkdir build
++ cd build
++ cmake -DEXERCISM_RUN_ALL_TESTS=1 -G 'Unix Makefiles' ..
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.58") found components: date_time 
+-- Configuring done
++ make
+-- Generating done
+-- Build files have been written to: /testbed/build
+[ 25%] Building CXX object CMakeFiles/meetup.dir/meetup_test.cpp.o
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____0()':
+/testbed/meetup_test.cpp:17:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   17 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:20:31: error: expected primary-expression before '.' token
+   20 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:20:31: error: expected primary-expression before '.' token
+   20 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+/testbed/meetup_test.cpp:20:31: error: expected primary-expression before '.' token
+   20 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____2()':
+/testbed/meetup_test.cpp:26:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   26 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:29:31: error: expected primary-expression before '.' token
+   29 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:29:31: error: expected primary-expression before '.' token
+   29 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+/testbed/meetup_test.cpp:29:31: error: expected primary-expression before '.' token
+   29 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____4()':
+/testbed/meetup_test.cpp:34:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   34 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:37:31: error: expected primary-expression before '.' token
+   37 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:37:31: error: expected primary-expression before '.' token
+   37 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+/testbed/meetup_test.cpp:37:31: error: expected primary-expression before '.' token
+   37 |     REQUIRE(expected == meetup.monteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____6()':
+/testbed/meetup_test.cpp:42:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   42 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:45:31: error: expected primary-expression before '.' token
+   45 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:45:31: error: expected primary-expression before '.' token
+   45 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+/testbed/meetup_test.cpp:45:31: error: expected primary-expression before '.' token
+   45 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____8()':
+/testbed/meetup_test.cpp:50:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   50 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:53:31: error: expected primary-expression before '.' token
+   53 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:53:31: error: expected primary-expression before '.' token
+   53 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+/testbed/meetup_test.cpp:53:31: error: expected primary-expression before '.' token
+   53 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____10()':
+/testbed/meetup_test.cpp:58:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   58 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:61:31: error: expected primary-expression before '.' token
+   61 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:61:31: error: expected primary-expression before '.' token
+   61 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+/testbed/meetup_test.cpp:61:31: error: expected primary-expression before '.' token
+   61 |     REQUIRE(expected == meetup.tuesteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____12()':
+/testbed/meetup_test.cpp:66:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   66 |     const meetup::scheduler meetup{boost::gregorian::Jan, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:69:31: error: expected primary-expression before '.' token
+   69 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:69:31: error: expected primary-expression before '.' token
+   69 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+/testbed/meetup_test.cpp:69:31: error: expected primary-expression before '.' token
+   69 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____14()':
+/testbed/meetup_test.cpp:74:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   74 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:77:31: error: expected primary-expression before '.' token
+   77 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:77:31: error: expected primary-expression before '.' token
+   77 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+/testbed/meetup_test.cpp:77:31: error: expected primary-expression before '.' token
+   77 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____16()':
+/testbed/meetup_test.cpp:82:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   82 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:85:31: error: expected primary-expression before '.' token
+   85 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:85:31: error: expected primary-expression before '.' token
+   85 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+/testbed/meetup_test.cpp:85:31: error: expected primary-expression before '.' token
+   85 |     REQUIRE(expected == meetup.wednesteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____18()':
+/testbed/meetup_test.cpp:90:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   90 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:93:31: error: expected primary-expression before '.' token
+   93 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:93:31: error: expected primary-expression before '.' token
+   93 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+/testbed/meetup_test.cpp:93:31: error: expected primary-expression before '.' token
+   93 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____20()':
+/testbed/meetup_test.cpp:98:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+   98 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:101:31: error: expected primary-expression before '.' token
+  101 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:101:31: error: expected primary-expression before '.' token
+  101 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+/testbed/meetup_test.cpp:101:31: error: expected primary-expression before '.' token
+  101 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____22()':
+/testbed/meetup_test.cpp:106:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  106 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:109:31: error: expected primary-expression before '.' token
+  109 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:109:31: error: expected primary-expression before '.' token
+  109 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+/testbed/meetup_test.cpp:109:31: error: expected primary-expression before '.' token
+  109 |     REQUIRE(expected == meetup.thursteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____24()':
+/testbed/meetup_test.cpp:114:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  114 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:117:31: error: expected primary-expression before '.' token
+  117 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:117:31: error: expected primary-expression before '.' token
+  117 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+/testbed/meetup_test.cpp:117:31: error: expected primary-expression before '.' token
+  117 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____26()':
+/testbed/meetup_test.cpp:122:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  122 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:125:31: error: expected primary-expression before '.' token
+  125 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:125:31: error: expected primary-expression before '.' token
+  125 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+/testbed/meetup_test.cpp:125:31: error: expected primary-expression before '.' token
+  125 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____28()':
+/testbed/meetup_test.cpp:130:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  130 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:133:31: error: expected primary-expression before '.' token
+  133 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:133:31: error: expected primary-expression before '.' token
+  133 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+/testbed/meetup_test.cpp:133:31: error: expected primary-expression before '.' token
+  133 |     REQUIRE(expected == meetup.friteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____30()':
+/testbed/meetup_test.cpp:138:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  138 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:141:31: error: expected primary-expression before '.' token
+  141 |     REQUIRE(expected == meetup.saturteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:141:31: error: expected primary-expression before '.' token
+  141 |     REQUIRE(expected == meetup.saturteenth());
+      |                               ^
+/testbed/meetup_test.cpp:141:31: error: expected primary-expression before '.' token
+  141 |     REQUIRE(expected == meetup.saturteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____32()':
+/testbed/meetup_test.cpp:146:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  146 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:149:31: error: expected primary-expression before '.' token
+  149 |     REQUIRE(expected == meetup.saturteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:149:31: error: expected primary-expression before '.' token
+  149 |     REQUIRE(expected == meetup.saturteenth());
+      |                               ^
+/testbed/meetup_test.cpp:149:31: error: expected primary-expression before '.' token
+  149 |     REQUIRE(expected == meetup.saturteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____34()':
+/testbed/meetup_test.cpp:154:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  154 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:157:31: error: expected primary-expression before '.' token
+  157 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:157:31: error: expected primary-expression before '.' token
+  157 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+/testbed/meetup_test.cpp:157:31: error: expected primary-expression before '.' token
+  157 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____36()':
+/testbed/meetup_test.cpp:162:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  162 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:165:31: error: expected primary-expression before '.' token
+  165 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:165:31: error: expected primary-expression before '.' token
+  165 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+/testbed/meetup_test.cpp:165:31: error: expected primary-expression before '.' token
+  165 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____38()':
+/testbed/meetup_test.cpp:170:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  170 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:173:31: error: expected primary-expression before '.' token
+  173 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:173:31: error: expected primary-expression before '.' token
+  173 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+/testbed/meetup_test.cpp:173:31: error: expected primary-expression before '.' token
+  173 |     REQUIRE(expected == meetup.sunteenth());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____40()':
+/testbed/meetup_test.cpp:178:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  178 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:181:31: error: expected primary-expression before '.' token
+  181 |     REQUIRE(expected == meetup.first_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:181:31: error: expected primary-expression before '.' token
+  181 |     REQUIRE(expected == meetup.first_monday());
+      |                               ^
+/testbed/meetup_test.cpp:181:31: error: expected primary-expression before '.' token
+  181 |     REQUIRE(expected == meetup.first_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____42()':
+/testbed/meetup_test.cpp:186:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  186 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:189:31: error: expected primary-expression before '.' token
+  189 |     REQUIRE(expected == meetup.first_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:189:31: error: expected primary-expression before '.' token
+  189 |     REQUIRE(expected == meetup.first_monday());
+      |                               ^
+/testbed/meetup_test.cpp:189:31: error: expected primary-expression before '.' token
+  189 |     REQUIRE(expected == meetup.first_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____44()':
+/testbed/meetup_test.cpp:194:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  194 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:197:31: error: expected primary-expression before '.' token
+  197 |     REQUIRE(expected == meetup.first_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:197:31: error: expected primary-expression before '.' token
+  197 |     REQUIRE(expected == meetup.first_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:197:31: error: expected primary-expression before '.' token
+  197 |     REQUIRE(expected == meetup.first_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____46()':
+/testbed/meetup_test.cpp:202:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  202 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:205:31: error: expected primary-expression before '.' token
+  205 |     REQUIRE(expected == meetup.first_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:205:31: error: expected primary-expression before '.' token
+  205 |     REQUIRE(expected == meetup.first_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:205:31: error: expected primary-expression before '.' token
+  205 |     REQUIRE(expected == meetup.first_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____48()':
+/testbed/meetup_test.cpp:210:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  210 |     const meetup::scheduler meetup{boost::gregorian::Jul, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:213:31: error: expected primary-expression before '.' token
+  213 |     REQUIRE(expected == meetup.first_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:213:31: error: expected primary-expression before '.' token
+  213 |     REQUIRE(expected == meetup.first_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:213:31: error: expected primary-expression before '.' token
+  213 |     REQUIRE(expected == meetup.first_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____50()':
+/testbed/meetup_test.cpp:218:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  218 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:221:31: error: expected primary-expression before '.' token
+  221 |     REQUIRE(expected == meetup.first_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:221:31: error: expected primary-expression before '.' token
+  221 |     REQUIRE(expected == meetup.first_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:221:31: error: expected primary-expression before '.' token
+  221 |     REQUIRE(expected == meetup.first_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____52()':
+/testbed/meetup_test.cpp:226:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  226 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:229:31: error: expected primary-expression before '.' token
+  229 |     REQUIRE(expected == meetup.first_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:229:31: error: expected primary-expression before '.' token
+  229 |     REQUIRE(expected == meetup.first_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:229:31: error: expected primary-expression before '.' token
+  229 |     REQUIRE(expected == meetup.first_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____54()':
+/testbed/meetup_test.cpp:234:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  234 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:237:31: error: expected primary-expression before '.' token
+  237 |     REQUIRE(expected == meetup.first_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:237:31: error: expected primary-expression before '.' token
+  237 |     REQUIRE(expected == meetup.first_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:237:31: error: expected primary-expression before '.' token
+  237 |     REQUIRE(expected == meetup.first_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____56()':
+/testbed/meetup_test.cpp:242:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  242 |     const meetup::scheduler meetup{boost::gregorian::Nov, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:245:31: error: expected primary-expression before '.' token
+  245 |     REQUIRE(expected == meetup.first_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:245:31: error: expected primary-expression before '.' token
+  245 |     REQUIRE(expected == meetup.first_friday());
+      |                               ^
+/testbed/meetup_test.cpp:245:31: error: expected primary-expression before '.' token
+  245 |     REQUIRE(expected == meetup.first_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____58()':
+/testbed/meetup_test.cpp:250:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  250 |     const meetup::scheduler meetup{boost::gregorian::Dec, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:253:31: error: expected primary-expression before '.' token
+  253 |     REQUIRE(expected == meetup.first_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:253:31: error: expected primary-expression before '.' token
+  253 |     REQUIRE(expected == meetup.first_friday());
+      |                               ^
+/testbed/meetup_test.cpp:253:31: error: expected primary-expression before '.' token
+  253 |     REQUIRE(expected == meetup.first_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____60()':
+/testbed/meetup_test.cpp:258:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  258 |     const meetup::scheduler meetup{boost::gregorian::Jan, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:261:31: error: expected primary-expression before '.' token
+  261 |     REQUIRE(expected == meetup.first_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:261:31: error: expected primary-expression before '.' token
+  261 |     REQUIRE(expected == meetup.first_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:261:31: error: expected primary-expression before '.' token
+  261 |     REQUIRE(expected == meetup.first_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____62()':
+/testbed/meetup_test.cpp:266:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  266 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:269:31: error: expected primary-expression before '.' token
+  269 |     REQUIRE(expected == meetup.first_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:269:31: error: expected primary-expression before '.' token
+  269 |     REQUIRE(expected == meetup.first_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:269:31: error: expected primary-expression before '.' token
+  269 |     REQUIRE(expected == meetup.first_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____64()':
+/testbed/meetup_test.cpp:274:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  274 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:277:31: error: expected primary-expression before '.' token
+  277 |     REQUIRE(expected == meetup.first_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:277:31: error: expected primary-expression before '.' token
+  277 |     REQUIRE(expected == meetup.first_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:277:31: error: expected primary-expression before '.' token
+  277 |     REQUIRE(expected == meetup.first_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____66()':
+/testbed/meetup_test.cpp:282:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  282 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:285:31: error: expected primary-expression before '.' token
+  285 |     REQUIRE(expected == meetup.first_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:285:31: error: expected primary-expression before '.' token
+  285 |     REQUIRE(expected == meetup.first_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:285:31: error: expected primary-expression before '.' token
+  285 |     REQUIRE(expected == meetup.first_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____68()':
+/testbed/meetup_test.cpp:290:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  290 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:293:31: error: expected primary-expression before '.' token
+  293 |     REQUIRE(expected == meetup.second_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:293:31: error: expected primary-expression before '.' token
+  293 |     REQUIRE(expected == meetup.second_monday());
+      |                               ^
+/testbed/meetup_test.cpp:293:31: error: expected primary-expression before '.' token
+  293 |     REQUIRE(expected == meetup.second_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____70()':
+/testbed/meetup_test.cpp:298:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  298 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:301:31: error: expected primary-expression before '.' token
+  301 |     REQUIRE(expected == meetup.second_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:301:31: error: expected primary-expression before '.' token
+  301 |     REQUIRE(expected == meetup.second_monday());
+      |                               ^
+/testbed/meetup_test.cpp:301:31: error: expected primary-expression before '.' token
+  301 |     REQUIRE(expected == meetup.second_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____72()':
+/testbed/meetup_test.cpp:306:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  306 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:309:31: error: expected primary-expression before '.' token
+  309 |     REQUIRE(expected == meetup.second_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:309:31: error: expected primary-expression before '.' token
+  309 |     REQUIRE(expected == meetup.second_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:309:31: error: expected primary-expression before '.' token
+  309 |     REQUIRE(expected == meetup.second_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____74()':
+/testbed/meetup_test.cpp:314:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  314 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:317:31: error: expected primary-expression before '.' token
+  317 |     REQUIRE(expected == meetup.second_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:317:31: error: expected primary-expression before '.' token
+  317 |     REQUIRE(expected == meetup.second_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:317:31: error: expected primary-expression before '.' token
+  317 |     REQUIRE(expected == meetup.second_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____76()':
+/testbed/meetup_test.cpp:322:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  322 |     const meetup::scheduler meetup{boost::gregorian::Jul, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:325:31: error: expected primary-expression before '.' token
+  325 |     REQUIRE(expected == meetup.second_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:325:31: error: expected primary-expression before '.' token
+  325 |     REQUIRE(expected == meetup.second_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:325:31: error: expected primary-expression before '.' token
+  325 |     REQUIRE(expected == meetup.second_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____78()':
+/testbed/meetup_test.cpp:330:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  330 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:333:31: error: expected primary-expression before '.' token
+  333 |     REQUIRE(expected == meetup.second_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:333:31: error: expected primary-expression before '.' token
+  333 |     REQUIRE(expected == meetup.second_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:333:31: error: expected primary-expression before '.' token
+  333 |     REQUIRE(expected == meetup.second_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____80()':
+/testbed/meetup_test.cpp:338:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  338 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:341:31: error: expected primary-expression before '.' token
+  341 |     REQUIRE(expected == meetup.second_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:341:31: error: expected primary-expression before '.' token
+  341 |     REQUIRE(expected == meetup.second_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:341:31: error: expected primary-expression before '.' token
+  341 |     REQUIRE(expected == meetup.second_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____82()':
+/testbed/meetup_test.cpp:346:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  346 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:349:31: error: expected primary-expression before '.' token
+  349 |     REQUIRE(expected == meetup.second_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:349:31: error: expected primary-expression before '.' token
+  349 |     REQUIRE(expected == meetup.second_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:349:31: error: expected primary-expression before '.' token
+  349 |     REQUIRE(expected == meetup.second_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____84()':
+/testbed/meetup_test.cpp:354:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  354 |     const meetup::scheduler meetup{boost::gregorian::Nov, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:357:31: error: expected primary-expression before '.' token
+  357 |     REQUIRE(expected == meetup.second_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:357:31: error: expected primary-expression before '.' token
+  357 |     REQUIRE(expected == meetup.second_friday());
+      |                               ^
+/testbed/meetup_test.cpp:357:31: error: expected primary-expression before '.' token
+  357 |     REQUIRE(expected == meetup.second_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____86()':
+/testbed/meetup_test.cpp:362:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  362 |     const meetup::scheduler meetup{boost::gregorian::Dec, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:365:31: error: expected primary-expression before '.' token
+  365 |     REQUIRE(expected == meetup.second_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:365:31: error: expected primary-expression before '.' token
+  365 |     REQUIRE(expected == meetup.second_friday());
+      |                               ^
+/testbed/meetup_test.cpp:365:31: error: expected primary-expression before '.' token
+  365 |     REQUIRE(expected == meetup.second_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____88()':
+/testbed/meetup_test.cpp:370:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  370 |     const meetup::scheduler meetup{boost::gregorian::Jan, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:373:31: error: expected primary-expression before '.' token
+  373 |     REQUIRE(expected == meetup.second_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:373:31: error: expected primary-expression before '.' token
+  373 |     REQUIRE(expected == meetup.second_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:373:31: error: expected primary-expression before '.' token
+  373 |     REQUIRE(expected == meetup.second_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____90()':
+/testbed/meetup_test.cpp:378:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  378 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:381:31: error: expected primary-expression before '.' token
+  381 |     REQUIRE(expected == meetup.second_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:381:31: error: expected primary-expression before '.' token
+  381 |     REQUIRE(expected == meetup.second_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:381:31: error: expected primary-expression before '.' token
+  381 |     REQUIRE(expected == meetup.second_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____92()':
+/testbed/meetup_test.cpp:386:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  386 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:389:31: error: expected primary-expression before '.' token
+  389 |     REQUIRE(expected == meetup.second_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:389:31: error: expected primary-expression before '.' token
+  389 |     REQUIRE(expected == meetup.second_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:389:31: error: expected primary-expression before '.' token
+  389 |     REQUIRE(expected == meetup.second_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____94()':
+/testbed/meetup_test.cpp:394:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  394 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:397:31: error: expected primary-expression before '.' token
+  397 |     REQUIRE(expected == meetup.second_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:397:31: error: expected primary-expression before '.' token
+  397 |     REQUIRE(expected == meetup.second_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:397:31: error: expected primary-expression before '.' token
+  397 |     REQUIRE(expected == meetup.second_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____96()':
+/testbed/meetup_test.cpp:402:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  402 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:405:31: error: expected primary-expression before '.' token
+  405 |     REQUIRE(expected == meetup.third_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:405:31: error: expected primary-expression before '.' token
+  405 |     REQUIRE(expected == meetup.third_monday());
+      |                               ^
+/testbed/meetup_test.cpp:405:31: error: expected primary-expression before '.' token
+  405 |     REQUIRE(expected == meetup.third_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____98()':
+/testbed/meetup_test.cpp:410:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  410 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:413:31: error: expected primary-expression before '.' token
+  413 |     REQUIRE(expected == meetup.third_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:413:31: error: expected primary-expression before '.' token
+  413 |     REQUIRE(expected == meetup.third_monday());
+      |                               ^
+/testbed/meetup_test.cpp:413:31: error: expected primary-expression before '.' token
+  413 |     REQUIRE(expected == meetup.third_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____100()':
+/testbed/meetup_test.cpp:418:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  418 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:421:31: error: expected primary-expression before '.' token
+  421 |     REQUIRE(expected == meetup.third_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:421:31: error: expected primary-expression before '.' token
+  421 |     REQUIRE(expected == meetup.third_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:421:31: error: expected primary-expression before '.' token
+  421 |     REQUIRE(expected == meetup.third_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____102()':
+/testbed/meetup_test.cpp:426:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  426 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:429:31: error: expected primary-expression before '.' token
+  429 |     REQUIRE(expected == meetup.third_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:429:31: error: expected primary-expression before '.' token
+  429 |     REQUIRE(expected == meetup.third_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:429:31: error: expected primary-expression before '.' token
+  429 |     REQUIRE(expected == meetup.third_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____104()':
+/testbed/meetup_test.cpp:434:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  434 |     const meetup::scheduler meetup{boost::gregorian::Jul, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:437:31: error: expected primary-expression before '.' token
+  437 |     REQUIRE(expected == meetup.third_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:437:31: error: expected primary-expression before '.' token
+  437 |     REQUIRE(expected == meetup.third_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:437:31: error: expected primary-expression before '.' token
+  437 |     REQUIRE(expected == meetup.third_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____106()':
+/testbed/meetup_test.cpp:442:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  442 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:445:31: error: expected primary-expression before '.' token
+  445 |     REQUIRE(expected == meetup.third_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:445:31: error: expected primary-expression before '.' token
+  445 |     REQUIRE(expected == meetup.third_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:445:31: error: expected primary-expression before '.' token
+  445 |     REQUIRE(expected == meetup.third_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____108()':
+/testbed/meetup_test.cpp:450:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  450 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:453:31: error: expected primary-expression before '.' token
+  453 |     REQUIRE(expected == meetup.third_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:453:31: error: expected primary-expression before '.' token
+  453 |     REQUIRE(expected == meetup.third_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:453:31: error: expected primary-expression before '.' token
+  453 |     REQUIRE(expected == meetup.third_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____110()':
+/testbed/meetup_test.cpp:458:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  458 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:461:31: error: expected primary-expression before '.' token
+  461 |     REQUIRE(expected == meetup.third_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:461:31: error: expected primary-expression before '.' token
+  461 |     REQUIRE(expected == meetup.third_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:461:31: error: expected primary-expression before '.' token
+  461 |     REQUIRE(expected == meetup.third_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____112()':
+/testbed/meetup_test.cpp:466:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  466 |     const meetup::scheduler meetup{boost::gregorian::Nov, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:469:31: error: expected primary-expression before '.' token
+  469 |     REQUIRE(expected == meetup.third_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:469:31: error: expected primary-expression before '.' token
+  469 |     REQUIRE(expected == meetup.third_friday());
+      |                               ^
+/testbed/meetup_test.cpp:469:31: error: expected primary-expression before '.' token
+  469 |     REQUIRE(expected == meetup.third_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____114()':
+/testbed/meetup_test.cpp:474:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  474 |     const meetup::scheduler meetup{boost::gregorian::Dec, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:477:31: error: expected primary-expression before '.' token
+  477 |     REQUIRE(expected == meetup.third_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:477:31: error: expected primary-expression before '.' token
+  477 |     REQUIRE(expected == meetup.third_friday());
+      |                               ^
+/testbed/meetup_test.cpp:477:31: error: expected primary-expression before '.' token
+  477 |     REQUIRE(expected == meetup.third_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____116()':
+/testbed/meetup_test.cpp:482:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  482 |     const meetup::scheduler meetup{boost::gregorian::Jan, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:485:31: error: expected primary-expression before '.' token
+  485 |     REQUIRE(expected == meetup.third_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:485:31: error: expected primary-expression before '.' token
+  485 |     REQUIRE(expected == meetup.third_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:485:31: error: expected primary-expression before '.' token
+  485 |     REQUIRE(expected == meetup.third_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____118()':
+/testbed/meetup_test.cpp:490:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  490 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:493:31: error: expected primary-expression before '.' token
+  493 |     REQUIRE(expected == meetup.third_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:493:31: error: expected primary-expression before '.' token
+  493 |     REQUIRE(expected == meetup.third_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:493:31: error: expected primary-expression before '.' token
+  493 |     REQUIRE(expected == meetup.third_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____120()':
+/testbed/meetup_test.cpp:498:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  498 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:501:31: error: expected primary-expression before '.' token
+  501 |     REQUIRE(expected == meetup.third_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:501:31: error: expected primary-expression before '.' token
+  501 |     REQUIRE(expected == meetup.third_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:501:31: error: expected primary-expression before '.' token
+  501 |     REQUIRE(expected == meetup.third_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____122()':
+/testbed/meetup_test.cpp:506:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  506 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:509:31: error: expected primary-expression before '.' token
+  509 |     REQUIRE(expected == meetup.third_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:509:31: error: expected primary-expression before '.' token
+  509 |     REQUIRE(expected == meetup.third_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:509:31: error: expected primary-expression before '.' token
+  509 |     REQUIRE(expected == meetup.third_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____124()':
+/testbed/meetup_test.cpp:514:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  514 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:517:31: error: expected primary-expression before '.' token
+  517 |     REQUIRE(expected == meetup.fourth_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:517:31: error: expected primary-expression before '.' token
+  517 |     REQUIRE(expected == meetup.fourth_monday());
+      |                               ^
+/testbed/meetup_test.cpp:517:31: error: expected primary-expression before '.' token
+  517 |     REQUIRE(expected == meetup.fourth_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____126()':
+/testbed/meetup_test.cpp:522:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  522 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:525:31: error: expected primary-expression before '.' token
+  525 |     REQUIRE(expected == meetup.fourth_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:525:31: error: expected primary-expression before '.' token
+  525 |     REQUIRE(expected == meetup.fourth_monday());
+      |                               ^
+/testbed/meetup_test.cpp:525:31: error: expected primary-expression before '.' token
+  525 |     REQUIRE(expected == meetup.fourth_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____128()':
+/testbed/meetup_test.cpp:530:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  530 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:533:31: error: expected primary-expression before '.' token
+  533 |     REQUIRE(expected == meetup.fourth_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:533:31: error: expected primary-expression before '.' token
+  533 |     REQUIRE(expected == meetup.fourth_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:533:31: error: expected primary-expression before '.' token
+  533 |     REQUIRE(expected == meetup.fourth_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____130()':
+/testbed/meetup_test.cpp:538:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  538 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:541:31: error: expected primary-expression before '.' token
+  541 |     REQUIRE(expected == meetup.fourth_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:541:31: error: expected primary-expression before '.' token
+  541 |     REQUIRE(expected == meetup.fourth_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:541:31: error: expected primary-expression before '.' token
+  541 |     REQUIRE(expected == meetup.fourth_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____132()':
+/testbed/meetup_test.cpp:546:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  546 |     const meetup::scheduler meetup{boost::gregorian::Jul, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:549:31: error: expected primary-expression before '.' token
+  549 |     REQUIRE(expected == meetup.fourth_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:549:31: error: expected primary-expression before '.' token
+  549 |     REQUIRE(expected == meetup.fourth_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:549:31: error: expected primary-expression before '.' token
+  549 |     REQUIRE(expected == meetup.fourth_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____134()':
+/testbed/meetup_test.cpp:554:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  554 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:557:31: error: expected primary-expression before '.' token
+  557 |     REQUIRE(expected == meetup.fourth_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:557:31: error: expected primary-expression before '.' token
+  557 |     REQUIRE(expected == meetup.fourth_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:557:31: error: expected primary-expression before '.' token
+  557 |     REQUIRE(expected == meetup.fourth_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____136()':
+/testbed/meetup_test.cpp:562:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  562 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:565:31: error: expected primary-expression before '.' token
+  565 |     REQUIRE(expected == meetup.fourth_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:565:31: error: expected primary-expression before '.' token
+  565 |     REQUIRE(expected == meetup.fourth_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:565:31: error: expected primary-expression before '.' token
+  565 |     REQUIRE(expected == meetup.fourth_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____138()':
+/testbed/meetup_test.cpp:570:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  570 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:573:31: error: expected primary-expression before '.' token
+  573 |     REQUIRE(expected == meetup.fourth_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:573:31: error: expected primary-expression before '.' token
+  573 |     REQUIRE(expected == meetup.fourth_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:573:31: error: expected primary-expression before '.' token
+  573 |     REQUIRE(expected == meetup.fourth_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____140()':
+/testbed/meetup_test.cpp:578:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  578 |     const meetup::scheduler meetup{boost::gregorian::Nov, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:581:31: error: expected primary-expression before '.' token
+  581 |     REQUIRE(expected == meetup.fourth_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:581:31: error: expected primary-expression before '.' token
+  581 |     REQUIRE(expected == meetup.fourth_friday());
+      |                               ^
+/testbed/meetup_test.cpp:581:31: error: expected primary-expression before '.' token
+  581 |     REQUIRE(expected == meetup.fourth_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____142()':
+/testbed/meetup_test.cpp:586:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  586 |     const meetup::scheduler meetup{boost::gregorian::Dec, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:589:31: error: expected primary-expression before '.' token
+  589 |     REQUIRE(expected == meetup.fourth_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:589:31: error: expected primary-expression before '.' token
+  589 |     REQUIRE(expected == meetup.fourth_friday());
+      |                               ^
+/testbed/meetup_test.cpp:589:31: error: expected primary-expression before '.' token
+  589 |     REQUIRE(expected == meetup.fourth_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____144()':
+/testbed/meetup_test.cpp:594:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  594 |     const meetup::scheduler meetup{boost::gregorian::Jan, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:597:31: error: expected primary-expression before '.' token
+  597 |     REQUIRE(expected == meetup.fourth_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:597:31: error: expected primary-expression before '.' token
+  597 |     REQUIRE(expected == meetup.fourth_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:597:31: error: expected primary-expression before '.' token
+  597 |     REQUIRE(expected == meetup.fourth_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____146()':
+/testbed/meetup_test.cpp:602:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  602 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:605:31: error: expected primary-expression before '.' token
+  605 |     REQUIRE(expected == meetup.fourth_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:605:31: error: expected primary-expression before '.' token
+  605 |     REQUIRE(expected == meetup.fourth_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:605:31: error: expected primary-expression before '.' token
+  605 |     REQUIRE(expected == meetup.fourth_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____148()':
+/testbed/meetup_test.cpp:610:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  610 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:613:31: error: expected primary-expression before '.' token
+  613 |     REQUIRE(expected == meetup.fourth_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:613:31: error: expected primary-expression before '.' token
+  613 |     REQUIRE(expected == meetup.fourth_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:613:31: error: expected primary-expression before '.' token
+  613 |     REQUIRE(expected == meetup.fourth_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____150()':
+/testbed/meetup_test.cpp:618:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  618 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:621:31: error: expected primary-expression before '.' token
+  621 |     REQUIRE(expected == meetup.fourth_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:621:31: error: expected primary-expression before '.' token
+  621 |     REQUIRE(expected == meetup.fourth_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:621:31: error: expected primary-expression before '.' token
+  621 |     REQUIRE(expected == meetup.fourth_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____152()':
+/testbed/meetup_test.cpp:626:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  626 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:629:31: error: expected primary-expression before '.' token
+  629 |     REQUIRE(expected == meetup.last_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:629:31: error: expected primary-expression before '.' token
+  629 |     REQUIRE(expected == meetup.last_monday());
+      |                               ^
+/testbed/meetup_test.cpp:629:31: error: expected primary-expression before '.' token
+  629 |     REQUIRE(expected == meetup.last_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____154()':
+/testbed/meetup_test.cpp:634:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  634 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:637:31: error: expected primary-expression before '.' token
+  637 |     REQUIRE(expected == meetup.last_monday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:637:31: error: expected primary-expression before '.' token
+  637 |     REQUIRE(expected == meetup.last_monday());
+      |                               ^
+/testbed/meetup_test.cpp:637:31: error: expected primary-expression before '.' token
+  637 |     REQUIRE(expected == meetup.last_monday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____156()':
+/testbed/meetup_test.cpp:642:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  642 |     const meetup::scheduler meetup{boost::gregorian::May, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:645:31: error: expected primary-expression before '.' token
+  645 |     REQUIRE(expected == meetup.last_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:645:31: error: expected primary-expression before '.' token
+  645 |     REQUIRE(expected == meetup.last_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:645:31: error: expected primary-expression before '.' token
+  645 |     REQUIRE(expected == meetup.last_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____158()':
+/testbed/meetup_test.cpp:650:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  650 |     const meetup::scheduler meetup{boost::gregorian::Jun, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:653:31: error: expected primary-expression before '.' token
+  653 |     REQUIRE(expected == meetup.last_tuesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:653:31: error: expected primary-expression before '.' token
+  653 |     REQUIRE(expected == meetup.last_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp:653:31: error: expected primary-expression before '.' token
+  653 |     REQUIRE(expected == meetup.last_tuesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____160()':
+/testbed/meetup_test.cpp:658:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  658 |     const meetup::scheduler meetup{boost::gregorian::Jul, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:661:31: error: expected primary-expression before '.' token
+  661 |     REQUIRE(expected == meetup.last_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:661:31: error: expected primary-expression before '.' token
+  661 |     REQUIRE(expected == meetup.last_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:661:31: error: expected primary-expression before '.' token
+  661 |     REQUIRE(expected == meetup.last_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____162()':
+/testbed/meetup_test.cpp:666:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  666 |     const meetup::scheduler meetup{boost::gregorian::Aug, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:669:31: error: expected primary-expression before '.' token
+  669 |     REQUIRE(expected == meetup.last_wednesday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:669:31: error: expected primary-expression before '.' token
+  669 |     REQUIRE(expected == meetup.last_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp:669:31: error: expected primary-expression before '.' token
+  669 |     REQUIRE(expected == meetup.last_wednesday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____164()':
+/testbed/meetup_test.cpp:674:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  674 |     const meetup::scheduler meetup{boost::gregorian::Sep, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:677:31: error: expected primary-expression before '.' token
+  677 |     REQUIRE(expected == meetup.last_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:677:31: error: expected primary-expression before '.' token
+  677 |     REQUIRE(expected == meetup.last_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:677:31: error: expected primary-expression before '.' token
+  677 |     REQUIRE(expected == meetup.last_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____166()':
+/testbed/meetup_test.cpp:682:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  682 |     const meetup::scheduler meetup{boost::gregorian::Oct, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:685:31: error: expected primary-expression before '.' token
+  685 |     REQUIRE(expected == meetup.last_thursday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:685:31: error: expected primary-expression before '.' token
+  685 |     REQUIRE(expected == meetup.last_thursday());
+      |                               ^
+/testbed/meetup_test.cpp:685:31: error: expected primary-expression before '.' token
+  685 |     REQUIRE(expected == meetup.last_thursday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____168()':
+/testbed/meetup_test.cpp:690:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  690 |     const meetup::scheduler meetup{boost::gregorian::Nov, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:693:31: error: expected primary-expression before '.' token
+  693 |     REQUIRE(expected == meetup.last_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:693:31: error: expected primary-expression before '.' token
+  693 |     REQUIRE(expected == meetup.last_friday());
+      |                               ^
+/testbed/meetup_test.cpp:693:31: error: expected primary-expression before '.' token
+  693 |     REQUIRE(expected == meetup.last_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____170()':
+/testbed/meetup_test.cpp:698:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  698 |     const meetup::scheduler meetup{boost::gregorian::Dec, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:701:31: error: expected primary-expression before '.' token
+  701 |     REQUIRE(expected == meetup.last_friday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:701:31: error: expected primary-expression before '.' token
+  701 |     REQUIRE(expected == meetup.last_friday());
+      |                               ^
+/testbed/meetup_test.cpp:701:31: error: expected primary-expression before '.' token
+  701 |     REQUIRE(expected == meetup.last_friday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____172()':
+/testbed/meetup_test.cpp:706:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  706 |     const meetup::scheduler meetup{boost::gregorian::Jan, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:709:31: error: expected primary-expression before '.' token
+  709 |     REQUIRE(expected == meetup.last_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:709:31: error: expected primary-expression before '.' token
+  709 |     REQUIRE(expected == meetup.last_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:709:31: error: expected primary-expression before '.' token
+  709 |     REQUIRE(expected == meetup.last_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____174()':
+/testbed/meetup_test.cpp:714:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  714 |     const meetup::scheduler meetup{boost::gregorian::Feb, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:717:31: error: expected primary-expression before '.' token
+  717 |     REQUIRE(expected == meetup.last_saturday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:717:31: error: expected primary-expression before '.' token
+  717 |     REQUIRE(expected == meetup.last_saturday());
+      |                               ^
+/testbed/meetup_test.cpp:717:31: error: expected primary-expression before '.' token
+  717 |     REQUIRE(expected == meetup.last_saturday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____176()':
+/testbed/meetup_test.cpp:722:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  722 |     const meetup::scheduler meetup{boost::gregorian::Mar, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:725:31: error: expected primary-expression before '.' token
+  725 |     REQUIRE(expected == meetup.last_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:725:31: error: expected primary-expression before '.' token
+  725 |     REQUIRE(expected == meetup.last_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:725:31: error: expected primary-expression before '.' token
+  725 |     REQUIRE(expected == meetup.last_sunday());
+      |                               ^
+/testbed/meetup_test.cpp: In function 'void ____C_A_T_C_H____T_E_S_T____178()':
+/testbed/meetup_test.cpp:730:19: error: 'scheduler' in namespace 'meetup' does not name a type; did you mean 'Schedule'?
+  730 |     const meetup::scheduler meetup{boost::gregorian::Apr, 2013};
+      |                   ^~~~~~~~~
+      |                   Schedule
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:733:31: error: expected primary-expression before '.' token
+  733 |     REQUIRE(expected == meetup.last_sunday());
+      |                               ^
+In file included from /testbed/meetup_test.cpp:6:
+/testbed/meetup_test.cpp:733:31: error: expected primary-expression before '.' token
+  733 |     REQUIRE(expected == meetup.last_sunday());
+      |                               ^
+/testbed/meetup_test.cpp:733:31: error: expected primary-expression before '.' token
+  733 |     REQUIRE(expected == meetup.last_sunday());
+      |                               ^
+make[2]: *** [CMakeFiles/meetup.dir/build.make:76: CMakeFiles/meetup.dir/meetup_test.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:85: CMakeFiles/meetup.dir/all] Error 2
+make: *** [Makefile:91: all] Error 2
+
+2025-05-10 02:19:10,032 - ThreadPoolExecutor-0_15 - INFO - Attempting to stop container pb.eval.cpp__meetup.20250510_021328_798264...
+2025-05-10 02:19:27,359 - ThreadPoolExecutor-0_15 - INFO - Attempting to remove container pb.eval.cpp__meetup.20250510_021328_798264...
+2025-05-10 02:19:43,329 - ThreadPoolExecutor-0_15 - INFO - Container pb.eval.cpp__meetup.20250510_021328_798264 removed.

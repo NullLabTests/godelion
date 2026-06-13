@@ -1,0 +1,1095 @@
+2025-05-10 02:45:51,778 - ThreadPoolExecutor-0_18 - INFO - No existing container with name pb.eval.rust__wordy.20250510_024551_765850 found.
+2025-05-10 02:45:51,784 - ThreadPoolExecutor-0_18 - INFO - Environment image pb.env.x86_64.3bb2f0e92d01ae3d2f2ae7:latest found for rust__wordy
+Building instance image pb.eval.x86_64.rust__wordy:latest for rust__wordy
+2025-05-10 02:45:51,801 - ThreadPoolExecutor-0_18 - INFO - Image pb.eval.x86_64.rust__wordy:latest already exists, skipping build.
+2025-05-10 02:45:51,801 - ThreadPoolExecutor-0_18 - INFO - Creating container for rust__wordy...
+2025-05-10 02:45:54,687 - ThreadPoolExecutor-0_18 - INFO - Container for rust__wordy created: 43045df620e8a218386d5174939997a43eb7a377f594d7bf072b8e5f3daca929
+2025-05-10 02:45:56,353 - ThreadPoolExecutor-0_18 - INFO - Copying coding_agent.py to container at /dgm/coding_agent.py
+2025-05-10 02:45:56,621 - ThreadPoolExecutor-0_18 - INFO - Successfully copied coding_agent.py to container
+2025-05-10 02:45:57,329 - ThreadPoolExecutor-0_18 - INFO - Copying requirements.txt to container at /dgm/requirements.txt
+2025-05-10 02:45:57,530 - ThreadPoolExecutor-0_18 - INFO - Successfully copied requirements.txt to container
+2025-05-10 02:45:57,819 - ThreadPoolExecutor-0_18 - INFO - Copying pytest.ini to container at /dgm/pytest.ini
+2025-05-10 02:45:57,831 - ThreadPoolExecutor-0_18 - INFO - Successfully copied pytest.ini to container
+2025-05-10 02:45:58,507 - ThreadPoolExecutor-0_18 - INFO - Copying tools to container at /dgm/tools
+2025-05-10 02:45:58,611 - ThreadPoolExecutor-0_18 - INFO - Successfully copied tools to container
+2025-05-10 02:45:59,190 - ThreadPoolExecutor-0_18 - INFO - Copying utils to container at /dgm/utils
+2025-05-10 02:45:59,207 - ThreadPoolExecutor-0_18 - INFO - Successfully copied utils to container
+2025-05-10 02:45:59,511 - ThreadPoolExecutor-0_18 - INFO - Copying tests to container at /dgm/tests
+2025-05-10 02:45:59,647 - ThreadPoolExecutor-0_18 - INFO - Successfully copied tests to container
+2025-05-10 02:46:00,227 - ThreadPoolExecutor-0_18 - INFO - Copying prompts to container at /dgm/prompts
+2025-05-10 02:46:00,327 - ThreadPoolExecutor-0_18 - INFO - Successfully copied prompts to container
+2025-05-10 02:46:00,657 - ThreadPoolExecutor-0_18 - INFO - Copying llm.py to container at /dgm/llm.py
+2025-05-10 02:46:00,676 - ThreadPoolExecutor-0_18 - INFO - Successfully copied llm.py to container
+2025-05-10 02:46:00,874 - ThreadPoolExecutor-0_18 - INFO - Copying llm_withtools.py to container at /dgm/llm_withtools.py
+2025-05-10 02:46:00,897 - ThreadPoolExecutor-0_18 - INFO - Successfully copied llm_withtools.py to container
+2025-05-10 02:46:01,142 - ThreadPoolExecutor-0_18 - INFO - Container output: /testbed:
+Cargo.toml
+src
+
+/testbed/src:
+lib.rs
+
+2025-05-10 02:46:01,144 - ThreadPoolExecutor-0_18 - INFO - Installing more requirements
+2025-05-10 02:48:14,602 - ThreadPoolExecutor-0_18 - INFO - Container output: Collecting datasets (from -r /dgm/requirements.txt (line 1))
+  Downloading datasets-3.6.0-py3-none-any.whl.metadata (19 kB)
+Collecting anthropic (from -r /dgm/requirements.txt (line 2))
+  Downloading anthropic-0.51.0-py3-none-any.whl.metadata (25 kB)
+Collecting backoff (from -r /dgm/requirements.txt (line 4))
+  Downloading backoff-2.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting botocore (from -r /dgm/requirements.txt (line 5))
+  Downloading botocore-1.38.13-py3-none-any.whl.metadata (5.7 kB)
+Collecting boto3 (from -r /dgm/requirements.txt (line 6))
+  Downloading boto3-1.38.13-py3-none-any.whl.metadata (6.6 kB)
+Collecting openai (from -r /dgm/requirements.txt (line 7))
+  Downloading openai-1.78.0-py3-none-any.whl.metadata (25 kB)
+Collecting beautifulsoup4 (from -r /dgm/requirements.txt (line 10))
+  Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+Collecting chardet (from -r /dgm/requirements.txt (line 11))
+  Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting docker (from -r /dgm/requirements.txt (line 12))
+  Downloading docker-7.1.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting ghapi (from -r /dgm/requirements.txt (line 13))
+  Downloading ghapi-1.0.6-py3-none-any.whl.metadata (13 kB)
+Collecting GitPython (from -r /dgm/requirements.txt (line 14))
+  Downloading GitPython-3.1.44-py3-none-any.whl.metadata (13 kB)
+Collecting pre-commit (from -r /dgm/requirements.txt (line 15))
+  Downloading pre_commit-4.2.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting python-dotenv (from -r /dgm/requirements.txt (line 16))
+  Downloading python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
+Collecting rich (from -r /dgm/requirements.txt (line 17))
+  Downloading rich-14.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting unidiff (from -r /dgm/requirements.txt (line 18))
+  Downloading unidiff-0.7.5-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting pytest (from -r /dgm/requirements.txt (line 21))
+  Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-asyncio (from -r /dgm/requirements.txt (line 22))
+  Downloading pytest_asyncio-0.26.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting async_timeout (from -r /dgm/requirements.txt (line 23))
+  Downloading async_timeout-5.0.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting filelock (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting numpy>=1.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 395.2 kB/s eta 0:00:00
+Collecting pyarrow>=15.0.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Collecting pandas (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (89 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 kB 613.7 kB/s eta 0:00:00
+Collecting requests>=2.32.2 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.66.3 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 493.9 kB/s eta 0:00:00
+Collecting xxhash (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess<0.70.17 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multiprocess-0.70.16-py311-none-any.whl.metadata (7.2 kB)
+Collecting fsspec<=2025.3.0,>=2023.1.0 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading fsspec-2025.3.0-py3-none-any.whl.metadata (11 kB)
+Collecting huggingface-hub>=0.24.0 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading huggingface_hub-0.31.1-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: packaging in /opt/miniconda3/lib/python3.11/site-packages (from datasets->-r /dgm/requirements.txt (line 1)) (23.1)
+Collecting pyyaml>=5.1 (from datasets->-r /dgm/requirements.txt (line 1))
+  Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting anyio<5,>=3.5.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Requirement already satisfied: distro<2,>=1.7.0 in /opt/miniconda3/lib/python3.11/site-packages (from anthropic->-r /dgm/requirements.txt (line 2)) (1.8.0)
+Collecting httpx<1,>=0.25.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.4.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic-2.11.4-py3-none-any.whl.metadata (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.6/66.6 kB 284.9 kB/s eta 0:00:00
+Collecting sniffio (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting typing-extensions<5,>=4.10 (from anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore->-r /dgm/requirements.txt (line 5))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/miniconda3/lib/python3.11/site-packages (from botocore->-r /dgm/requirements.txt (line 5)) (1.26.18)
+Collecting s3transfer<0.13.0,>=0.12.0 (from boto3->-r /dgm/requirements.txt (line 6))
+  Downloading s3transfer-0.12.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4->-r /dgm/requirements.txt (line 10))
+  Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting fastcore>=1.7.2 (from ghapi->-r /dgm/requirements.txt (line 13))
+  Downloading fastcore-1.8.2-py3-none-any.whl.metadata (3.7 kB)
+Collecting gitdb<5,>=4.0.1 (from GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+Collecting cfgv>=2.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading cfgv-3.4.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting identify>=1.0.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading identify-2.6.10-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading nodeenv-1.9.1-py2.py3-none-any.whl.metadata (21 kB)
+Collecting virtualenv>=20.10.0 (from pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading virtualenv-20.31.2-py3-none-any.whl.metadata (4.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich->-r /dgm/requirements.txt (line 17))
+  Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting iniconfig (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting pluggy<2,>=1.5 (from pytest->-r /dgm/requirements.txt (line 21))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: idna>=2.8 in /opt/miniconda3/lib/python3.11/site-packages (from anyio<5,>=3.5.0->anthropic->-r /dgm/requirements.txt (line 2)) (3.4)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->GitPython->-r /dgm/requirements.txt (line 14))
+  Downloading smmap-5.0.2-py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: certifi in /opt/miniconda3/lib/python3.11/site-packages (from httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2)) (2023.11.17)
+Collecting httpcore==1.* (from httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.25.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting hf-xet<2.0.0,>=1.1.0 (from huggingface-hub>=0.24.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (494 bytes)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->-r /dgm/requirements.txt (line 17))
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic<3,>=1.9.0->anthropic->-r /dgm/requirements.txt (line 2))
+  Downloading typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore->-r /dgm/requirements.txt (line 5))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: charset-normalizer<4,>=2 in /opt/miniconda3/lib/python3.11/site-packages (from requests>=2.32.2->datasets->-r /dgm/requirements.txt (line 1)) (2.0.4)
+Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15))
+  Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in /opt/miniconda3/lib/python3.11/site-packages (from virtualenv>=20.10.0->pre-commit->-r /dgm/requirements.txt (line 15)) (3.10.0)
+Collecting pytz>=2020.1 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting aiohappyeyeballs>=2.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (16 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.3.0,>=2023.1.0->datasets->-r /dgm/requirements.txt (line 1))
+  Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (72 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.4/72.4 kB 1.3 MB/s eta 0:00:00
+Downloading datasets-3.6.0-py3-none-any.whl (491 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 491.5/491.5 kB 2.6 MB/s eta 0:00:00
+Downloading anthropic-0.51.0-py3-none-any.whl (263 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 264.0/264.0 kB 4.0 MB/s eta 0:00:00
+Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+Downloading botocore-1.38.13-py3-none-any.whl (13.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 6.9 MB/s eta 0:00:00
+Downloading boto3-1.38.13-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.9/139.9 kB 873.7 kB/s eta 0:00:00
+Downloading openai-1.78.0-py3-none-any.whl (680 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 680.4/680.4 kB 3.8 MB/s eta 0:00:00
+Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.3/187.3 kB 5.1 MB/s eta 0:00:00
+Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.4/199.4 kB 2.5 MB/s eta 0:00:00
+Downloading docker-7.1.0-py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 423.6 kB/s eta 0:00:00
+Downloading ghapi-1.0.6-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 84.0 kB/s eta 0:00:00
+Downloading GitPython-3.1.44-py3-none-any.whl (207 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 207.6/207.6 kB 455.7 kB/s eta 0:00:00
+Downloading pre_commit-4.2.0-py2.py3-none-any.whl (220 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.7/220.7 kB 622.6 kB/s eta 0:00:00
+Downloading python_dotenv-1.1.0-py3-none-any.whl (20 kB)
+Downloading rich-14.0.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.2/243.2 kB 1.0 MB/s eta 0:00:00
+Downloading unidiff-0.7.5-py2.py3-none-any.whl (14 kB)
+Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 343.6/343.6 kB 1.1 MB/s eta 0:00:00
+Downloading pytest_asyncio-0.26.0-py3-none-any.whl (19 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.9/100.9 kB 142.5 kB/s eta 0:00:00
+Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 2.5 MB/s eta 0:00:00
+Downloading fastcore-1.8.2-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.2/78.2 kB 2.0 MB/s eta 0:00:00
+Downloading fsspec-2025.3.0-py3-none-any.whl (193 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.6/193.6 kB 3.9 MB/s eta 0:00:00
+Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.8/62.8 kB 805.5 kB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 2.8 MB/s eta 0:00:00
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 4.4 MB/s eta 0:00:00
+Downloading huggingface_hub-0.31.1-py3-none-any.whl (484 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 484.3/484.3 kB 12.8 MB/s eta 0:00:00
+Downloading identify-2.6.10-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 2.3 MB/s eta 0:00:00
+Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (351 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.8/351.8 kB 7.6 MB/s eta 0:00:00
+Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 2.6 MB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py311-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.5/143.5 kB 3.8 MB/s eta 0:00:00
+Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+Downloading numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.4/16.4 MB 8.9 MB/s eta 0:00:00
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Downloading pyarrow-20.0.0-cp311-cp311-manylinux_2_28_x86_64.whl (42.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.3/42.3 MB 13.8 MB/s eta 0:00:00
+Downloading pydantic-2.11.4-py3-none-any.whl (443 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 kB 3.5 MB/s eta 0:00:00
+Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 5.3 MB/s eta 0:00:00
+Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 5.2 MB/s eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 1.4 MB/s eta 0:00:00
+Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (762 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 763.0/763.0 kB 2.4 MB/s eta 0:00:00
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 1.3 MB/s eta 0:00:00
+Downloading s3transfer-0.12.0-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.8/84.8 kB 1.3 MB/s eta 0:00:00
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 141.8 kB/s eta 0:00:00
+Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.8/45.8 kB 86.7 kB/s eta 0:00:00
+Downloading virtualenv-20.31.2-py3-none-any.whl (6.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 12.8 MB/s eta 0:00:00
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Downloading pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 10.2 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.8/194.8 kB 5.7 MB/s eta 0:00:00
+Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 5.8 MB/s eta 0:00:00
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 469.0/469.0 kB 5.9 MB/s eta 0:00:00
+Downloading hf_xet-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 MB 6.3 MB/s eta 0:00:00
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 4.0 MB/s eta 0:00:00
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading smmap-5.0.2-py3-none-any.whl (24 kB)
+Downloading typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 347.8/347.8 kB 1.2 MB/s eta 0:00:00
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 1.4 MB/s eta 0:00:00
+Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (313 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.6/313.6 kB 2.7 MB/s eta 0:00:00
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 223.5/223.5 kB 6.1 MB/s eta 0:00:00
+Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.5/232.5 kB 7.3 MB/s eta 0:00:00
+Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (358 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 358.1/358.1 kB 1.6 MB/s eta 0:00:00
+Installing collected packages: unidiff, pytz, distlib, xxhash, tzdata, typing-extensions, tqdm, soupsieve, sniffio, smmap, six, requests, pyyaml, python-dotenv, pygments, pyarrow, propcache, pluggy, numpy, nodeenv, multidict, mdurl, jmespath, jiter, iniconfig, identify, hf-xet, h11, fsspec, frozenlist, filelock, fastcore, dill, chardet, cfgv, backoff, attrs, async_timeout, annotated-types, aiohappyeyeballs, yarl, virtualenv, typing-inspection, python-dateutil, pytest, pydantic-core, multiprocess, markdown-it-py, huggingface-hub, httpcore, gitdb, ghapi, docker, beautifulsoup4, anyio, aiosignal, rich, pytest-asyncio, pydantic, pre-commit, pandas, httpx, GitPython, botocore, aiohttp, s3transfer, openai, anthropic, datasets, boto3
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.65.0
+    Uninstalling tqdm-4.65.0:
+      Successfully uninstalled tqdm-4.65.0
+  Attempting uninstall: requests
+    Found existing installation: requests 2.31.0
+    Uninstalling requests-2.31.0:
+      Successfully uninstalled requests-2.31.0
+  Attempting uninstall: pluggy
+    Found existing installation: pluggy 1.0.0
+    Uninstalling pluggy-1.0.0:
+      Successfully uninstalled pluggy-1.0.0
+Successfully installed GitPython-3.1.44 aiohappyeyeballs-2.6.1 aiohttp-3.11.18 aiosignal-1.3.2 annotated-types-0.7.0 anthropic-0.51.0 anyio-4.9.0 async_timeout-5.0.1 attrs-25.3.0 backoff-2.2.1 beautifulsoup4-4.13.4 boto3-1.38.13 botocore-1.38.13 cfgv-3.4.0 chardet-5.2.0 datasets-3.6.0 dill-0.3.8 distlib-0.3.9 docker-7.1.0 fastcore-1.8.2 filelock-3.18.0 frozenlist-1.6.0 fsspec-2025.3.0 ghapi-1.0.6 gitdb-4.0.12 h11-0.16.0 hf-xet-1.1.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-0.31.1 identify-2.6.10 iniconfig-2.1.0 jiter-0.9.0 jmespath-1.0.1 markdown-it-py-3.0.0 mdurl-0.1.2 multidict-6.4.3 multiprocess-0.70.16 nodeenv-1.9.1 numpy-2.2.5 openai-1.78.0 pandas-2.2.3 pluggy-1.5.0 pre-commit-4.2.0 propcache-0.3.1 pyarrow-20.0.0 pydantic-2.11.4 pydantic-core-2.33.2 pygments-2.19.1 pytest-8.3.5 pytest-asyncio-0.26.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 pytz-2025.2 pyyaml-6.0.2 requests-2.32.3 rich-14.0.0 s3transfer-0.12.0 six-1.17.0 smmap-5.0.2 sniffio-1.3.1 soupsieve-2.7 tqdm-4.67.1 typing-extensions-4.13.2 typing-inspection-0.4.0 tzdata-2025.2 unidiff-0.7.5 virtualenv-20.31.2 xxhash-3.5.0 yarl-1.20.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+2025-05-10 02:48:14,610 - ThreadPoolExecutor-0_18 - INFO - Running the agent
+2025-05-10 02:49:37,412 - ThreadPoolExecutor-0_18 - INFO - Container output: Using OpenAI API with model o3-mini-2025-01-31.
+
+2025-05-10 02:49:37,413 - ThreadPoolExecutor-0_18 - INFO - Copying output files back to host
+2025-05-10 02:49:37,593 - ThreadPoolExecutor-0_18 - INFO - Copying from container /dgm/rust__wordy.md to local path polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__wordy.md
+2025-05-10 02:49:37,607 - ThreadPoolExecutor-0_18 - INFO - Successfully copied from container to polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__wordy.md
+2025-05-10 02:49:37,699 - ThreadPoolExecutor-0_18 - INFO - Getting model_patch
+2025-05-10 02:49:37,797 - ThreadPoolExecutor-0_18 - INFO - Container output: diff --git a/src/lib.rs b/src/lib.rs
+index dff74fd..00ea404 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1,3 +1,183 @@
+ pub fn answer(command: &str) -> Option<i32> {
+-    todo!("Return the result of the command '{command}' or None, if the command is invalid.");
++    // Check that the command starts with "What is " and ends with "?"
++    let command = command.trim();
++    if !command.starts_with("What is") || !command.ends_with("?") {
++        return None;
++    }
++
++    // Remove prefix and trailing question mark
++    let content = &command[8..command.len() - 1].trim();
++    if content.is_empty() {
++        return None;
++    }
++
++    // Split the content into words. We'll treat multi-word operators accordingly.
++    let tokens: Vec<&str> = content.split_whitespace().collect();
++    let mut iter = tokens.iter().peekable();
++
++    // The first token should be a number
++    let first = iter.next()?;
++    let mut result: i32 = first.parse().ok()?;
++
++    // Process the rest tokens in left-to-right order
++    while let Some(&token) = iter.next() {
++        let op = match token {
++            "plus" => "plus",
++            "minus" => "minus",
++            "multiplied" => {
++                // Expect next token to be "by"
++                if let Some(&&next_token) = iter.peek() {
++                    if next_token == "by" {
++                        iter.next(); // consume "by"
++                        "multiplied"
++                    } else {
++                        return None;
++                    }
++                } else {
++                    return None;
++                }
++            },
++            "divided" => {
++                // Expect next token to be "by"
++                if let Some(&&next_token) = iter.peek() {
++                    if next_token == "by" {
++                        iter.next();
++                        "divided"
++                    } else {
++                        return None;
++                    }
++                } else {
++                    return None;
++                }
++            },
++            "raised" => {
++                // This block handles exponentiation. It is only supported when the "exponentials" feature is enabled.
++                #[cfg(feature = "exponentials")]
++                {
++                    // Expect sequence: "to", "the", "power", "of"
++                    if iter.next() != Some(&"to") {
++                        return None;
++                    }
++                    if iter.next() != Some(&"the") {
++                        return None;
++                    }
++                    if iter.next() != Some(&"power") {
++                        return None;
++                    }
++                    if iter.next() != Some(&"of") {
++                        return None;
++                    }
++                    "raised"
++                }
++                #[cfg(not(feature = "exponentials"))]
++                {
++                    return None;
++                }
++            },
++            _ => return None, // unsupported operator or malformed token
++        };
++
++        // The next token should be a number
++        let next_number_token = iter.next()?;
++        let next_number: i32 = next_number_token.parse().ok()?;
++
++        // Apply the operation in sequence (left-to-right evaluation)
++        match op {
++            "plus" => result += next_number,
++            "minus" => result -= next_number,
++            "multiplied" => result *= next_number,
++            "divided" => {
++                if next_number == 0 {
++                    return None;
++                }
++                result /= next_number
++            },
++            "raised" => {
++                // In Rust, exponent must be u32, so negative exponents are not supported
++                if next_number < 0 {
++                    return None;
++                }
++                result = result.pow(next_number as u32)
++            },
++            _ => return None, // should not occur
++        }
++    }
++
++    Some(result)
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn test_numbers() {
++        assert_eq!(answer("What is 42?"), Some(42));
++    }
++
++    #[test]
++    fn test_addition() {
++        assert_eq!(answer("What is 5 plus 13?"), Some(18));
++    }
++
++    #[test]
++    fn test_subtraction() {
++        assert_eq!(answer("What is 7 minus 5?"), Some(2));
++    }
++
++    #[test]
++    fn test_multiplication() {
++        assert_eq!(answer("What is 6 multiplied by 4?"), Some(24));
++    }
++
++    #[test]
++    fn test_division() {
++        assert_eq!(answer("What is 25 divided by 5?"), Some(5));
++    }
++
++    #[test]
++    fn test_multiple_operations() {
++        assert_eq!(answer("What is 5 plus 13 plus 6?"), Some(24));
++        // Evaluate left-to-right: 3 plus 2 = 5, 5 multiplied by 3 = 15
++        assert_eq!(answer("What is 3 plus 2 multiplied by 3?"), Some(15));
++    }
++
++    #[test]
++    fn test_division_by_zero() {
++        assert_eq!(answer("What is 10 divided by 0?"), None);
++    }
++
++    #[test]
++    fn test_invalid_question() {
++        // Non-math question
++        assert_eq!(answer("Who is the President of the United States"), None);
++    }
++
++    #[test]
++    fn test_invalid_syntax() {
++        // Malformed question: double operator
++        assert_eq!(answer("What is 1 plus plus 2?"), None);
++    }
++
++    #[test]
++    fn test_unsupported_operation() {
++        // Unsupported operation: cubed
++        assert_eq!(answer("What is 52 cubed?"), None);
++    }
++
++    #[cfg(feature = "exponentials")]
++    #[test]
++    fn test_exponentiation() {
++        // Test exponentiation: 2 raised to the power of 3 should be 8
++        assert_eq!(answer("What is 2 raised to the power of 3?"), Some(8));
++        // More complex expression: Evaluate left-to-right: 2 raised to the power of 2 = 4, then plus 3 = 7
++        assert_eq!(answer("What is 2 raised to the power of 2 plus 3?"), Some(7));
++    }
++
++    #[cfg(not(feature = "exponentials"))]
++    #[test]
++    fn test_exponentiation_without_feature() {
++        // When exponentials feature is not enabled, exponentiation should not be supported
++        assert_eq!(answer("What is 2 raised to the power of 3?"), None);
++    }
+ }
+diff --git a/Cargo.lock b/Cargo.lock
+new file mode 100644
+index 0000000..373fe18
+--- /dev/null
++++ b/Cargo.lock
+@@ -0,0 +1,7 @@
++# This file is automatically @generated by Cargo.
++# It is not intended for manual editing.
++version = 4
++
++[[package]]
++name = "wordy"
++version = "1.5.0"
+diff --git a/target/.rustc_info.json b/target/.rustc_info.json
+new file mode 100644
+index 0000000..264502c
+--- /dev/null
++++ b/target/.rustc_info.json
+@@ -0,0 +1 @@
++{"rustc_fingerprint":15433756029299601208,"outputs":{"13331785392996375709":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu\noff\npacked\nunpacked\n___\ndebug_assertions\npanic=\"unwind\"\nproc_macro\ntarget_abi=\"\"\ntarget_arch=\"x86_64\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"fxsr\"\ntarget_feature=\"sse\"\ntarget_feature=\"sse2\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"64\"\ntarget_vendor=\"unknown\"\nunix\n","stderr":""},"17747080675513052775":{"success":true,"status":"","code":0,"stdout":"rustc 1.85.1 (4eb161250 2025-03-15)\nbinary: rustc\ncommit-hash: 4eb161250e340c8f48f66e2b929ef4a5bed7c181\ncommit-date: 2025-03-15\nhost: x86_64-unknown-linux-gnu\nrelease: 1.85.1\nLLVM version: 19.1.7\n","stderr":""}},"successes":{}}
+\ No newline at end of file
+diff --git a/target/CACHEDIR.TAG b/target/CACHEDIR.TAG
+new file mode 100644
+index 0000000..20d7c31
+--- /dev/null
++++ b/target/CACHEDIR.TAG
+@@ -0,0 +1,3 @@
++Signature: 8a477f597d28d172789f06886806bc55
++# This file is a cache directory tag created by cargo.
++# For information about cache directory tags see https://bford.info/cachedir/
+diff --git a/target/debug/.cargo-lock b/target/debug/.cargo-lock
+new file mode 100644
+index 0000000..e69de29
+diff --git a/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/dep-lib-wordy b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/dep-lib-wordy
+new file mode 100644
+index 0000000..024be49
+Binary files /dev/null and b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/dep-lib-wordy differ
+diff --git a/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/invoked.timestamp b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/invoked.timestamp
+new file mode 100644
+index 0000000..e00328d
+--- /dev/null
++++ b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/invoked.timestamp
+@@ -0,0 +1 @@
++This file has an mtime of when this was started.
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/lib-wordy b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/lib-wordy
+new file mode 100644
+index 0000000..f85d065
+--- /dev/null
++++ b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/lib-wordy
+@@ -0,0 +1 @@
++ea2d05dbcc60dfc0
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/lib-wordy.json b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/lib-wordy.json
+new file mode 100644
+index 0000000..8d3e91e
+--- /dev/null
++++ b/target/debug/.fingerprint/wordy-d0a8f3ae79332cf4/lib-wordy.json
+@@ -0,0 +1 @@
++{"rustc":8750902384292223123,"features":"[\"exponentials\"]","declared_features":"[\"exponentials\"]","target":11240995796198103420,"profile":8731458305071235362,"path":10763286916239946207,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/wordy-d0a8f3ae79332cf4/dep-lib-wordy","checksum":false}}],"rustflags":[],"config":2069994364910194474,"compile_kind":0}
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/wordy-eae3dd26e27dd541/dep-test-lib-wordy b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/dep-test-lib-wordy
+new file mode 100644
+index 0000000..024be49
+Binary files /dev/null and b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/dep-test-lib-wordy differ
+diff --git a/target/debug/.fingerprint/wordy-eae3dd26e27dd541/invoked.timestamp b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/invoked.timestamp
+new file mode 100644
+index 0000000..e00328d
+--- /dev/null
++++ b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/invoked.timestamp
+@@ -0,0 +1 @@
++This file has an mtime of when this was started.
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/wordy-eae3dd26e27dd541/test-lib-wordy b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/test-lib-wordy
+new file mode 100644
+index 0000000..2f73f25
+--- /dev/null
++++ b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/test-lib-wordy
+@@ -0,0 +1 @@
++011933a82f4d3659
+\ No newline at end of file
+diff --git a/target/debug/.fingerprint/wordy-eae3dd26e27dd541/test-lib-wordy.json b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/test-lib-wordy.json
+new file mode 100644
+index 0000000..aa0c808
+--- /dev/null
++++ b/target/debug/.fingerprint/wordy-eae3dd26e27dd541/test-lib-wordy.json
+@@ -0,0 +1 @@
++{"rustc":8750902384292223123,"features":"[\"exponentials\"]","declared_features":"[\"exponentials\"]","target":11240995796198103420,"profile":1722584277633009122,"path":10763286916239946207,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/wordy-eae3dd26e27dd541/dep-test-lib-wordy","checksum":false}}],"rustflags":[],"config":2069994364910194474,"compile_kind":0}
+\ No newline at end of file
+diff --git a/target/debug/deps/libwordy-d0a8f3ae79332cf4.rlib b/target/debug/deps/libwordy-d0a8f3ae79332cf4.rlib
+new file mode 100644
+index 0000000..701bd75
+Binary files /dev/null and b/target/debug/deps/libwordy-d0a8f3ae79332cf4.rlib differ
+diff --git a/target/debug/deps/libwordy-d0a8f3ae79332cf4.rmeta b/target/debug/deps/libwordy-d0a8f3ae79332cf4.rmeta
+new file mode 100644
+index 0000000..6a0388f
+Binary files /dev/null and b/target/debug/deps/libwordy-d0a8f3ae79332cf4.rmeta differ
+diff --git a/target/debug/deps/wordy-d0a8f3ae79332cf4.d b/target/debug/deps/wordy-d0a8f3ae79332cf4.d
+new file mode 100644
+index 0000000..4474205
+--- /dev/null
++++ b/target/debug/deps/wordy-d0a8f3ae79332cf4.d
+@@ -0,0 +1,7 @@
++/testbed/target/debug/deps/libwordy-d0a8f3ae79332cf4.rmeta: src/lib.rs
++
++/testbed/target/debug/deps/libwordy-d0a8f3ae79332cf4.rlib: src/lib.rs
++
++/testbed/target/debug/deps/wordy-d0a8f3ae79332cf4.d: src/lib.rs
++
++src/lib.rs:
+diff --git a/target/debug/deps/wordy-eae3dd26e27dd541 b/target/debug/deps/wordy-eae3dd26e27dd541
+new file mode 100755
+index 0000000..c14a051
+Binary files /dev/null and b/target/debug/deps/wordy-eae3dd26e27dd541 differ
+diff --git a/target/debug/deps/wordy-eae3dd26e27dd541.d b/target/debug/deps/wordy-eae3dd26e27dd541.d
+new file mode 100644
+index 0000000..6e0e053
+--- /dev/null
++++ b/target/debug/deps/wordy-eae3dd26e27dd541.d
+@@ -0,0 +1,5 @@
++/testbed/target/debug/deps/wordy-eae3dd26e27dd541: src/lib.rs
++
++/testbed/target/debug/deps/wordy-eae3dd26e27dd541.d: src/lib.rs
++
++src/lib.rs:
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/0es81yjgyalolmxtbjbuqbgsp.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/0es81yjgyalolmxtbjbuqbgsp.o
+new file mode 100644
+index 0000000..0a910a2
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/0es81yjgyalolmxtbjbuqbgsp.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/0m8m3af1hm98987ut87vyq96i.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/0m8m3af1hm98987ut87vyq96i.o
+new file mode 100644
+index 0000000..62ee8ef
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/0m8m3af1hm98987ut87vyq96i.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/1i98tyyonjzi3urc7uya0wg79.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/1i98tyyonjzi3urc7uya0wg79.o
+new file mode 100644
+index 0000000..949093a
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/1i98tyyonjzi3urc7uya0wg79.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/25uxwkvlh2mukr4qobekair0d.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/25uxwkvlh2mukr4qobekair0d.o
+new file mode 100644
+index 0000000..71ad5d0
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/25uxwkvlh2mukr4qobekair0d.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/28xeoezcdr0c9pxxxyfzeg5tb.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/28xeoezcdr0c9pxxxyfzeg5tb.o
+new file mode 100644
+index 0000000..52ca0a9
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/28xeoezcdr0c9pxxxyfzeg5tb.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/2ixec4ttvvpnfx1vw1gmxg20p.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/2ixec4ttvvpnfx1vw1gmxg20p.o
+new file mode 100644
+index 0000000..883fa5b
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/2ixec4ttvvpnfx1vw1gmxg20p.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/35tczwk6b97h39maluuk3qmvf.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/35tczwk6b97h39maluuk3qmvf.o
+new file mode 100644
+index 0000000..deb5c0f
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/35tczwk6b97h39maluuk3qmvf.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/5is9lmbgr2xh7vxjiv4ed2izp.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/5is9lmbgr2xh7vxjiv4ed2izp.o
+new file mode 100644
+index 0000000..b6806f5
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/5is9lmbgr2xh7vxjiv4ed2izp.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/5xbfpafe8coe1dcdzkzuxa8rh.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/5xbfpafe8coe1dcdzkzuxa8rh.o
+new file mode 100644
+index 0000000..d2fc1a0
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/5xbfpafe8coe1dcdzkzuxa8rh.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/647vru2c1gopvpmm9fwx5rft7.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/647vru2c1gopvpmm9fwx5rft7.o
+new file mode 100644
+index 0000000..56176b2
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/647vru2c1gopvpmm9fwx5rft7.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6airwdr877ckva2ooqnuglhzv.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6airwdr877ckva2ooqnuglhzv.o
+new file mode 100644
+index 0000000..4b971df
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6airwdr877ckva2ooqnuglhzv.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6d9mq67g3cafy2syhgfpwak80.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6d9mq67g3cafy2syhgfpwak80.o
+new file mode 100644
+index 0000000..068b3d6
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6d9mq67g3cafy2syhgfpwak80.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6lnh89x9wwfuzwnvaj3eue7k6.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6lnh89x9wwfuzwnvaj3eue7k6.o
+new file mode 100644
+index 0000000..3b83210
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/6lnh89x9wwfuzwnvaj3eue7k6.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/759rivhsvqwyh2l2gpcjwz0nz.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/759rivhsvqwyh2l2gpcjwz0nz.o
+new file mode 100644
+index 0000000..57c2cbf
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/759rivhsvqwyh2l2gpcjwz0nz.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/7cev1wc1t1bhvacx1582rovaw.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/7cev1wc1t1bhvacx1582rovaw.o
+new file mode 100644
+index 0000000..1664f5d
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/7cev1wc1t1bhvacx1582rovaw.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/7w2wbjm1s41c11z6oj9m1xomb.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/7w2wbjm1s41c11z6oj9m1xomb.o
+new file mode 100644
+index 0000000..8401b4f
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/7w2wbjm1s41c11z6oj9m1xomb.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/87lv79wdy1s0qqwz1ee7qw4wm.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/87lv79wdy1s0qqwz1ee7qw4wm.o
+new file mode 100644
+index 0000000..a9440db
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/87lv79wdy1s0qqwz1ee7qw4wm.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/8d68xbpqc3zaupxqkezx7xsme.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/8d68xbpqc3zaupxqkezx7xsme.o
+new file mode 100644
+index 0000000..398e9c0
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/8d68xbpqc3zaupxqkezx7xsme.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/8fkkmnbkl96fn1mw3znim2iju.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/8fkkmnbkl96fn1mw3znim2iju.o
+new file mode 100644
+index 0000000..a4a4718
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/8fkkmnbkl96fn1mw3znim2iju.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9pv88e4l43m0xuwhoqfqo9ia7.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9pv88e4l43m0xuwhoqfqo9ia7.o
+new file mode 100644
+index 0000000..15e5c01
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9pv88e4l43m0xuwhoqfqo9ia7.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9rq1lxqehephb58mqa7bout5m.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9rq1lxqehephb58mqa7bout5m.o
+new file mode 100644
+index 0000000..dd45313
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9rq1lxqehephb58mqa7bout5m.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9tvpssgy09pnj1uatwr79wc8k.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9tvpssgy09pnj1uatwr79wc8k.o
+new file mode 100644
+index 0000000..e4ebf27
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/9tvpssgy09pnj1uatwr79wc8k.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/a7rl3lcobpfwoozfuq7ctnqnl.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/a7rl3lcobpfwoozfuq7ctnqnl.o
+new file mode 100644
+index 0000000..435e218
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/a7rl3lcobpfwoozfuq7ctnqnl.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/atdjfmbof7pdq1xz9036ktgk0.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/atdjfmbof7pdq1xz9036ktgk0.o
+new file mode 100644
+index 0000000..d5d7257
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/atdjfmbof7pdq1xz9036ktgk0.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/bcizrjz3lymrcavv9t5x7mlcl.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/bcizrjz3lymrcavv9t5x7mlcl.o
+new file mode 100644
+index 0000000..2a301d0
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/bcizrjz3lymrcavv9t5x7mlcl.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/bsp3syp4qc1zf39zhm0rqcye4.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/bsp3syp4qc1zf39zhm0rqcye4.o
+new file mode 100644
+index 0000000..e42dfc7
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/bsp3syp4qc1zf39zhm0rqcye4.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/c4r4e6ocd292lqjpligrut4rr.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/c4r4e6ocd292lqjpligrut4rr.o
+new file mode 100644
+index 0000000..829cc73
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/c4r4e6ocd292lqjpligrut4rr.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cdqzfdih59vq879qmr4muzgtq.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cdqzfdih59vq879qmr4muzgtq.o
+new file mode 100644
+index 0000000..b407bd4
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cdqzfdih59vq879qmr4muzgtq.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/chthix28ucv6m68k9juijnos6.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/chthix28ucv6m68k9juijnos6.o
+new file mode 100644
+index 0000000..17ac795
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/chthix28ucv6m68k9juijnos6.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/ck9yfzlfe4v3b1jhrjn710qfr.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/ck9yfzlfe4v3b1jhrjn710qfr.o
+new file mode 100644
+index 0000000..a021f39
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/ck9yfzlfe4v3b1jhrjn710qfr.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cstxfvsdd4nk166v4lb858gtt.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cstxfvsdd4nk166v4lb858gtt.o
+new file mode 100644
+index 0000000..b9cf629
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cstxfvsdd4nk166v4lb858gtt.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cvlorrpdle2nwgjnq68rrlirn.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cvlorrpdle2nwgjnq68rrlirn.o
+new file mode 100644
+index 0000000..5624b42
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/cvlorrpdle2nwgjnq68rrlirn.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/d8ws0d0ejktdf65i7st0uuedu.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/d8ws0d0ejktdf65i7st0uuedu.o
+new file mode 100644
+index 0000000..3a9cff1
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/d8ws0d0ejktdf65i7st0uuedu.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/dep-graph.bin b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/dep-graph.bin
+new file mode 100644
+index 0000000..4a1439a
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/dep-graph.bin differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/emp9dksjmmagd5yh706x6hxhz.o b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/emp9dksjmmagd5yh706x6hxhz.o
+new file mode 100644
+index 0000000..09473ca
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/emp9dksjmmagd5yh706x6hxhz.o differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/query-cache.bin b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/query-cache.bin
+new file mode 100644
+index 0000000..275dbab
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/query-cache.bin differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/work-products.bin b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/work-products.bin
+new file mode 100644
+index 0000000..256844a
+Binary files /dev/null and b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz-73tpohklo0v3e6b4h9m5cesdn/work-products.bin differ
+diff --git a/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz.lock b/target/debug/incremental/wordy-3106jw9p5u8sp/s-h77dopa3ei-1ufbvwz.lock
+new file mode 100644
+index 0000000..e69de29
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/06d5bqxzeqptk3ij269qvz425.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/06d5bqxzeqptk3ij269qvz425.o
+new file mode 100644
+index 0000000..4ade710
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/06d5bqxzeqptk3ij269qvz425.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0dog45lpdzj5wk181yigxthjj.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0dog45lpdzj5wk181yigxthjj.o
+new file mode 100644
+index 0000000..8adcd5c
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0dog45lpdzj5wk181yigxthjj.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0lw7jnqny3dkvpulyivxh9hr4.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0lw7jnqny3dkvpulyivxh9hr4.o
+new file mode 100644
+index 0000000..a749d30
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0lw7jnqny3dkvpulyivxh9hr4.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0wkepoqowl9u5o75cx6lrbiwm.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0wkepoqowl9u5o75cx6lrbiwm.o
+new file mode 100644
+index 0000000..b9f8f75
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/0wkepoqowl9u5o75cx6lrbiwm.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/1ku80ozfx4vux6fh1pm0oywqw.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/1ku80ozfx4vux6fh1pm0oywqw.o
+new file mode 100644
+index 0000000..3f95dbb
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/1ku80ozfx4vux6fh1pm0oywqw.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2fwo7fxag1bqnne8dnbaz53p7.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2fwo7fxag1bqnne8dnbaz53p7.o
+new file mode 100644
+index 0000000..059be8f
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2fwo7fxag1bqnne8dnbaz53p7.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2mr0iwqgt4fjlbbtwx6wm7r59.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2mr0iwqgt4fjlbbtwx6wm7r59.o
+new file mode 100644
+index 0000000..ddac640
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2mr0iwqgt4fjlbbtwx6wm7r59.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2tcjao08rytlt1tkyayu16df4.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2tcjao08rytlt1tkyayu16df4.o
+new file mode 100644
+index 0000000..9fe59dc
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2tcjao08rytlt1tkyayu16df4.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2yignoc1uvqu1tgcgtvryxx4w.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2yignoc1uvqu1tgcgtvryxx4w.o
+new file mode 100644
+index 0000000..dcc8934
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/2yignoc1uvqu1tgcgtvryxx4w.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/3d567xor7hcffpwlo3ar6pabg.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/3d567xor7hcffpwlo3ar6pabg.o
+new file mode 100644
+index 0000000..5823050
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/3d567xor7hcffpwlo3ar6pabg.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/3vtdyvz6g0wlztcx2xqu18bph.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/3vtdyvz6g0wlztcx2xqu18bph.o
+new file mode 100644
+index 0000000..0055336
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/3vtdyvz6g0wlztcx2xqu18bph.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/49jnkr6k2bmwquiumbwebksky.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/49jnkr6k2bmwquiumbwebksky.o
+new file mode 100644
+index 0000000..03c140c
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/49jnkr6k2bmwquiumbwebksky.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/57mvtlq3p2uvimhidislpchvq.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/57mvtlq3p2uvimhidislpchvq.o
+new file mode 100644
+index 0000000..b60821f
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/57mvtlq3p2uvimhidislpchvq.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/5arlvnozimwn7s54eetg9dajk.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/5arlvnozimwn7s54eetg9dajk.o
+new file mode 100644
+index 0000000..db7063e
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/5arlvnozimwn7s54eetg9dajk.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/5wexdfcqgh5ggdaesjo9hm2mg.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/5wexdfcqgh5ggdaesjo9hm2mg.o
+new file mode 100644
+index 0000000..e0ce4ba
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/5wexdfcqgh5ggdaesjo9hm2mg.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/60n8fnw0r27mc277fnscl5uo8.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/60n8fnw0r27mc277fnscl5uo8.o
+new file mode 100644
+index 0000000..e2e79bc
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/60n8fnw0r27mc277fnscl5uo8.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/63e3ovsa4vu5ao7dk2pg4aasp.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/63e3ovsa4vu5ao7dk2pg4aasp.o
+new file mode 100644
+index 0000000..2fb4224
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/63e3ovsa4vu5ao7dk2pg4aasp.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/6l8z6hjib61uwwrgt6nho73hn.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/6l8z6hjib61uwwrgt6nho73hn.o
+new file mode 100644
+index 0000000..a49b758
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/6l8z6hjib61uwwrgt6nho73hn.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/6nsx8aclykhmqozjvl2iy2su0.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/6nsx8aclykhmqozjvl2iy2su0.o
+new file mode 100644
+index 0000000..b30ce5e
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/6nsx8aclykhmqozjvl2iy2su0.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/7lxmcefllqr13f4rxcoahnesh.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/7lxmcefllqr13f4rxcoahnesh.o
+new file mode 100644
+index 0000000..3acb60d
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/7lxmcefllqr13f4rxcoahnesh.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/7xp925e2xfdzc75vv8mjdao15.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/7xp925e2xfdzc75vv8mjdao15.o
+new file mode 100644
+index 0000000..49a9c59
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/7xp925e2xfdzc75vv8mjdao15.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/84u6my7cxd755ikkhi5donloj.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/84u6my7cxd755ikkhi5donloj.o
+new file mode 100644
+index 0000000..f988e1d
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/84u6my7cxd755ikkhi5donloj.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/87zumwdlj3d4tp8xezzlbet6k.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/87zumwdlj3d4tp8xezzlbet6k.o
+new file mode 100644
+index 0000000..3cd1af4
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/87zumwdlj3d4tp8xezzlbet6k.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8kv2rgecgp6ljowohz29zknrc.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8kv2rgecgp6ljowohz29zknrc.o
+new file mode 100644
+index 0000000..f96ac06
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8kv2rgecgp6ljowohz29zknrc.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8p3ngt2i9xuioloyy7h06bbsr.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8p3ngt2i9xuioloyy7h06bbsr.o
+new file mode 100644
+index 0000000..ce83342
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8p3ngt2i9xuioloyy7h06bbsr.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8sc9koezxstui0kmj4zdxt6jn.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8sc9koezxstui0kmj4zdxt6jn.o
+new file mode 100644
+index 0000000..3ab79f5
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/8sc9koezxstui0kmj4zdxt6jn.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/98fpuqnnbzo58s1d80xnl3b1a.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/98fpuqnnbzo58s1d80xnl3b1a.o
+new file mode 100644
+index 0000000..170b58b
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/98fpuqnnbzo58s1d80xnl3b1a.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9eavwqq07ht7mbwm7d78q4fgg.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9eavwqq07ht7mbwm7d78q4fgg.o
+new file mode 100644
+index 0000000..13c6a13
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9eavwqq07ht7mbwm7d78q4fgg.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9rgsua084pb6w2t62i55nmgvm.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9rgsua084pb6w2t62i55nmgvm.o
+new file mode 100644
+index 0000000..2047e0d
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9rgsua084pb6w2t62i55nmgvm.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9rohh5282jehhtgj3jdyv98oe.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9rohh5282jehhtgj3jdyv98oe.o
+new file mode 100644
+index 0000000..a5044be
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9rohh5282jehhtgj3jdyv98oe.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9tleo24f4bambkuf1ssdo9hcd.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9tleo24f4bambkuf1ssdo9hcd.o
+new file mode 100644
+index 0000000..00b112b
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/9tleo24f4bambkuf1ssdo9hcd.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a1zxmf9tphhbn54hoqyw9odyb.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a1zxmf9tphhbn54hoqyw9odyb.o
+new file mode 100644
+index 0000000..9bf4b60
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a1zxmf9tphhbn54hoqyw9odyb.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a3xpvjlqdasrm3wa72yr577y5.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a3xpvjlqdasrm3wa72yr577y5.o
+new file mode 100644
+index 0000000..eff8f90
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a3xpvjlqdasrm3wa72yr577y5.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a7818uu9r522x7pm5t4nbfb2y.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a7818uu9r522x7pm5t4nbfb2y.o
+new file mode 100644
+index 0000000..175dafb
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/a7818uu9r522x7pm5t4nbfb2y.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/ac35jxdx4t9mdfp7oi9ju2tpr.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/ac35jxdx4t9mdfp7oi9ju2tpr.o
+new file mode 100644
+index 0000000..40caf46
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/ac35jxdx4t9mdfp7oi9ju2tpr.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/b7jnfkuzvlmjnbvfgzwx3p9ae.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/b7jnfkuzvlmjnbvfgzwx3p9ae.o
+new file mode 100644
+index 0000000..285c74d
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/b7jnfkuzvlmjnbvfgzwx3p9ae.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/brqudxoez4ydaiq46p13sed3c.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/brqudxoez4ydaiq46p13sed3c.o
+new file mode 100644
+index 0000000..e46be1e
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/brqudxoez4ydaiq46p13sed3c.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/c011uzibkiode64ppolkc1k9t.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/c011uzibkiode64ppolkc1k9t.o
+new file mode 100644
+index 0000000..e6dd2a4
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/c011uzibkiode64ppolkc1k9t.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/c4dg5m4cayl2g4kxo80uha3vf.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/c4dg5m4cayl2g4kxo80uha3vf.o
+new file mode 100644
+index 0000000..8353de4
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/c4dg5m4cayl2g4kxo80uha3vf.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/cd0djtfanv1cgcm91r2324nga.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/cd0djtfanv1cgcm91r2324nga.o
+new file mode 100644
+index 0000000..ca6f6a2
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/cd0djtfanv1cgcm91r2324nga.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/ce140a84h51jg2tgk5tjbf48q.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/ce140a84h51jg2tgk5tjbf48q.o
+new file mode 100644
+index 0000000..b5ca223
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/ce140a84h51jg2tgk5tjbf48q.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/dep-graph.bin b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/dep-graph.bin
+new file mode 100644
+index 0000000..789f459
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/dep-graph.bin differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/dg5f4boedib964c90noyg5mgb.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/dg5f4boedib964c90noyg5mgb.o
+new file mode 100644
+index 0000000..8eeed79
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/dg5f4boedib964c90noyg5mgb.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/du2uq4ep2z57n8t0r7kh2dbno.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/du2uq4ep2z57n8t0r7kh2dbno.o
+new file mode 100644
+index 0000000..9979c0e
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/du2uq4ep2z57n8t0r7kh2dbno.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/e5v79pov4vhh80uylytjols55.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/e5v79pov4vhh80uylytjols55.o
+new file mode 100644
+index 0000000..a221799
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/e5v79pov4vhh80uylytjols55.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/e66h3zvw2cfujvbyonn8yncnz.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/e66h3zvw2cfujvbyonn8yncnz.o
+new file mode 100644
+index 0000000..599172c
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/e66h3zvw2cfujvbyonn8yncnz.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/eshv2jct3vxs4lepblrqax3ex.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/eshv2jct3vxs4lepblrqax3ex.o
+new file mode 100644
+index 0000000..e09a227
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/eshv2jct3vxs4lepblrqax3ex.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/f2t5aago39p43nn10op1vtm61.o b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/f2t5aago39p43nn10op1vtm61.o
+new file mode 100644
+index 0000000..e8752d8
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/f2t5aago39p43nn10op1vtm61.o differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/query-cache.bin b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/query-cache.bin
+new file mode 100644
+index 0000000..5a4d7d6
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/query-cache.bin differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/work-products.bin b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/work-products.bin
+new file mode 100644
+index 0000000..55da700
+Binary files /dev/null and b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx-dj7ac6uzpzi77t2yr04trqnsn/work-products.bin differ
+diff --git a/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx.lock b/target/debug/incremental/wordy-3tmuls8rgp481/s-h77dopa482-0zjtvwx.lock
+new file mode 100644
+index 0000000..e69de29
+
+2025-05-10 02:49:38,085 - ThreadPoolExecutor-0_18 - INFO - Container output: Saved working directory and index state WIP on master: ed4bf7c Initial commit
+
+2025-05-10 02:49:38,225 - ThreadPoolExecutor-0_18 - INFO - Container output: HEAD is now at e8ffb6c all files
+
+2025-05-10 02:49:38,355 - ThreadPoolExecutor-0_18 - INFO - Container output: Removing Cargo.lock
+Removing target/
+
+2025-05-10 02:49:38,468 - ThreadPoolExecutor-0_18 - INFO - Container output: On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/lib.rs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (f3fafc67b28afe9df5ab28b0d296b976c62e671c)
+
+2025-05-10 02:49:38,469 - ThreadPoolExecutor-0_18 - INFO - Running the eval
+2025-05-10 02:49:38,574 - ThreadPoolExecutor-0_18 - INFO - Copying polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__wordy_eval.sh to container at /testbed/eval.sh
+2025-05-10 02:49:38,582 - ThreadPoolExecutor-0_18 - INFO - Successfully copied polyglot/predictions/20250510_021328--claude-3-5-sonnet-20241022_0/rust__wordy_eval.sh to container
+2025-05-10 02:49:38,680 - ThreadPoolExecutor-0_18 - INFO - Container output: /testbed:
+Cargo.toml
+eval.sh
+src
+tests
+
+/testbed/src:
+lib.rs
+
+/testbed/tests:
+wordy.rs
+
+2025-05-10 02:49:38,772 - ThreadPoolExecutor-0_18 - INFO - Container output: 
+2025-05-10 02:49:39,509 - ThreadPoolExecutor-0_18 - INFO - Container output: + cargo test -- --include-ignored
+   Compiling wordy v1.5.0 (/testbed)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.59s
+     Running unittests src/lib.rs (target/debug/deps/wordy-700213af80ce0518)
+
+running 11 tests
+test tests::test_addition ... ok
+test tests::test_division ... ok
+test tests::test_division_by_zero ... ok
+test tests::test_exponentiation_without_feature ... ok
+test tests::test_invalid_syntax ... ok
+test tests::test_invalid_question ... ok
+test tests::test_multiple_operations ... ok
+test tests::test_numbers ... ok
+test tests::test_subtraction ... ok
+test tests::test_multiplication ... ok
+test tests::test_unsupported_operation ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/wordy.rs (target/debug/deps/wordy-4bef527a64e7b23d)
+
+running 23 tests
+test addition ... ok
+test addition_and_subtraction ... ok
+test addition_and_multiplication ... ok
+test addition_with_negative_numbers ... ok
+test division ... ok
+test just_a_number ... ok
+test large_addition ... ok
+test more_addition ... ok
+test multiple_division ... ok
+test multiple_additions ... ok
+test multiple_multiplication ... ok
+test multiplication ... ok
+test multiple_subtraction ... ok
+test non_math_question ... ok
+test reject_postfix_notation ... ok
+test reject_prefix_notation ... ok
+test reject_problem_missing_an_operand ... ok
+test reject_problem_with_no_operands_or_operators ... FAILED
+test reject_two_operations_in_a_row ... ok
+test reject_two_numbers_in_a_row ... ok
+test subtraction_then_addition ... ok
+test unknown_operation ... ok
+test subtraction ... ok
+
+failures:
+
+---- reject_problem_with_no_operands_or_operators stdout ----
+
+thread 'reject_problem_with_no_operands_or_operators' panicked at src/lib.rs:9:27:
+begin <= end (8 <= 7) when slicing `What is?`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    reject_problem_with_no_operands_or_operators
+
+test result: FAILED. 22 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test wordy`
+
+2025-05-10 02:49:39,518 - ThreadPoolExecutor-0_18 - INFO - Attempting to stop container pb.eval.rust__wordy.20250510_024551_765850...
+2025-05-10 02:49:55,040 - ThreadPoolExecutor-0_18 - INFO - Attempting to remove container pb.eval.rust__wordy.20250510_024551_765850...
+2025-05-10 02:49:56,063 - ThreadPoolExecutor-0_18 - INFO - Container pb.eval.rust__wordy.20250510_024551_765850 removed.
