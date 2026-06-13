@@ -2,22 +2,35 @@
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#0f0c29"/>
-      <stop offset="50%" style="stop-color:#1a0a2e"/>
-      <stop offset="100%" style="stop-color:#16213e"/>
+      <stop offset="50%" style="stop-color:#1a1a3e"/>
+      <stop offset="100%" style="stop-color:#24243e"/>
     </linearGradient>
     <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f7c948"/>
-      <stop offset="100%" style="stop-color:#e8a317"/>
+      <stop offset="0%" style="stop-color:#f6d365"/>
+      <stop offset="100%" style="stop-color:#fda085"/>
     </linearGradient>
     <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#00d2ff"/>
       <stop offset="100%" style="stop-color:#3a7bd5"/>
     </linearGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d2ff"/>
+      <stop offset="100%" style="stop-color:#3a7bd5"/>
+    </linearGradient>
+    <!-- Lion clipart paths (CC0 libreclipart.org) -->
+    <g id="lion">
+      <path d="M 0,0 C 28.831,11.252 55.348,27.117 78.661,46.68 77.743,73.978 74.93,81.247 74.93,81.247 74.93,81.247 33.559,45.05 0,0"/>
+      <path d="M 0,0 C 37.321,65.153 62.578,196.724 33.737,281.907 73.881,251.625 135.366,156.407 122.715,50.604 117.022,89.191 89.822,158.138 70.846,172.687 76.539,133.89 29.098,21.507 0,0 m -7.871,274.237 c -47.232,-8.856 -64.662,-52.773 -64.662,-52.773 0,0 43.858,12.37 56.086,35.563 10.965,-46.809 -74.471,-70.424 -75.188,-70.846 l -6.198,-4.076 C -111.624,251.264 -43.876,303.976 2.091,299.9 34.982,240.58 30.784,133.89 24.881,130.096 24.459,155.819 2.672,265.803 -7.871,274.237 M -19.826,114.709 c -2.947,-30.363 -13.909,-69.165 -36.4,-86.666 22.491,47.793 24.458,111.33 -5.497,150.969 l 22.926,-5.904 12.653,23.616 c 2.694,-7.293 10.127,-42.749 6.318,-82.015 M -126.089,21.296 c 37.813,76.768 1.881,146.354 1.881,146.354 -31.017,48.636 -58.476,54.539 -58.476,54.539 0,0 62.078,84.25 148.949,84.932 -22.773,-9.534 -109.964,-54.363 -78.437,-117.988 37.768,-76.22 15.469,-144.341 -13.917,-167.837 m -61.146,-32.049 c 28.676,23.334 66.067,90.561 49.48,173.178 13.946,-20.803 17.772,-62.099 11.858,-99.217 -5.573,-34.979 -23.054,-66.385 -61.338,-73.961 m -41.327,-66.629 c -3.945,7.591 -7.932,55.243 39.491,61.006 0,0 -23.738,-22.21 -39.491,-61.006 m -4.917,39.499 c 2.723,49.621 -25.563,117.527 -62.14,132.23 63.929,-22.011 77.319,-92.028 62.14,-132.23 m -12.758,-17.384 c -0.255,108.207 -41.915,98.361 -66.864,71.203 70.32,102.082 81.667,-70.693 66.864,-71.203 m -6.178,6.854 c -15.398,14.794 -21.483,32.207 -21.483,32.207 0,0 7.377,-5.666 13.887,-8.232 6.51,-2.566 5.483,10.746 5.483,10.746 5.133,-15.851 3.321,-32.306 2.113,-34.721 m -31.917,35.868 c -9.499,6.703 -17.53,14.495 -23.058,24.142 3.158,15.567 36.143,26.031 48.393,-9.698 -11.314,19.397 -31.9,16.078 -33.432,16.078 -1.531,0 -0.324,-12.913 8.097,-30.522 m -31.811,47.741 c -0.51,0.601 45.875,23.912 32.971,38.04 -11.105,12.158 -36.899,-16.025 -39.288,-25.408 -2.32,17.677 26.934,32.048 28.789,33.628 0,0 -0.559,3.146 -9.944,6.342 -12.665,4.552 -31.204,-9.505 -34.589,-21.169 -0.843,2.214 3.725,23.799 24.177,25.447 l 0.106,-0.043 c 13.316,-3.22 25.262,-10.709 28.451,-16.971 0,0 38.559,77.978 28.633,119.509"/>
+      <path d="m 0,0 c -8.679,-8.14 -16.851,-16.812 -24.444,-25.983 7.176,-1.255 14.292,-3.531 20.729,-6.981 0,0 -0.253,14.829 3.715,32.964"/>
+      <path d="M 0,0 C 5.254,20.381 21.243,40.31 40.964,55.907 32.779,53.226 24.759,50.183 16.923,46.792 9.565,38.25 3.481,29.008 1.265,21.295 0.382,27.617 0.587,33.773 1.44,39.532 -1.224,38.181 -3.864,36.79 -6.479,35.357 -6.802,25.077 -5.172,13.425 0,0"/>
+      <path d="m 0,0 c -2.898,0.088 -5.804,0.147 -8.724,0.147 -4.866,0 -9.703,-0.123 -14.508,-0.367 -17.752,-8.529 -29.555,-16.644 -29.555,-16.644 2.196,5.119 5.223,10.182 9.147,14.859 -4.209,-0.519 -8.386,-1.141 -12.536,-1.844 -8.032,-15.133 -17.323,-32.865 -20.056,-53.512 C -53.701,-27.499 -26.722,-9.267 0,0"/>
+      <path d="m 0,0 c 6.574,1.042 13.077,2.3 19.492,3.788 36.328,57.404 114.886,119.733 122.67,168.578 13.979,-34.578 15.373,-65.88 10.837,-95.143 5.972,5.862 11.685,11.985 17.119,18.355 -1.74,74.549 -21.63,111.128 -21.63,111.128 C 124.03,148.793 37.811,76.892 0,0"/>
+    </g>
   </defs>
 
   <rect width="1280" height="640" fill="url(#bg)"/>
 
-  <!-- Subtle grid pattern -->
+  <!-- Subtle grid -->
   <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
     <line x1="0" y1="100" x2="1280" y2="100"/>
     <line x1="0" y1="200" x2="1280" y2="200"/>
@@ -32,52 +45,41 @@
     <line x1="1200" y1="0" x2="1200" y2="640"/>
   </g>
 
-  <!-- Glow effects -->
+  <!-- Glow -->
   <circle cx="640" cy="320" r="300" fill="#00d2ff" opacity="0.03"/>
-  <circle cx="640" cy="320" r="200" fill="#f7c948" opacity="0.04"/>
+  <circle cx="640" cy="320" r="200" fill="#f6d365" opacity="0.04"/>
 
-  <!-- Abstract Ouroboros / Self-reference ring -->
-  <path d="M 640 140 C 780 140, 880 230, 880 340 C 880 450, 780 520, 640 520 C 500 520, 400 450, 400 340 C 400 230, 500 140, 640 140"
-        fill="none" stroke="url(#gold)" stroke-width="3" opacity="0.5"/>
-  <path d="M 640 120 C 800 120, 910 225, 910 340 C 910 455, 800 540, 640 540 C 480 540, 370 455, 370 340 C 370 225, 480 120, 640 120"
-        fill="none" stroke="url(#cyan)" stroke-width="1.5" opacity="0.25"/>
+  <!-- Logo area (left) -->
+  <g transform="translate(160, 320)">
+    <circle cx="0" cy="0" r="160" fill="url(#bg)" stroke="url(#ring)" stroke-width="4"/>
+    <circle cx="0" cy="0" r="156" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.3"/>
+    <g transform="translate(0, 8) scale(0.237)">
+      <use href="#lion" fill="url(#gold)"/>
+    </g>
+  </g>
 
-  <!-- Code bracket decorations -->
-  <text x="320" y="260" font-family="'Courier New', monospace" font-size="80" fill="url(#cyan)" opacity="0.08" font-weight="bold">&lt;/&gt;</text>
-  <text x="880" y="440" font-family="'Courier New', monospace" font-size="80" fill="url(#gold)" opacity="0.08" font-weight="bold">{  }</text>
-  <text x="220" y="500" font-family="'Courier New', monospace" font-size="40" fill="#00d2ff" opacity="0.05">def evolve():</text>
-  <text x="980" y="180" font-family="'Courier New', monospace" font-size="40" fill="#f7c948" opacity="0.05">return self</text>
+  <!-- Title area (right) -->
+  <text x="500" y="280" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="96" font-weight="700" fill="url(#gold)" letter-spacing="8">GODELION</text>
 
-  <!-- Main title -->
-  <text x="640" y="300" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="96" font-weight="700" fill="url(#gold)" text-anchor="middle" letter-spacing="8">GODELION</text>
+  <text x="500" y="340" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="24" fill="url(#cyan)" letter-spacing="4" opacity="0.9">Open-Ended Evolution of</text>
+  <text x="500" y="375" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="24" fill="url(#cyan)" letter-spacing="4" opacity="0.9">Self-Improving Coding Agents</text>
 
-  <!-- Subtitle -->
-  <text x="640" y="370" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="28" fill="url(#cyan)" text-anchor="middle" letter-spacing="4" opacity="0.9">Open-Ended Evolution of Self-Improving Coding Agents</text>
+  <text x="500" y="430" font-family="'Courier New', monospace" font-size="16" fill="#ffffff" text-anchor="start" letter-spacing="3" opacity="0.4">Recursive Self-Improvement  •  Empirically Validated  •  Safely Sandboxed</text>
 
-  <!-- Tagline -->
-  <text x="640" y="430" font-family="'Courier New', monospace" font-size="18" fill="#ffffff" text-anchor="middle" letter-spacing="3" opacity="0.4">Recursive Self-Improvement  •  Empirically Validated  •  Safely Sandboxed</text>
+  <line x1="500" y1="460" x2="1150" y2="460" stroke="url(#gold)" stroke-width="2" opacity="0.3"/>
 
-  <!-- Decorative bottom line -->
-  <line x1="440" y1="465" x2="840" y2="465" stroke="url(#gold)" stroke-width="2" opacity="0.3"/>
+  <!-- Badges -->
+  <rect x="500" y="480" rx="15" ry="15" width="150" height="35" fill="none" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
+  <text x="575" y="503" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#00d2ff" text-anchor="middle" opacity="0.8">Darwinian Evolution</text>
 
-  <!-- Badge-style indicators -->
-  <rect x="420" y="490" rx="15" ry="15" width="160" height="35" fill="none" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
-  <text x="500" y="513" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#00d2ff" text-anchor="middle" opacity="0.8">🧬 Darwinian</text>
+  <rect x="665" y="480" rx="15" ry="15" width="155" height="35" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <text x="742" y="503" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#f6d365" text-anchor="middle" opacity="0.8">Multi-Provider LLM</text>
 
-  <rect x="560" y="490" rx="15" ry="15" width="160" height="35" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
-  <text x="640" y="513" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#f7c948" text-anchor="middle" opacity="0.8">🔄 Self-Improving</text>
+  <rect x="835" y="480" rx="15" ry="15" width="150" height="35" fill="none" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
+  <text x="910" y="503" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#00d2ff" text-anchor="middle" opacity="0.8">Safely Sandboxed</text>
 
-  <rect x="700" y="490" rx="15" ry="15" width="160" height="35" fill="none" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
-  <text x="780" y="513" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#00d2ff" text-anchor="middle" opacity="0.8">🛡️ Sandboxed</text>
-
-  <!-- Nodes / neural decoration -->
-  <circle cx="160" cy="160" r="4" fill="#00d2ff" opacity="0.4"/>
-  <circle cx="1120" cy="500" r="4" fill="#00d2ff" opacity="0.4"/>
-  <circle cx="180" cy="500" r="3" fill="#f7c948" opacity="0.3"/>
-  <circle cx="1100" cy="160" r="3" fill="#f7c948" opacity="0.3"/>
-
-  <line x1="160" y1="160" x2="180" y2="500" stroke="#00d2ff" stroke-width="0.8" opacity="0.12"/>
-  <line x1="1100" y1="160" x2="1120" y2="500" stroke="#00d2ff" stroke-width="0.8" opacity="0.12"/>
-  <line x1="160" y1="160" x2="1100" y2="160" stroke="#00d2ff" stroke-width="0.8" opacity="0.08"/>
-  <line x1="180" y1="500" x2="1120" y2="500" stroke="#00d2ff" stroke-width="0.8" opacity="0.08"/>
+  <!-- Decorative code brackets -->
+  <text x="450" y="570" font-family="'Courier New', monospace" font-size="30" fill="url(#cyan)" opacity="0.06" font-weight="bold">&lt;/&gt;</text>
+  <text x="1050" y="150" font-family="'Courier New', monospace" font-size="50" fill="url(#gold)" opacity="0.06" font-weight="bold">{  }</text>
+  <text x="180" y="580" font-family="'Courier New', monospace" font-size="30" fill="#00d2ff" opacity="0.05">def evolve(): ~self</text>
 </svg>

@@ -1,118 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a0a2e"/>
-      <stop offset="50%" style="stop-color:#16213e"/>
-      <stop offset="100%" style="stop-color:#0f3460"/>
+      <stop offset="0%" style="stop-color:#0f0c29"/>
+      <stop offset="50%" style="stop-color:#1a1a3e"/>
+      <stop offset="100%" style="stop-color:#24243e"/>
     </linearGradient>
     <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f7c948"/>
-      <stop offset="100%" style="stop-color:#e8a317"/>
+      <stop offset="0%" style="stop-color:#f6d365"/>
+      <stop offset="100%" style="stop-color:#fda085"/>
     </linearGradient>
-    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#00d2ff"/>
       <stop offset="100%" style="stop-color:#3a7bd5"/>
     </linearGradient>
-    <linearGradient id="mane" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f7c948;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#e8a317;stop-opacity:0.05"/>
-    </linearGradient>
   </defs>
-
   <!-- Background circle -->
-  <circle cx="256" cy="256" r="248" fill="url(#bg)" stroke="url(#gold)" stroke-width="3"/>
-
-  <!-- Outer ring -->
-  <circle cx="256" cy="256" r="240" fill="none" stroke="url(#cyan)" stroke-width="1" stroke-opacity="0.3"/>
-  <circle cx="256" cy="256" r="230" fill="none" stroke="url(#gold)" stroke-width="0.5" stroke-opacity="0.2"/>
-
-  <!-- Text path -->
-  <path id="text-path" d="M 256 40 A 216 216 0 1 1 255.9 40" fill="none"/>
-  <text font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="700" fill="url(#gold)" letter-spacing="12">
-    <textPath href="#text-path" startOffset="28%">GODELION</textPath>
-  </text>
-
-  <!-- Subtle inner ring with code brackets -->
-  <circle cx="256" cy="256" r="175" fill="none" stroke="url(#cyan)" stroke-width="0.8" stroke-opacity="0.15" stroke-dasharray="8,6"/>
-
-  <!-- Mane: Ouroboros/Möbius self-referential loop -->
-  <path d="M 256 100 
-           C 340 100, 400 160, 400 256 
-           C 400 352, 340 412, 256 412 
-           C 172 412, 112 352, 112 256 
-           C 112 160, 172 100, 256 100"
-        fill="none" stroke="url(#mane)" stroke-width="40" stroke-opacity="0.6"/>
-
-  <!-- Mane detail arcs -->
-  <path d="M 256 85 C 355 85, 425 155, 425 256 C 425 357, 355 427, 256 427 C 157 427, 87 357, 87 256 C 87 155, 157 85, 256 85"
-        fill="none" stroke="url(#gold)" stroke-width="2" stroke-opacity="0.25"/>
-  <path d="M 256 70 C 370 70, 450 150, 450 256 C 450 362, 370 442, 256 442 C 142 442, 62 362, 62 256 C 62 150, 142 70, 256 70"
-        fill="none" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.15"/>
-
-  <!-- Lion Face - Geometric Abstract -->
-  <!-- Main face shape -->
-  <ellipse cx="256" cy="260" rx="75" ry="80" fill="#1a0a2e" stroke="url(#gold)" stroke-width="2.5"/>
-
-  <!-- Eyes -->
-  <ellipse cx="225" cy="240" rx="16" ry="18" fill="#0a0a1a" stroke="url(#cyan)" stroke-width="2"/>
-  <ellipse cx="287" cy="240" rx="16" ry="18" fill="#0a0a1a" stroke="url(#cyan)" stroke-width="2"/>
-
-  <!-- Eye pupils - infinity symbol within -->
-  <text x="224" y="249" font-family="'Courier New', monospace" font-size="20" fill="#00d2ff" text-anchor="middle">∞</text>
-  <text x="286" y="249" font-family="'Courier New', monospace" font-size="20" fill="#00d2ff" text-anchor="middle">∞</text>
-
-  <!-- Angular brows / code brackets -->
-  <text x="256" y="210" font-family="'Courier New', monospace" font-size="18" fill="url(#gold)" text-anchor="middle" font-weight="bold">&lt;/&gt;</text>
-
-  <!-- Nose bridge -->
-  <line x1="256" y1="258" x2="256" y2="290" stroke="url(#gold)" stroke-width="2" stroke-opacity="0.6"/>
-
-  <!-- Nose -->
-  <ellipse cx="256" cy="292" rx="10" ry="7" fill="url(#gold)"/>
-
-  <!-- Mouth / Gödel brackets -->
-  <text x="256" y="320" font-family="'Courier New', monospace" font-size="16" fill="url(#cyan)" text-anchor="middle" font-weight="bold">{  }</text>
-
-  <!-- Whiskers - code parentheses and brackets -->
-  <line x1="190" y1="260" x2="155" y2="248" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
-  <line x1="190" y1="270" x2="155" y2="270" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
-  <line x1="190" y1="280" x2="155" y2="292" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
-
-  <line x1="322" y1="260" x2="357" y2="248" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
-  <line x1="322" y1="270" x2="357" y2="270" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
-  <line x1="322" y1="280" x2="357" y2="292" stroke="url(#cyan)" stroke-width="1.5" stroke-opacity="0.5"/>
-
-  <!-- Small dots at whisker ends -->
-  <circle cx="155" cy="248" r="2.5" fill="url(#cyan)" opacity="0.6"/>
-  <circle cx="155" cy="270" r="2.5" fill="url(#cyan)" opacity="0.6"/>
-  <circle cx="155" cy="292" r="2.5" fill="url(#cyan)" opacity="0.6"/>
-  <circle cx="357" cy="248" r="2.5" fill="url(#cyan)" opacity="0.6"/>
-  <circle cx="357" cy="270" r="2.5" fill="url(#cyan)" opacity="0.6"/>
-  <circle cx="357" cy="292" r="2.5" fill="url(#cyan)" opacity="0.6"/>
-
-  <!-- Ears -->
-  <path d="M 195 195 L 185 155 L 220 180" fill="#1a0a2e" stroke="url(#gold)" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M 317 195 L 327 155 L 292 180" fill="#1a0a2e" stroke="url(#gold)" stroke-width="2" stroke-linejoin="round"/>
-
-  <!-- Inner ear detail -->
-  <circle cx="200" cy="185" r="6" fill="url(#gold)" opacity="0.4"/>
-  <circle cx="312" cy="185" r="6" fill="url(#gold)" opacity="0.4"/>
-
-  <!-- Decorative nodes (neural network / machine) around face -->
-  <circle cx="160" cy="200" r="3" fill="#00d2ff" opacity="0.7"/>
-  <circle cx="148" cy="220" r="2" fill="#00d2ff" opacity="0.5"/>
-  <circle cx="170" cy="230" r="2.5" fill="#00d2ff" opacity="0.6"/>
-
-  <circle cx="352" cy="200" r="3" fill="#00d2ff" opacity="0.7"/>
-  <circle cx="364" cy="220" r="2" fill="#00d2ff" opacity="0.5"/>
-  <circle cx="342" cy="230" r="2.5" fill="#00d2ff" opacity="0.6"/>
-
-  <!-- Connection lines between nodes -->
-  <line x1="160" y1="200" x2="148" y2="220" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
-  <line x1="148" y1="220" x2="170" y2="230" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
-  <line x1="352" y1="200" x2="364" y2="220" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
-  <line x1="364" y1="220" x2="342" y2="230" stroke="#00d2ff" stroke-width="0.8" opacity="0.4"/>
-
-  <!-- Tagline at bottom -->
-  <text x="256" y="480" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="url(#cyan)" text-anchor="middle" letter-spacing="6" opacity="0.7">SELF-EVOLVING CODING AGENT</text>
+  <circle cx="256" cy="256" r="248" fill="url(#bg)" stroke="url(#ring)" stroke-width="4"/>
+  <!-- Outer ring glow -->
+  <circle cx="256" cy="256" r="244" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.3"/>
+  <!-- Lion head (coneixement's lion silhouette, adapted) -->
+  <g transform="translate(256,270) scale(0.37)" fill="url(#gold)">
+    <path d="M 0,0 C 28.831,11.252 55.348,27.117 78.661,46.68 77.743,73.978 74.93,81.247 74.93,81.247 74.93,81.247 33.559,45.05 0,0"/>
+    <path d="M 0,0 C 37.321,65.153 62.578,196.724 33.737,281.907 73.881,251.625 135.366,156.407 122.715,50.604 117.022,89.191 89.822,158.138 70.846,172.687 76.539,133.89 29.098,21.507 0,0 m -7.871,274.237 c -47.232,-8.856 -64.662,-52.773 -64.662,-52.773 0,0 43.858,12.37 56.086,35.563 10.965,-46.809 -74.471,-70.424 -75.188,-70.846 l -6.198,-4.076 C -111.624,251.264 -43.876,303.976 2.091,299.9 34.982,240.58 30.784,133.89 24.881,130.096 24.459,155.819 2.672,265.803 -7.871,274.237 M -19.826,114.709 c -2.947,-30.363 -13.909,-69.165 -36.4,-86.666 22.491,47.793 24.458,111.33 -5.497,150.969 l 22.926,-5.904 12.653,23.616 c 2.694,-7.293 10.127,-42.749 6.318,-82.015 M -126.089,21.296 c 37.813,76.768 1.881,146.354 1.881,146.354 -31.017,48.636 -58.476,54.539 -58.476,54.539 0,0 62.078,84.25 148.949,84.932 -22.773,-9.534 -109.964,-54.363 -78.437,-117.988 37.768,-76.22 15.469,-144.341 -13.917,-167.837 m -61.146,-32.049 c 28.676,23.334 66.067,90.561 49.48,173.178 13.946,-20.803 17.772,-62.099 11.858,-99.217 -5.573,-34.979 -23.054,-66.385 -61.338,-73.961 m -41.327,-66.629 c -3.945,7.591 -7.932,55.243 39.491,61.006 0,0 -23.738,-22.21 -39.491,-61.006 m -4.917,39.499 c 2.723,49.621 -25.563,117.527 -62.14,132.23 63.929,-22.011 77.319,-92.028 62.14,-132.23 m -12.758,-17.384 c -0.255,108.207 -41.915,98.361 -66.864,71.203 70.32,102.082 81.667,-70.693 66.864,-71.203 m -6.178,6.854 c -15.398,14.794 -21.483,32.207 -21.483,32.207 0,0 7.377,-5.666 13.887,-8.232 6.51,-2.566 5.483,10.746 5.483,10.746 5.133,-15.851 3.321,-32.306 2.113,-34.721 m -31.917,35.868 c -9.499,6.703 -17.53,14.495 -23.058,24.142 3.158,15.567 36.143,26.031 48.393,-9.698 -11.314,19.397 -31.9,16.078 -33.432,16.078 -1.531,0 -0.324,-12.913 8.097,-30.522 m -31.811,47.741 c -0.51,0.601 45.875,23.912 32.971,38.04 -11.105,12.158 -36.899,-16.025 -39.288,-25.408 -2.32,17.677 26.934,32.048 28.789,33.628 0,0 -0.559,3.146 -9.944,6.342 -12.665,4.552 -31.204,-9.505 -34.589,-21.169 -0.843,2.214 3.725,23.799 24.177,25.447 l 0.106,-0.043 c 13.316,-3.22 25.262,-10.709 28.451,-16.971 0,0 38.559,77.978 28.633,119.509"/>
+    <path d="m 0,0 c -8.679,-8.14 -16.851,-16.812 -24.444,-25.983 7.176,-1.255 14.292,-3.531 20.729,-6.981 0,0 -0.253,14.829 3.715,32.964"/>
+    <path d="M 0,0 C 5.254,20.381 21.243,40.31 40.964,55.907 32.779,53.226 24.759,50.183 16.923,46.792 9.565,38.25 3.481,29.008 1.265,21.295 0.382,27.617 0.587,33.773 1.44,39.532 -1.224,38.181 -3.864,36.79 -6.479,35.357 -6.802,25.077 -5.172,13.425 0,0"/>
+    <path d="m 0,0 c -2.898,0.088 -5.804,0.147 -8.724,0.147 -4.866,0 -9.703,-0.123 -14.508,-0.367 -17.752,-8.529 -29.555,-16.644 -29.555,-16.644 2.196,5.119 5.223,10.182 9.147,14.859 -4.209,-0.519 -8.386,-1.141 -12.536,-1.844 -8.032,-15.133 -17.323,-32.865 -20.056,-53.512 C -53.701,-27.499 -26.722,-9.267 0,0"/>
+    <path d="m 0,0 c 6.574,1.042 13.077,2.3 19.492,3.788 36.328,57.404 114.886,119.733 122.67,168.578 13.979,-34.578 15.373,-65.88 10.837,-95.143 5.972,5.862 11.685,11.985 17.119,18.355 -1.74,74.549 -21.63,111.128 -21.63,111.128 C 124.03,148.793 37.811,76.892 0,0"/>
+  </g>
 </svg>
