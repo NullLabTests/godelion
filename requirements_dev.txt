@@ -1,5 +1,13 @@
-# analysis
-networkx
-pygraphviz
-matplotlib
-plotly
+# Additional development and analysis dependencies
+# Install with: pip install -r requirements_dev.txt
+
+# Analysis & Visualization
+matplotlib>=3.7
+seaborn>=0.12
+pandas>=2.0
+graphviz>=0.20
+
+# Development tools
+ruff>=0.1
+mypy>=1.0
+pytest-cov>=4

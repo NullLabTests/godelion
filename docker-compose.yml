@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  godelion:
+    build: .
+    image: godelion:latest
+    container_name: godelion
+    volumes:
+      - .:/godelion
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_REGION_NAME=${AWS_REGION_NAME:-}
+    network_mode: "bridge"
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 8G

@@ -1,15 +1,17 @@
-datasets
-anthropic
+# Godelion Core Dependencies
+datasets>=2.14
+anthropic>=0.30
 anthropic[bedrock]
-backoff
+backoff>=2.2
 botocore
 boto3
-openai
+openai>=1.0
+pyyaml>=6.0
 
-# SWE-Bench
+# SWE-bench
 beautifulsoup4
 chardet
-docker
+docker>=6.0
 ghapi
 GitPython
 pre-commit
@@ -17,7 +19,7 @@ python-dotenv
 rich
 unidiff
 
-# pytest
-pytest
+# Testing
+pytest>=7
 pytest-asyncio
 async_timeout
