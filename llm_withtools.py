@@ -9,9 +9,10 @@ import copy
 from llm import create_client, get_response_from_llm
 from prompts.tooluse_prompt import get_tooluse_prompt
 from tools import load_all_tools
+from godelion.config import config
 
-CLAUDE_MODEL = 'bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0'
-OPENAI_MODEL = 'o3-mini-2025-01-31'
+CLAUDE_MODEL = config.get("llm", "coding_model", default="claude-sonnet-4-20250514")
+OPENAI_MODEL = config.get("llm", "coding_model", default="claude-sonnet-4-20250514")
 
 def process_tool_call(tools_dict, tool_name, tool_input):
     try:
@@ -102,9 +103,8 @@ def check_for_tool_use(response, model=''):
                 if isinstance(tool_use_dict, dict) and 'tool_name' in tool_use_dict and 'tool_input' in tool_use_dict:
                     return tool_use_dict
             except Exception:
-                pass
+                pass  # Expected for non-JSON content
 
-    # No tool use found
     return None
 
 def convert_tool_info(tool_info, model=None):
@@ -330,17 +330,19 @@ def chat_with_agent_manualtools(msg, model, msg_history=None, logging=print):
             # Check for next tool use
             tool_use = check_for_tool_use(response, model=client_model)
 
-    except Exception:
-        pass
+    except Exception as e:
+        logging(f"Error in chat_with_agent_manualtools: {e}")
 
     return new_msg_history
 
 def chat_with_agent_claude(
         msg,
-        model='bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0',
+        model=None,
         msg_history=None,
         logging=print,
     ):
+    if model is None:
+        model = CLAUDE_MODEL
     # Construct message
     if msg_history is None:
         msg_history = []
@@ -418,18 +420,20 @@ def chat_with_agent_claude(
                 }
             ],
         })
-
-    except Exception:
-        pass
+    except Exception as e:
+        logging(f"Error in chat_with_agent_claude: {e}")
 
     return new_msg_history
 
+
 def chat_with_agent_openai(
         msg,
-        model='o3-mini-2025-01-31',
+        model=None,
         msg_history=None,
         logging=print,
     ):
+    if model is None:
+        model = OPENAI_MODEL
     # Construct message
     if msg_history is None:
         msg_history = []
@@ -506,8 +510,8 @@ def chat_with_agent_openai(
         # Get final response
         new_msg_history.append(response)
 
-    except Exception:
-        pass
+    except Exception as e:
+        logging(f"Error in chat_with_agent_openai: {e}")
 
     return new_msg_history
 

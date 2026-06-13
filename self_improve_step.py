@@ -14,7 +14,7 @@ from swe_bench.report import make_report
 from utils.common_utils import load_json_file
 from utils.evo_utils import get_model_patch_paths, get_all_performance, is_compiled_self_improve
 from utils.docker_utils import (
-    build_dgm_container,
+    build_dgm_container as build_godelion_container,
     cleanup_container,
     copy_from_container,
     copy_to_container,
@@ -23,9 +23,10 @@ from utils.docker_utils import (
     setup_logger,
     safe_log,
 )
+from godelion.config import config
 
 dataset = None
-diagnose_model = 'o1-2024-12-17'
+diagnose_model = config.get("llm", "diagnose_model", default="claude-sonnet-4-20250514")
 
 def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attempts=3, polyglot=False):
     client = create_client(diagnose_model)
@@ -248,9 +249,9 @@ def self_improve(
 
     # Variables for this self-improvement attempt
     metadata = {}
-    root_dir = os.path.abspath('./')  # root_dir should be /dgm
+    root_dir = os.path.abspath('./')
     run_id = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_%f')
-    out_dir_base = output_dir  # out_dir_base should be /dgm/output_selfimprove/ or /dgm/output_dgm/{dgm_run_id}/
+    out_dir_base = output_dir
     output_dir = os.path.join(root_dir, f"{output_dir}/{run_id}/")
     os.makedirs(output_dir, exist_ok=True)
     metadata['run_id'] = run_id
@@ -260,56 +261,69 @@ def self_improve(
     # Set up logger
     logger = setup_logger(os.path.join(output_dir, "self_improve.log"))
 
+    # Resolve Docker config
+    docker_cfg = {
+        "image_name": config.get("docker", "image_name", default="godelion"),
+        "container_prefix": config.get("docker", "container_prefix", default="godelion"),
+        "timeout": config.get("docker", "timeout_seconds", default=1800),
+        "network_disabled": config.get("docker", "network_disabled", default=True),
+    }
+    WORKDIR = "/godelion"
+
     # Create and start the Docker container
-    image_name = "dgm"
-    container_name = f"dgm-container-{run_id}"
+    image_name = docker_cfg["image_name"]
+    container_name = f"{docker_cfg['container_prefix']}-container-{run_id}"
     client = docker.from_env()
-    # Remove any existing container with the same name
     remove_existing_container(client, container_name)
-    # Now create and start the container
-    container = build_dgm_container(
+    container = build_godelion_container(
         client, root_dir, image_name, container_name,
         force_rebuild=force_rebuild,
     )
     container.start()
 
+    # Configure container network isolation if enabled
+    if docker_cfg["network_disabled"]:
+        try:
+            client.api.update_container(container.id, network_mode="none")
+            safe_log("Network disabled for container.")
+        except Exception as e:
+            safe_log(f"Could not disable network: {e}")
+
     if polyglot:
-        # remove the swe version of coding_agent.py
-        exec_result = container.exec_run("rm /dgm/coding_agent.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/coding_agent.py", workdir='/')
         log_container_output(exec_result)
-        # rename coding_agent_polyglot.py to coding_agent.py
-        exec_result = container.exec_run("mv /dgm/coding_agent_polyglot.py /dgm/coding_agent.py", workdir='/')
+        exec_result = container.exec_run(f"mv {WORKDIR}/coding_agent_polyglot.py {WORKDIR}/coding_agent.py", workdir='/')
         log_container_output(exec_result)
-        # remove swe-specific files utils/eval_utils.py and utils/swe_log_parsers.py
-        exec_result = container.exec_run("rm /dgm/utils/eval_utils.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/utils/eval_utils.py", workdir='/')
         log_container_output(exec_result)
-        exec_result = container.exec_run("rm /dgm/utils/swe_log_parsers.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/utils/swe_log_parsers.py", workdir='/')
         log_container_output(exec_result)
     else:
-        # remove the polyglot version of coding_agent.py
-        exec_result = container.exec_run("rm /dgm/coding_agent_polyglot.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/coding_agent_polyglot.py", workdir='/')
 
     # Find all parent patches and apply them
     patch_files = get_model_patch_paths(root_dir, os.path.join(output_dir, '../'), parent_commit)
     if run_baseline not in ['no_selfimprove']:
         for patch_file in patch_files:
-            copy_to_container(container, patch_file, '/dgm/parent_patch.txt')
-            exec_result = container.exec_run("/bin/sh -c 'patch -p1 < /dgm/parent_patch.txt'", workdir='/dgm')
+            copy_to_container(container, patch_file, f'{WORKDIR}/parent_patch.txt')
+            exec_result = container.exec_run(f"/bin/sh -c 'patch -p1 < {WORKDIR}/parent_patch.txt'", workdir=WORKDIR)
             log_container_output(exec_result)
-            exec_result = container.exec_run("rm /dgm/parent_patch.txt", workdir='/dgm')
+            exec_result = container.exec_run(f"rm {WORKDIR}/parent_patch.txt", workdir=WORKDIR)
             log_container_output(exec_result)
 
-    # Commit this version of dgm, so that irrelevant changes are not included in the patch
-    exec_result = container.exec_run("git add --all", workdir='/dgm/')
+    # Commit this version so that irrelevant changes are not included in the patch
+    exec_result = container.exec_run("git add --all", workdir=WORKDIR)
     log_container_output(exec_result)
-    exec_result = container.exec_run("git -c user.name='user' -c user.email='you@example.com' commit -m 'a nonsense commit message'", workdir='/dgm/')
+    exec_result = container.exec_run("git -c user.name='user' -c user.email='you@example.com' commit -m 'baseline commit'", workdir=WORKDIR)
     log_container_output(exec_result)
     commit_output = exec_result.output.decode('utf-8')
-    # Git commit output format: `[master (root-commit) <hash>] a nonsense commit message`
-    commit_hash = commit_output.split()[1].strip("[]")  # Extract the hash part
+    if ']' in commit_output:
+        commit_hash = commit_output.split()[1].strip("[]")
+    else:
+        commit_hash = commit_output.strip()
 
     # Install requirements again in case of any changes
-    exec_result = container.exec_run("python -m pip install -r /dgm/requirements.txt", workdir='/')
+    exec_result = container.exec_run(f"python -m pip install -r {WORKDIR}/requirements.txt", workdir='/')
     log_container_output(exec_result)
 
     # Get tasks to improve
@@ -332,26 +346,30 @@ def self_improve(
         save_metadata(metadata, output_dir)
         return metadata
 
+    # Gather environment variables from config
+    env_var_names = config.get("docker", "env_vars", default=[
+        "ANTHROPIC_API_KEY", "OPENAI_API_KEY", "DEEPSEEK_API_KEY",
+        "OPENROUTER_API_KEY", "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION_NAME",
+    ])
+    env_vars = {}
+    for var_name in env_var_names:
+        val = os.getenv(var_name)
+        if val:
+            env_vars[var_name] = val
+
     # Run self-improvement
     safe_log("Running self-improvement")
-    chat_history_file_container = "/dgm/self_evo.md"
+    chat_history_file_container = f"{WORKDIR}/self_evo.md"
     test_description = get_test_description(swerepo=False)
-    env_vars = {
-        "ANTHROPIC_API_KEY": os.getenv('ANTHROPIC_API_KEY'),
-        "AWS_REGION": os.getenv('AWS_REGION'),
-        "AWS_REGION_NAME": os.getenv('AWS_REGION_NAME'),
-        "AWS_ACCESS_KEY_ID": os.getenv('AWS_ACCESS_KEY_ID'),
-        "AWS_SECRET_ACCESS_KEY": os.getenv('AWS_SECRET_ACCESS_KEY'),
-        "OPENAI_API_KEY": os.getenv('OPENAI_API_KEY'),
-    }
+    timeout_sec = docker_cfg["timeout"]
     cmd = [
-        "timeout", "1800",  # 30min timeout
-        "python", "/dgm/coding_agent.py",
+        "timeout", str(timeout_sec),
+        "python", f"{WORKDIR}/coding_agent.py",
         "--problem_statement", problem_statement,
-        "--git_dir", "/dgm/",
+        "--git_dir", WORKDIR,
         "--chat_history_file", chat_history_file_container,
         "--base_commit", commit_hash,
-        "--outdir", "/dgm/",
+        "--outdir", WORKDIR,
         "--test_description", test_description,
         "--self_improve",
     ]
@@ -362,7 +380,7 @@ def self_improve(
     chat_history_file = os.path.join(output_dir, "self_evo.md")
     copy_from_container(container, chat_history_file_container, chat_history_file)
     model_patch_file = os.path.join(output_dir, "model_patch.diff")
-    copy_from_container(container, "/dgm/model_patch.diff", model_patch_file)
+    copy_from_container(container, f"{WORKDIR}/model_patch.diff", model_patch_file)
 
     # Try reading the patch file to validate it
     try:
