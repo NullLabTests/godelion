@@ -58,6 +58,9 @@ def sm():
         "filter_compiled": _run.filter_compiled,
         "choose_selfimproves": _run.choose_selfimproves,
         "initialize_run": _run.initialize_run,
+        "build_parser": _run.build_parser,
+        "resolve_config_settings": _run.resolve_config_settings,
+        "resolve_run_id": _run.resolve_run_id,
     }
 
     # Cleanup: remove stubbed modules so other test files aren't affected
@@ -444,3 +447,128 @@ class TestEdgeCases:
             entries = sm["choose_selfimproves"](tmp, ["nonexistent"], 2,
                                                  method="diversity_weighted")
             assert entries == []
+
+
+# ===========================================================================
+#  Extracted helpers (v0.2.2+)
+# ===========================================================================
+
+class TestConfigExtraction:
+    def test_build_parser_returns_parser(self, sm):
+        p = sm["build_parser"]()
+        ns = p.parse_args(["--max-generation", "10", "--selfimprove-size", "3"])
+        assert ns.max_generation == 10
+        assert ns.selfimprove_size == 3
+
+    def test_build_parser_defaults(self, sm):
+        p = sm["build_parser"]()
+        ns = p.parse_args([])
+        assert ns.config is None
+        assert ns.max_generation is None
+        assert ns.resume is None
+
+    def test_build_parser_boolean_flags(self, sm):
+        p = sm["build_parser"]()
+        ns = p.parse_args(["--polyglot", "--shallow-eval", "--no-meta-cognitive"])
+        assert ns.polyglot is True
+        assert ns.shallow_eval is True
+        assert ns.no_meta_cognitive is True
+
+    def test_build_parser_choices(self, sm):
+        p = sm["build_parser"]()
+        ns = p.parse_args([
+            "--selection-method", "best",
+            "--run-baseline", "no_darwin",
+            "--update-archive", "keep_diverse",
+        ])
+        assert ns.selection_method == "best"
+        assert ns.run_baseline == "no_darwin"
+        assert ns.update_archive == "keep_diverse"
+
+    def test_resolve_run_id_fresh(self, sm):
+        import argparse
+        ns = argparse.Namespace(continue_from=None, resume=None)
+        rid = sm["resolve_run_id"](ns, "/tmp/output", resume_val=False)
+        assert rid is not None and len(rid) > 10
+
+    def test_resolve_run_id_continue_from(self, sm):
+        import argparse
+        ns = argparse.Namespace(continue_from="/tmp/some_run", resume=None)
+        rid = sm["resolve_run_id"](ns, "/tmp/output", resume_val=False)
+        assert rid == "some_run"
+
+    def test_resolve_run_id_resume(self, sm):
+        import argparse
+        ns = argparse.Namespace(continue_from=None, resume=True)
+        rid = sm["resolve_run_id"](ns, "/tmp/some_output", resume_val=True)
+        assert rid == "some_output"
+
+    def test_resolve_config_settings_defaults(self, sm):
+        from godelion.config import Config
+        import argparse
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg_path = os.path.join(tmp, "test_config.json")
+            with open(cfg_path, "w") as f:
+                json.dump({
+                    "evolution": {"max_generations": 15, "self_improve_size": 4},
+                    "evaluation": {"num_evals": 3},
+                }, f)
+            test_cfg = Config(cfg_path)
+            ns = argparse.Namespace(
+                max_generation=None, selfimprove_size=None, selfimprove_workers=None,
+                selection_method=None, update_archive=None, num_evals=None,
+                post_improve_diagnose=None, no_meta_cognitive=None,
+                diversity_weight=None, diversity_bonus=None, shallow_eval=None,
+                polyglot=None, no_full_eval=None, run_baseline=None, config=None,
+                continue_from=None, resume=None,
+            )
+            settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
+            assert settings["max_generation"] == 15
+            assert settings["selfimprove_size"] == 4
+            assert settings["num_swe_evals"] == 3
+            assert "choose_method" in settings
+            assert "meta_cognitive_val" in settings
+            assert settings["meta_cognitive_val"] is True  # default
+
+    def test_resolve_config_settings_cli_overrides(self, sm):
+        from godelion.config import Config
+        import argparse
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg_path = os.path.join(tmp, "test_config.json")
+            with open(cfg_path, "w") as f:
+                json.dump({
+                    "evolution": {"max_generations": 15, "selection_method": "random"},
+                    "evaluation": {"meta_cognitive_validation": True},
+                }, f)
+            test_cfg = Config(cfg_path)
+            ns = argparse.Namespace(
+                max_generation=50, selfimprove_size=None, selfimprove_workers=None,
+                selection_method="best", update_archive=None, num_evals=None,
+                post_improve_diagnose=None, no_meta_cognitive=True,
+                diversity_weight=None, diversity_bonus=None, shallow_eval=None,
+                polyglot=None, no_full_eval=None, run_baseline=None, config=None,
+                continue_from=None, resume=None,
+            )
+            settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
+            assert settings["max_generation"] == 50       # CLI overrides
+            assert settings["choose_method"] == "best"     # CLI overrides
+            assert settings["meta_cognitive_val"] is False  # --no-meta-cognitive
+
+    def test_resolve_config_settings_meta_cognitive_override(self, sm):
+        from godelion.config import Config
+        import argparse
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg_path = os.path.join(tmp, "test_config.json")
+            with open(cfg_path, "w") as f:
+                json.dump({"evaluation": {"meta_cognitive_validation": False}}, f)
+            test_cfg = Config(cfg_path)
+            ns = argparse.Namespace(
+                max_generation=None, selfimprove_size=None, selfimprove_workers=None,
+                selection_method=None, update_archive=None, num_evals=None,
+                post_improve_diagnose=None, no_meta_cognitive=None,
+                diversity_weight=None, diversity_bonus=None, shallow_eval=None,
+                polyglot=None, no_full_eval=None, run_baseline=None, config=None,
+                continue_from=None, resume=None,
+            )
+            settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
+            assert settings["meta_cognitive_val"] is False

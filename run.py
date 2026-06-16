@@ -365,7 +365,7 @@ def get_archive_diversity_report(output_dir, archive, logger):
     return diversity
 
 
-def main():
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Godelion: Open-Ended Evolution of Self-Improving Coding Agents")
     parser.add_argument("--config", type=str, default=None, help="Path to YAML config file")
     parser.add_argument("--max-generation", type=int, default=None, help="Maximum number of evolution iterations")
@@ -378,95 +378,106 @@ def main():
     parser.add_argument("--num-evals", type=int, default=None, help="Number of repeated evaluations per self-improve")
     parser.add_argument("--post-improve-diagnose", default=None, action='store_true', help="Diagnose after evaluation")
     parser.add_argument("--no-meta-cognitive", default=None, action='store_true', help="Skip meta-cognitive validation of proposals")
-    parser.add_argument("--diversity-weight", type=float, default=None, help="Diversity weight for diversity_weighted selection (0.0-1.0)")
+    parser.add_argument("--diversity-weight", type=float, default=None, help="Diversity weight for diversity_weighted selection")
     parser.add_argument("--diversity-bonus", type=float, default=None, help="Diversity bonus for keep_diverse archive update")
     parser.add_argument("--shallow-eval", default=None, action='store_true', help="Single shallow evaluation")
     parser.add_argument("--polyglot", default=None, action='store_true', help="Run polyglot benchmark")
     parser.add_argument("--no-full-eval", default=None, action='store_true', help="Skip full evaluation")
     parser.add_argument("--run-baseline", type=str, default=None, choices=['no_selfimprove', 'no_darwin'], help="Baseline to run")
-    args = parser.parse_args()
+    return parser
 
-    # Load configuration
-    cfg = Config(args.config) if args.config else global_config
+
+def resolve_config_settings(args, cfg=None) -> dict:
+    if cfg is None:
+        cfg = Config(args.config) if args.config else global_config
 
     def cfg_or_arg(config_key, arg_value):
-        if arg_value is not None:
-            return arg_value
-        return cfg.get(*config_key.split("."))
+        return arg_value if arg_value is not None else cfg.get(*config_key.split("."))
 
-    # Resolve settings
-    max_generation = cfg_or_arg("evolution.max_generations", args.max_generation) or 80
-    selfimprove_size = cfg_or_arg("evolution.self_improve_size", args.selfimprove_size) or 2
-    selfimprove_workers = cfg_or_arg("evolution.parallel_workers", args.selfimprove_workers) or 2
-    choose_method = cfg_or_arg("evolution.selection_method", args.selection_method) or "score_child_prop"
-    archive_method = cfg_or_arg("evolution.archive_update", args.update_archive) or "keep_all"
-    num_swe_evals = cfg_or_arg("evaluation.num_evals", args.num_evals) or 1
-    post_improve_diagnose_val = cfg_or_arg("evaluation.post_improve_diagnose", args.post_improve_diagnose)
-    shallow_eval_val = cfg_or_arg("evaluation.shallow_eval", args.shallow_eval)
-    polyglot_val = cfg_or_arg("evaluation.polyglot", args.polyglot)
-    no_full_eval_val = cfg_or_arg("evaluation.no_full_eval", args.no_full_eval)
-    run_baseline_val = cfg_or_arg("evaluation.run_baseline", args.run_baseline)
+    settings = {
+        "max_generation": int(cfg_or_arg("evolution.max_generations", args.max_generation) or 80),
+        "selfimprove_size": int(cfg_or_arg("evolution.self_improve_size", args.selfimprove_size) or 2),
+        "selfimprove_workers": int(cfg_or_arg("evolution.parallel_workers", args.selfimprove_workers) or 2),
+        "choose_method": cfg_or_arg("evolution.selection_method", args.selection_method) or "score_child_prop",
+        "archive_method": cfg_or_arg("evolution.archive_update", args.update_archive) or "keep_all",
+        "num_swe_evals": int(cfg_or_arg("evaluation.num_evals", args.num_evals) or 1),
+        "shallow_eval_val": bool(cfg_or_arg("evaluation.shallow_eval", args.shallow_eval) or False),
+        "polyglot_val": bool(cfg_or_arg("evaluation.polyglot", args.polyglot) or False),
+        "no_full_eval_val": bool(cfg_or_arg("evaluation.no_full_eval", args.no_full_eval) or False),
+        "run_baseline_val": cfg_or_arg("evaluation.run_baseline", args.run_baseline),
+        "diversity_weight": float(cfg_or_arg("evolution.selection_weight_diversity", args.diversity_weight) or 0.3),
+        "diversity_bonus": float(cfg_or_arg("evolution.archive_diversity_bonus", args.diversity_bonus) or 0.1),
+        "eval_noise": float(cfg.get("evolution.eval_noise", default=0.1)),
+        "output_base_dir": cfg.get("logging.output_dir", default="./output_godelion"),
+        "checkpoint_enabled": bool(cfg.get("checkpoint", "enabled", default=True)),
+        "checkpoint_interval": int(cfg.get("checkpoint", "interval_generations", default=1)),
+        "test_more_threshold": 0.4,
+    }
+
     meta_cognitive_val = cfg_or_arg("evaluation.meta_cognitive_validation", args.no_meta_cognitive)
     if args.no_meta_cognitive:
-        meta_cognitive_val = False
+        settings["meta_cognitive_val"] = False
     else:
-        meta_cognitive_val = bool(cfg.get("evaluation", "meta_cognitive_validation", default=True))
-    diversity_weight = cfg_or_arg("evolution.selection_weight_diversity", args.diversity_weight) or 0.3
-    diversity_bonus = cfg_or_arg("evolution.archive_diversity_bonus", args.diversity_bonus) or 0.1
-    eval_noise = cfg.get("evolution.eval_noise", default=0.1)
-    output_base_dir = cfg.get("logging.output_dir", default="./output_godelion")
+        settings["meta_cognitive_val"] = bool(cfg.get("evaluation", "meta_cognitive_validation", default=True))
 
-    polyglot_val = bool(polyglot_val)
-    shallow_eval_val = bool(shallow_eval_val)
-    post_improve_diagnose_val = bool(post_improve_diagnose_val)
+    return settings
+
+
+def resolve_run_id(args, output_base_dir, resume_val):
+    if not args.continue_from and not resume_val:
+        return datetime.datetime.now().strftime("%Y%m%d%H%M%S_%f")
+    elif resume_val:
+        return os.path.basename(output_base_dir)
+    else:
+        return os.path.basename(args.continue_from)
+
+
+def main():
+    parser = build_parser()
+    args = parser.parse_args()
+    settings = resolve_config_settings(args)
     resume_val = bool(args.resume)
 
-    if not args.continue_from and not resume_val:
-        run_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S_%f")
-    elif resume_val:
-        run_id = os.path.basename(output_base_dir) if args.resume else datetime.datetime.now().strftime("%Y%m%d%H%M%S_%f")
-    else:
-        run_id = os.path.basename(args.continue_from)
+    run_id = resolve_run_id(args, settings["output_base_dir"], resume_val)
 
-    output_dir = os.path.join(output_base_dir, run_id)
+    output_dir = os.path.join(settings["output_base_dir"], run_id)
     os.makedirs(output_dir, exist_ok=True)
 
     logger = setup_logger(os.path.join(output_dir, "godelion_outer.log"))
 
-    archive, start_gen_num, resume_gen = initialize_run(output_dir, prevrun_dir=args.continue_from, polyglot=polyglot_val, resume=resume_val)
+    archive, start_gen_num, resume_gen = initialize_run(output_dir, prevrun_dir=args.continue_from, polyglot=settings["polyglot_val"], resume=resume_val)
     if resume_gen is not None:
         logger.info(f"Auto-resume detected checkpoint at generation {resume_gen}")
         logger.info(f"Starting from generation {start_gen_num}, archive size: {len(archive)}")
 
-    if not polyglot_val:
+    if not settings["polyglot_val"]:
         swe_issues_sm = load_json_file("./swe_bench/subsets/small.json")
         swe_issues_med = load_json_file("./swe_bench/subsets/medium.json")
     else:
         swe_issues_sm = load_json_file("./polyglot/subsets/small.json")
         swe_issues_med = load_json_file("./polyglot/subsets/medium.json")
+
+    post_improve_diagnose_val = bool(settings.get("post_improve_diagnose", True))
+    shallow_eval_val = settings["shallow_eval_val"]
+
     logger.info(f"Starting Godelion run {run_id}")
-    logger.info(f"Config: max_generation={max_generation}, selfimprove_size={selfimprove_size}, workers={selfimprove_workers}")
-    logger.info(f"Selection: {choose_method} (diversity_weight={diversity_weight}), Archive: {archive_method} (diversity_bonus={diversity_bonus})")
-    logger.info(f"Meta-cognitive validation: {meta_cognitive_val}, Post-diagnose: {post_improve_diagnose_val}")
+    logger.info(f"Config: max_generation={settings['max_generation']}, selfimprove_size={settings['selfimprove_size']}, workers={settings['selfimprove_workers']}")
+    logger.info(f"Selection: {settings['choose_method']} (diversity_weight={settings['diversity_weight']}), Archive: {settings['archive_method']} (diversity_bonus={settings['diversity_bonus']})")
+    logger.info(f"Meta-cognitive validation: {settings['meta_cognitive_val']}, Post-diagnose: {post_improve_diagnose_val}")
     logger.info(f"Archive initial: {archive}")
 
-    test_more_threshold = 0.4
-    checkpoint_enabled = cfg.get("checkpoint", "enabled", default=True)
-    checkpoint_interval = cfg.get("checkpoint", "interval_generations", default=1)
-
     gen_num = start_gen_num - 1
-    for gen_num in range(start_gen_num, max_generation):
+    for gen_num in range(start_gen_num, settings["max_generation"]):
         logger.info(f"--- Generation {gen_num} ---")
 
-        # Log diversity metrics at start of generation
         get_archive_diversity_report(output_dir, archive, logger)
 
         selfimprove_entries = choose_selfimproves(
-            output_dir, archive, selfimprove_size,
-            method=choose_method,
-            diversity_weight=diversity_weight,
-            run_baseline=run_baseline_val,
-            polyglot=polyglot_val,
+            output_dir, archive, settings["selfimprove_size"],
+            method=settings["choose_method"],
+            diversity_weight=settings["diversity_weight"],
+            run_baseline=settings["run_baseline_val"],
+            polyglot=settings["polyglot_val"],
         )
         if not selfimprove_entries:
             logger.warning(f"No self-improve entries for generation {gen_num}")
@@ -475,23 +486,23 @@ def main():
         logger.info(f"Self-improve entries: {selfimprove_entries}")
 
         selfimprove_ids = []
-        with ThreadPoolExecutor(max_workers=selfimprove_workers) as executor:
+        with ThreadPoolExecutor(max_workers=settings["selfimprove_workers"]) as executor:
             futures = [
                 executor.submit(
                     self_improve,
                     parent_commit=parent_commit,
                     output_dir=output_dir,
                     force_rebuild=False,
-                    num_evals=num_swe_evals,
+                    num_evals=settings["num_swe_evals"],
                     post_improve_diagnose=post_improve_diagnose_val,
-                    meta_cognitive_validation=meta_cognitive_val,
+                    meta_cognitive_validation=settings["meta_cognitive_val"],
                     entry=entry,
                     test_task_list=swe_issues_sm,
-                    test_more_threshold=None if shallow_eval_val else test_more_threshold,
+                    test_more_threshold=None if shallow_eval_val else settings["test_more_threshold"],
                     test_task_list_more=None if shallow_eval_val else swe_issues_med,
-                    polyglot=polyglot_val,
-                    full_eval_threshold=None if no_full_eval_val else get_full_eval_threshold(output_dir, archive),
-                    run_baseline=run_baseline_val,
+                    polyglot=settings["polyglot_val"],
+                    full_eval_threshold=None if settings["no_full_eval_val"] else get_full_eval_threshold(output_dir, archive),
+                    run_baseline=settings["run_baseline_val"],
                 )
                 for parent_commit, entry in selfimprove_entries
             ]
@@ -512,7 +523,7 @@ def main():
             num_swe_issues=[len(swe_issues_sm)] if shallow_eval_val else [len(swe_issues_sm), len(swe_issues_med)],
             logger=logger,
         )
-        archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=archive_method, noise_leeway=eval_noise, diversity_bonus=diversity_bonus)
+        archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=settings["archive_method"], noise_leeway=settings["eval_noise"], diversity_bonus=settings["diversity_bonus"])
 
         gen_record = {
             "generation": gen_num,
@@ -526,28 +537,26 @@ def main():
         with open(os.path.join(output_dir, "dgm_metadata.jsonl"), "a") as f:
             f.write(json.dumps(gen_record) + "\n")
 
-        # Save checkpoint
-        if checkpoint_enabled and (gen_num % checkpoint_interval == 0 or gen_num == max_generation - 1):
+        if settings["checkpoint_enabled"] and (gen_num % settings["checkpoint_interval"] == 0 or gen_num == settings["max_generation"] - 1):
             save_checkpoint(output_dir, gen_num, archive, selfimprove_entries, selfimprove_ids, selfimprove_ids_compiled)
             logger.info(f"Checkpoint saved for generation {gen_num}")
 
         logger.info(f"Archive after gen {gen_num}: {archive}")
         logger.info(f"Generation {gen_num} complete.")
 
-    # Write run summary
     summary = {
         "run_id": run_id,
         "output_dir": output_dir,
         "config": {
-            "max_generation": max_generation,
-            "selfimprove_size": selfimprove_size,
-            "workers": selfimprove_workers,
-            "selection_method": choose_method,
-            "diversity_weight": diversity_weight,
-            "archive_method": archive_method,
-            "diversity_bonus": diversity_bonus,
-            "meta_cognitive_validation": meta_cognitive_val,
-            "polyglot": polyglot_val,
+            "max_generation": settings["max_generation"],
+            "selfimprove_size": settings["selfimprove_size"],
+            "workers": settings["selfimprove_workers"],
+            "selection_method": settings["choose_method"],
+            "diversity_weight": settings["diversity_weight"],
+            "archive_method": settings["archive_method"],
+            "diversity_bonus": settings["diversity_bonus"],
+            "meta_cognitive_validation": settings["meta_cognitive_val"],
+            "polyglot": settings["polyglot_val"],
         },
         "generations_completed": max(0, gen_num + 1),
         "archive_size": len(archive),
