@@ -419,3 +419,28 @@ class TestEdgeCases:
             logger = types.SimpleNamespace(info=lambda m: None)
             report = sm["get_archive_diversity_report"](tmp, ["init", "ca", "cb"], logger)
             assert report is not None and len(report) == 3
+
+    def test_get_original_score_missing_returns_zero(self, sm):
+        with tempfile.TemporaryDirectory() as tmp:
+            assert sm["get_original_score"](tmp) == 0.0
+
+    def test_choose_selfimproves_empty_archive(self, sm):
+        with tempfile.TemporaryDirectory() as tmp:
+            entries = sm["choose_selfimproves"](tmp, [], 2, method="random")
+            assert entries == []
+
+    def test_choose_selfimproves_all_fail_metadata(self, sm):
+        with tempfile.TemporaryDirectory() as tmp:
+            entries = sm["choose_selfimproves"](tmp, ["nonexistent"], 2, method="random")
+            assert entries == []
+
+    def test_choose_selfimproves_all_fail_metadata_best(self, sm):
+        with tempfile.TemporaryDirectory() as tmp:
+            entries = sm["choose_selfimproves"](tmp, ["nonexistent"], 2, method="best")
+            assert entries == []
+
+    def test_choose_selfimproves_all_fail_metadata_diversity(self, sm):
+        with tempfile.TemporaryDirectory() as tmp:
+            entries = sm["choose_selfimproves"](tmp, ["nonexistent"], 2,
+                                                 method="diversity_weighted")
+            assert entries == []

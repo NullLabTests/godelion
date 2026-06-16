@@ -154,6 +154,10 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
             print(f"{commit} not eligible for being a parent: {e}")
             continue
 
+    if not candidates:
+        print("No eligible candidates in archive.")
+        return []
+
     if run_baseline == 'no_darwin':
         commits = list(candidates.keys())
         parent_commits = commits[-1:]
@@ -198,7 +202,10 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
         if len(parent_commits) < selfimprove_size:
             parent_commits.extend(random.choices(parent_commits, k=selfimprove_size - len(parent_commits)))
     else:
-        parent_commits = random.choices(list(candidates.keys()), k=selfimprove_size)
+        commit_keys = list(candidates.keys())
+        if not commit_keys:
+            return []
+        parent_commits = random.choices(commit_keys, k=selfimprove_size)
 
     for parent_commit in parent_commits:
         if parent_commit not in candidates:
@@ -251,20 +258,23 @@ def filter_compiled(run_ids, output_dir, num_swe_issues=None, logger=None):
 
 
 def get_original_score(output_dir):
-    metadata = load_json_file(os.path.join(output_dir, "initial", "metadata.json"))
-    return metadata["overall_performance"]["accuracy_score"]
+    try:
+        metadata = load_json_file(os.path.join(output_dir, "initial", "metadata.json"))
+        return metadata["overall_performance"]["accuracy_score"]
+    except (FileNotFoundError, KeyError, TypeError):
+        return 0.0
 
 
 def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway=0.1, diversity_bonus=0.1):
-    if method == 'keep_better':
+    if method in ('keep_better', 'keep_diverse'):
         original_score = get_original_score(output_dir) - noise_leeway
+    if method == 'keep_better':
         for run_id in new_ids:
             metadata = load_json_file(os.path.join(output_dir, run_id, "metadata.json"))
             score = metadata["overall_performance"]["accuracy_score"]
             if score >= original_score:
                 archive.append(run_id)
     elif method == 'keep_diverse':
-        original_score = get_original_score(output_dir) - noise_leeway
         diversity = compute_diversity_scores(output_dir, archive + new_ids)
         for run_id in new_ids:
             metadata = load_json_file(os.path.join(output_dir, run_id, "metadata.json"))
