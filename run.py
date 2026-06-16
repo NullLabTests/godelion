@@ -235,8 +235,12 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
                 selfimprove_entries.append((parent_commit, entry))
                 continue
             if not unresolved_ids:
-                continue
-            entry_ids = unresolved_ids
+                if resolved_ids:
+                    entry_ids = resolved_ids
+                else:
+                    continue
+            else:
+                entry_ids = unresolved_ids
         if entry_ids:
             entry = random.choice(entry_ids)
             selfimprove_entries.append((parent_commit, entry))
@@ -427,6 +431,8 @@ def main():
     output_dir = os.path.join(output_base_dir, run_id)
     os.makedirs(output_dir, exist_ok=True)
 
+    logger = setup_logger(os.path.join(output_dir, "godelion_outer.log"))
+
     archive, start_gen_num, resume_gen = initialize_run(output_dir, prevrun_dir=args.continue_from, polyglot=polyglot_val, resume=resume_val)
     if resume_gen is not None:
         logger.info(f"Auto-resume detected checkpoint at generation {resume_gen}")
@@ -438,8 +444,6 @@ def main():
     else:
         swe_issues_sm = load_json_file("./polyglot/subsets/small.json")
         swe_issues_med = load_json_file("./polyglot/subsets/medium.json")
-
-    logger = setup_logger(os.path.join(output_dir, "godelion_outer.log"))
     logger.info(f"Starting Godelion run {run_id}")
     logger.info(f"Config: max_generation={max_generation}, selfimprove_size={selfimprove_size}, workers={selfimprove_workers}")
     logger.info(f"Selection: {choose_method} (diversity_weight={diversity_weight}), Archive: {archive_method} (diversity_bonus={diversity_bonus})")
@@ -450,6 +454,7 @@ def main():
     checkpoint_enabled = cfg.get("checkpoint", "enabled", default=True)
     checkpoint_interval = cfg.get("checkpoint", "interval_generations", default=1)
 
+    gen_num = start_gen_num - 1
     for gen_num in range(start_gen_num, max_generation):
         logger.info(f"--- Generation {gen_num} ---")
 
@@ -544,7 +549,7 @@ def main():
             "meta_cognitive_validation": meta_cognitive_val,
             "polyglot": polyglot_val,
         },
-        "generations_completed": gen_num + 1 if 'gen_num' in dir() else start_gen_num,
+        "generations_completed": max(0, gen_num + 1),
         "archive_size": len(archive),
         "archive": archive,
         "timestamp": datetime.datetime.now().isoformat(),
