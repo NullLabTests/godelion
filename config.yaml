@@ -39,7 +39,11 @@ evolution:
   self_improve_size: 2
   parallel_workers: 2
   selection_method: "score_child_prop"  # random | score_prop | score_child_prop | diversity_weighted | best
+  # weights for diversity_weighted selection (accuracy_weight + diversity_weight should = 1.0)
+  selection_weight_diversity: 0.3  # 0.0 = pure accuracy, 1.0 = pure diversity
   archive_update: "keep_all"  # keep_all | keep_better | keep_diverse
+  # diversity bonus for keep_diverse archive update (added to score threshold)
+  archive_diversity_bonus: 0.1
   eval_noise: 0.1
   noise_leeway: 0.1
 
@@ -48,6 +52,9 @@ evaluation:
   num_evals: 1
   shallow_eval: false
   post_improve_diagnose: true
+  # Run meta-cognitive validation of improvement proposals before expensive eval
+  # When enabled, proposals are risk-assessed and may be rejected early
+  meta_cognitive_validation: true
   polyglot: false
   test_more_threshold: 0.4
   full_eval_threshold: null  # null = auto-calculate

@@ -167,8 +167,11 @@ def diagnose_improvement(
             return None
     return improvement_diagnosis
 
-def get_architecture_summary():
-    """Generate a summary of the current system architecture for meta-cognitive analysis."""
+def get_architecture_summary() -> str:
+    """Generate a summary of the current system architecture for meta-cognitive analysis.
+
+    Reads key source files and reports their line counts and roles.
+    """
     parts = []
     key_files = {
         "coding_agent.py": "Main agent loop",
@@ -200,10 +203,12 @@ def get_architecture_summary():
     return "\n".join(parts)
 
 
-def validate_improvement_proposal(problem_statement, max_attempts=2):
-    """
-    Meta-cognitive validation of an improvement proposal before running the full eval cycle.
-    Returns (approved: bool, analysis: dict or None).
+def validate_improvement_proposal(problem_statement: str, max_attempts: int = 2) -> tuple:
+    """Meta-cognitive validation of an improvement proposal before running the full eval cycle.
+
+    Uses an LLM to assess risk, failure modes, and impact of the proposed change.
+    Returns (approved, analysis) where approved is False if recommendation is 'reject',
+    and analysis is the parsed JSON dict or None on failure.
     """
     arch_summary = get_architecture_summary()
     prompt = META_COGNITIVE_PROMPT.format(
@@ -233,8 +238,12 @@ def validate_improvement_proposal(problem_statement, max_attempts=2):
     return True, None
 
 
-def analyze_patch_quality(patch_file):
-    """Analyze a patch for quality metrics: size, file types modified, etc."""
+def analyze_patch_quality(patch_file: str) -> dict:
+    """Analyze a patch for quality metrics: size, file types modified, etc.
+
+    Returns a dict with size_bytes, files_changed, lines_added, lines_removed.
+    Returns all zeros if the file cannot be read.
+    """
     try:
         with open(patch_file) as f:
             content = f.read()
@@ -363,6 +372,7 @@ def self_improve(
     force_rebuild=False,
     num_evals=1,
     post_improve_diagnose=True,
+    meta_cognitive_validation=True,
     entry=None,
     test_task_list=None,
     test_more_threshold=None,
@@ -540,8 +550,8 @@ def self_improve(
     patch_quality = analyze_patch_quality(model_patch_file)
     metadata['patch_quality'] = patch_quality
 
-    # Meta-cognitive validation of the improvement proposal
-    if post_improve_diagnose and problem_statement:
+    # Meta-cognitive validation of the improvement proposal (before expensive eval)
+    if meta_cognitive_validation and problem_statement:
         safe_log("Running meta-cognitive validation of improvement proposal")
         proposal_ok, meta_analysis = validate_improvement_proposal(problem_statement)
         metadata['meta_cognitive_analysis'] = meta_analysis
@@ -594,6 +604,7 @@ def main():
     parser.add_argument('--force_rebuild', default=False, action='store_true', help='Force rebuild of the Docker image')
     parser.add_argument('--num_evals', default=1, type=int, help='Repeated number of swe evaluations after self-improvement')
     parser.add_argument('--no_post_improve_diagnose', default=False, action='store_true', help='Skip diagnosing the self-improvement after evaluation')
+    parser.add_argument('--no_meta_cognitive', default=False, action='store_true', help='Skip meta-cognitive validation of improvement proposals')
     parser.add_argument('--entry', default="django__django-10999", type=str, help='Task entry to improve')
     parser.add_argument('--test_task_list', default=None, type=str, help='List of tasks to evaluate the self-improvement')
     args = parser.parse_args()
@@ -607,6 +618,7 @@ def main():
         force_rebuild=args.force_rebuild,
         num_evals=args.num_evals,
         post_improve_diagnose=not args.no_post_improve_diagnose,
+        meta_cognitive_validation=not args.no_meta_cognitive,
         entry=args.entry,
         test_task_list=args.test_task_list,
     )

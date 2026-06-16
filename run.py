@@ -25,23 +25,50 @@ from utils.docker_utils import setup_logger
 from utils.evo_utils import load_dgm_metadata, is_compiled_self_improve
 
 
-def initialize_run(output_dir, prevrun_dir=None, polyglot=False):
-    start_gen_num = 0
-    if not prevrun_dir:
-        archive = ['initial']
-    else:
-        metadata_path = os.path.join(prevrun_dir, "dgm_metadata.jsonl")
-        metadata = load_dgm_metadata(metadata_path, last_only=True)
-        archive = metadata['archive']
-        start_gen_num = metadata['generation'] + 1
+def initialize_run(output_dir: str, prevrun_dir: str | None = None, polyglot: bool = False, resume: bool = False) -> tuple:
+    """Initialize or resume an evolutionary run.
 
+    Args:
+        output_dir: Base output directory.
+        prevrun_dir: Previous run directory to continue from (uses metadata.jsonl).
+        polyglot: Whether using the polyglot benchmark.
+        resume: If True, scan for the latest checkpoint and resume from there.
+
+    Returns:
+        Tuple of (archive, start_gen_num, resume_gen_or_None).
+    """
+    start_gen_num = 0
+    archive: list = ['initial']
+    resume_gen: int | None = None
+
+    # Auto-resume: find latest checkpoint and use it
+    if resume and os.path.isdir(output_dir):
+        resume_gen = find_latest_checkpoint(output_dir)
+        if resume_gen is not None:
+            ckpt = load_checkpoint(output_dir, resume_gen)
+            if ckpt:
+                archive = ckpt.get('archive', ['initial'])
+                start_gen_num = ckpt['generation'] + 1
+                print(f"Resuming from generation {resume_gen} (archive: {len(archive)} members)")
+                return archive, start_gen_num, resume_gen
+
+    # Continue from previous run directory (old metadata.jsonl method)
+    if not resume and prevrun_dir:
+        metadata_path = os.path.join(prevrun_dir, "dgm_metadata.jsonl")
+        if os.path.exists(metadata_path):
+            metadata = load_dgm_metadata(metadata_path, last_only=True)
+            archive = metadata['archive']
+            start_gen_num = metadata['generation'] + 1
+            return archive, start_gen_num, None
+
+    # Fresh start — copy initial evaluation results
     initial_folder_name = 'initial' if not polyglot else 'initial_polyglot'
-    if not prevrun_dir and not os.path.exists(f"{output_dir}/{initial_folder_name}"):
+    if not os.path.exists(f"{output_dir}/{initial_folder_name}"):
         if os.path.exists(initial_folder_name):
             os.system(f"cp -r {initial_folder_name}/ {output_dir}/initial")
         else:
             raise RuntimeError("Need initial evaluation results. Run evaluation first.")
-    return archive, start_gen_num
+    return archive, start_gen_num, None
 
 
 def any_exceeding_context_length(output_dir, commit_id, instance_ids):
@@ -56,13 +83,24 @@ def any_exceeding_context_length(output_dir, commit_id, instance_ids):
     return False
 
 
-def compute_diversity_scores(output_dir, archive):
-    """Compute diversity scores for archive members based on patch quality and parent lineage."""
+def compute_diversity_scores(output_dir: str, archive: list) -> dict:
+    """Compute diversity scores for archive members based on lineage overlap.
+
+    For each archive member, diversity = 1 - average pairwise lineage overlap
+    with all other members. Members from distinct evolutionary branches get
+    high scores; closely related members get low scores.
+
+    Args:
+        output_dir: Base output directory containing run metadata.
+        archive: List of run_ids (commit hashes or 'initial').
+
+    Returns:
+        dict mapping each commit to its diversity score (0.0–1.0).
+    """
     diversity = {}
     if len(archive) < 2:
         return {c: 1.0 for c in archive}
 
-    # Track parent lineages for diversity
     lineages = {}
     for commit in archive:
         try:
@@ -76,7 +114,6 @@ def compute_diversity_scores(output_dir, archive):
         except Exception:
             lineages[commit] = {commit}
 
-    # Diversity = 1 - (lineage overlap with rest of archive)
     for commit in archive:
         my_lineage = lineages[commit]
         overlap_scores = []
@@ -94,7 +131,7 @@ def compute_diversity_scores(output_dir, archive):
     return diversity
 
 
-def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', run_baseline=None, polyglot=False):
+def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', diversity_weight=0.3, run_baseline=None, polyglot=False):
     selfimprove_entries = []
     candidates = {}
 
@@ -150,7 +187,8 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
         scores = [candidates[commit]['accuracy_score'] for commit in commits]
         div_scores = [diversity_scores.get(commit, 0.5) for commit in commits]
         sig_scores = [1 / (1 + math.exp(-10 * (s - 0.5))) for s in scores]
-        combined = [0.7 * s + 0.3 * d for s, d in zip(sig_scores, div_scores)]
+        acc_weight = 1.0 - diversity_weight
+        combined = [acc_weight * s + diversity_weight * d for s, d in zip(sig_scores, div_scores)]
         prob_sum = sum(combined)
         probabilities = [c / prob_sum for c in combined] if prob_sum > 0 else [1 / len(combined)] * len(combined)
         parent_commits = random.choices(commits, probabilities, k=selfimprove_size)
@@ -217,7 +255,7 @@ def get_original_score(output_dir):
     return metadata["overall_performance"]["accuracy_score"]
 
 
-def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway=0.1):
+def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway=0.1, diversity_bonus=0.1):
     if method == 'keep_better':
         original_score = get_original_score(output_dir) - noise_leeway
         for run_id in new_ids:
@@ -231,7 +269,7 @@ def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway
         for run_id in new_ids:
             metadata = load_json_file(os.path.join(output_dir, run_id, "metadata.json"))
             score = metadata["overall_performance"]["accuracy_score"]
-            div_bonus = 0.1 * diversity.get(run_id, 0.5)
+            div_bonus = diversity_bonus * diversity.get(run_id, 0.5)
             if score + div_bonus >= original_score:
                 archive.append(run_id)
     else:
@@ -260,7 +298,7 @@ def get_full_eval_threshold(output_dir, archive):
     return threshold
 
 
-def save_checkpoint(output_dir, gen_num, archive, selfimprove_entries, selfimprove_ids, selfimprove_ids_compiled):
+def save_checkpoint(output_dir: str, gen_num: int, archive: list, selfimprove_entries: list, selfimprove_ids: list, selfimprove_ids_compiled: list) -> None:
     """Save a checkpoint that can be used to resume the run."""
     checkpoint = {
         "generation": gen_num,
@@ -274,12 +312,30 @@ def save_checkpoint(output_dir, gen_num, archive, selfimprove_entries, selfimpro
         json.dump(checkpoint, f, indent=2)
 
 
-def load_checkpoint(output_dir, gen_num):
+def load_checkpoint(output_dir: str, gen_num: int) -> dict | None:
     """Load a checkpoint for a specific generation."""
     path = os.path.join(output_dir, f"checkpoint_gen_{gen_num}.json")
     if os.path.exists(path):
         return load_json_file(path)
     return None
+
+
+def find_latest_checkpoint(output_dir: str) -> int | None:
+    """Scan output_dir for the highest-numbered checkpoint file.
+
+    Returns the generation number of the latest checkpoint, or None if none found.
+    """
+    import re
+    max_gen = None
+    if not os.path.isdir(output_dir):
+        return None
+    for fname in os.listdir(output_dir):
+        m = re.match(r'checkpoint_gen_(\d+)\.json', fname)
+        if m:
+            gen = int(m.group(1))
+            if max_gen is None or gen > max_gen:
+                max_gen = gen
+    return max_gen
 
 
 def get_archive_diversity_report(output_dir, archive, logger):
@@ -302,10 +358,14 @@ def main():
     parser.add_argument("--selfimprove-size", type=int, default=None, help="Number of self-improvement attempts per generation")
     parser.add_argument("--selfimprove-workers", type=int, default=None, help="Number of parallel workers")
     parser.add_argument("--selection-method", type=str, default=None, choices=['random', 'score_prop', 'score_child_prop', 'diversity_weighted', 'best'], help="Parent selection method")
-    parser.add_argument("--continue-from", type=str, default=None, help="Directory to continue from")
+    parser.add_argument("--continue-from", type=str, default=None, help="Directory to continue from (uses metadata.jsonl)")
+    parser.add_argument("--resume", default=None, action='store_true', help="Auto-resume from latest checkpoint in output dir")
     parser.add_argument("--update-archive", type=str, default=None, choices=['keep_better', 'keep_all', 'keep_diverse'], help="Archive update method")
     parser.add_argument("--num-evals", type=int, default=None, help="Number of repeated evaluations per self-improve")
     parser.add_argument("--post-improve-diagnose", default=None, action='store_true', help="Diagnose after evaluation")
+    parser.add_argument("--no-meta-cognitive", default=None, action='store_true', help="Skip meta-cognitive validation of proposals")
+    parser.add_argument("--diversity-weight", type=float, default=None, help="Diversity weight for diversity_weighted selection (0.0-1.0)")
+    parser.add_argument("--diversity-bonus", type=float, default=None, help="Diversity bonus for keep_diverse archive update")
     parser.add_argument("--shallow-eval", default=None, action='store_true', help="Single shallow evaluation")
     parser.add_argument("--polyglot", default=None, action='store_true', help="Run polyglot benchmark")
     parser.add_argument("--no-full-eval", default=None, action='store_true', help="Skip full evaluation")
@@ -332,22 +392,35 @@ def main():
     polyglot_val = cfg_or_arg("evaluation.polyglot", args.polyglot)
     no_full_eval_val = cfg_or_arg("evaluation.no_full_eval", args.no_full_eval)
     run_baseline_val = cfg_or_arg("evaluation.run_baseline", args.run_baseline)
+    meta_cognitive_val = cfg_or_arg("evaluation.meta_cognitive_validation", args.no_meta_cognitive)
+    if args.no_meta_cognitive:
+        meta_cognitive_val = False
+    else:
+        meta_cognitive_val = bool(cfg.get("evaluation", "meta_cognitive_validation", default=True))
+    diversity_weight = cfg_or_arg("evolution.selection_weight_diversity", args.diversity_weight) or 0.3
+    diversity_bonus = cfg_or_arg("evolution.archive_diversity_bonus", args.diversity_bonus) or 0.1
     eval_noise = cfg.get("evolution.eval_noise", default=0.1)
     output_base_dir = cfg.get("logging.output_dir", default="./output_godelion")
 
     polyglot_val = bool(polyglot_val)
     shallow_eval_val = bool(shallow_eval_val)
     post_improve_diagnose_val = bool(post_improve_diagnose_val)
+    resume_val = bool(args.resume)
 
-    if not args.continue_from:
+    if not args.continue_from and not resume_val:
         run_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S_%f")
+    elif resume_val:
+        run_id = os.path.basename(output_base_dir) if args.resume else datetime.datetime.now().strftime("%Y%m%d%H%M%S_%f")
     else:
         run_id = os.path.basename(args.continue_from)
 
     output_dir = os.path.join(output_base_dir, run_id)
     os.makedirs(output_dir, exist_ok=True)
 
-    archive, start_gen_num = initialize_run(output_dir, prevrun_dir=args.continue_from, polyglot=polyglot_val)
+    archive, start_gen_num, resume_gen = initialize_run(output_dir, prevrun_dir=args.continue_from, polyglot=polyglot_val, resume=resume_val)
+    if resume_gen is not None:
+        logger.info(f"Auto-resume detected checkpoint at generation {resume_gen}")
+        logger.info(f"Starting from generation {start_gen_num}, archive size: {len(archive)}")
 
     if not polyglot_val:
         swe_issues_sm = load_json_file("./swe_bench/subsets/small.json")
@@ -359,7 +432,8 @@ def main():
     logger = setup_logger(os.path.join(output_dir, "godelion_outer.log"))
     logger.info(f"Starting Godelion run {run_id}")
     logger.info(f"Config: max_generation={max_generation}, selfimprove_size={selfimprove_size}, workers={selfimprove_workers}")
-    logger.info(f"Selection: {choose_method}, Archive: {archive_method}")
+    logger.info(f"Selection: {choose_method} (diversity_weight={diversity_weight}), Archive: {archive_method} (diversity_bonus={diversity_bonus})")
+    logger.info(f"Meta-cognitive validation: {meta_cognitive_val}, Post-diagnose: {post_improve_diagnose_val}")
     logger.info(f"Archive initial: {archive}")
 
     test_more_threshold = 0.4
@@ -375,6 +449,7 @@ def main():
         selfimprove_entries = choose_selfimproves(
             output_dir, archive, selfimprove_size,
             method=choose_method,
+            diversity_weight=diversity_weight,
             run_baseline=run_baseline_val,
             polyglot=polyglot_val,
         )
@@ -394,6 +469,7 @@ def main():
                     force_rebuild=False,
                     num_evals=num_swe_evals,
                     post_improve_diagnose=post_improve_diagnose_val,
+                    meta_cognitive_validation=meta_cognitive_val,
                     entry=entry,
                     test_task_list=swe_issues_sm,
                     test_more_threshold=None if shallow_eval_val else test_more_threshold,
@@ -421,7 +497,7 @@ def main():
             num_swe_issues=[len(swe_issues_sm)] if shallow_eval_val else [len(swe_issues_sm), len(swe_issues_med)],
             logger=logger,
         )
-        archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=archive_method, noise_leeway=eval_noise)
+        archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=archive_method, noise_leeway=eval_noise, diversity_bonus=diversity_bonus)
 
         gen_record = {
             "generation": gen_num,
@@ -443,6 +519,30 @@ def main():
         logger.info(f"Archive after gen {gen_num}: {archive}")
         logger.info(f"Generation {gen_num} complete.")
 
+    # Write run summary
+    summary = {
+        "run_id": run_id,
+        "output_dir": output_dir,
+        "config": {
+            "max_generation": max_generation,
+            "selfimprove_size": selfimprove_size,
+            "workers": selfimprove_workers,
+            "selection_method": choose_method,
+            "diversity_weight": diversity_weight,
+            "archive_method": archive_method,
+            "diversity_bonus": diversity_bonus,
+            "meta_cognitive_validation": meta_cognitive_val,
+            "polyglot": polyglot_val,
+        },
+        "generations_completed": gen_num + 1 if 'gen_num' in dir() else start_gen_num,
+        "archive_size": len(archive),
+        "archive": archive,
+        "timestamp": datetime.datetime.now().isoformat(),
+    }
+    with open(os.path.join(output_dir, "run_summary.json"), "w") as f:
+        json.dump(summary, f, indent=2)
+    logger.info(f"Run summary saved to {output_dir}/run_summary.json")
+    logger.info(f"Archive size: {len(archive)}, Generations: {summary['generations_completed']}")
     logger.info("Godelion run complete.")
 
 
