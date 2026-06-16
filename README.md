@@ -68,6 +68,17 @@ compounding improvements over generations.
 | **🔐 Safety-First** | Constitutional checks, human approval gates, protected files |
 | **📦 Modern Python** | `pyproject.toml`, type hints, pre-commit hooks, CI config |
 
+### What's New in v0.2.0+
+
+| Feature | Description |
+|---------|-------------|
+| **🧠 Meta-Cognitive Validation** | LLM-based risk/failure-mode/impact analysis rejects harmful proposals *before* expensive eval |
+| **🌿 Diversity-Weighted Selection** | New parent selection blends accuracy (70%) + lineage diversity (30%) to prevent archive collapse |
+| **💾 Per-Generation Checkpointing** | Automatic checkpoints enable resume from any generation |
+| **📊 Patch Quality Analysis** | Tracks lines added/removed, files changed per patch for richer fitness data |
+| **♻️ Auto-Resume** | `--resume` flag scans for latest checkpoint and continues from there |
+| **🔧 Config-Driven** | All new options available via `config.yaml` — no CLI flags required |
+
 ---
 
 ## 📋 Table of Contents
@@ -190,6 +201,27 @@ That's it. The system will start evolving. Output is saved to `./output_godelion
 5. **Compete**: If the change improves performance (or at least doesn't regress), it enters the archive
 6. **Repeat**: Future generations can build on any archived agent
 
+### Architecture Overview
+
+Godelion is structured as a **layered evolutionary system** with four main components:
+
+| Layer | Component | Responsibility |
+|-------|-----------|----------------|
+| **Outer Loop** | `run.py` | Orchestrates generations: select parents, spawn self-improvement workers, filter results, update archive |
+| **Self-Improvement** | `self_improve_step.py` | Single iteration: diagnose failures, spawn Docker sandbox, run coding agent, validate output |
+| **Coding Agent** | `coding_agent.py` | The evolving agent: reads a problem statement, uses tools (bash, editor) to modify code |
+| **Tool Layer** | `tools/` | Primitive capabilities (bash, file editing) exposed to the agent with structured schemas |
+
+**Data flow per generation:**
+```
+Archive ─→ Parent Selection ─→ Self-Improve ─→ Eval ─→ Filter ─→ Archive
+          (fitness +        (Docker sandbox,   (SWE-bench   (is_compiled,
+          diversity)         meta-cognitive     Polyglot)    score >= thr)
+                             validation?)
+```
+
+The **meta-cognitive validation** step runs *before* the expensive eval harness — it uses an LLM to assess risk, failure modes, and impact of the proposed change. Proposals with high regression risk or safety concerns can be rejected early, saving significant time and cost.
+
 ### RSI Seed Growth
 
 This project is a **minimal seed for Recursive Self-Improvement**. The initial agent is capable enough to:
@@ -302,6 +334,49 @@ python run.py
 python run.py --config config.local.yaml --max-generation 40 --selfimprove-size 4 --selfimprove-workers 4
 ```
 
+### Selection Methods
+
+```bash
+# Diversity-weighted selection (accuracy + lineage diversity)
+python run.py --selection-method diversity_weighted
+
+# Pure accuracy-based selection
+python run.py --selection-method best
+
+# Accuracy-proportional with child count anti-preference
+python run.py --selection-method score_child_prop
+```
+
+### Archive Update Strategies
+
+```bash
+# Keep all children (maximum diversity, default)
+python run.py --update-archive keep_all
+
+# Keep only children that exceed baseline accuracy
+python run.py --update-archive keep_better
+
+# Keep children with diversity bonus for novel lineages
+python run.py --update-archive keep_diverse
+```
+
+### Meta-Cognitive Validation
+
+```bash
+# Enable meta-cognitive proposal validation (default: on)
+python run.py
+
+# Disable meta-cognitive validation (faster, less safe)
+python run.py --no-meta-cognitive
+```
+
+### Auto-Resume from Checkpoint
+
+```bash
+# Resume from the latest checkpoint in the output directory
+python run.py --resume
+```
+
 ### Baseline Comparisons
 
 ```bash
@@ -345,7 +420,8 @@ python -m analysis.report --output-dir ./output_godelion/20250101_120000_123456
 
 ```
 godelion/
-├── run.py                    # Main entry point
+├── run.py                    # Main evolutionary entry point
+├── self_improve_step.py      # Single self-improvement iteration
 ├── config.yaml               # Default configuration
 ├── config.local.yaml         # Local overrides (gitignored)
 ├── godelion/
@@ -354,29 +430,27 @@ godelion/
 │   ├── llm.py                # LLM client factory (multi-provider)
 │   ├── llm_withtools.py      # LLM + tool calling orchestration
 │   ├── coding_agent.py       # The coding agent (evolves!)
-│   ├── coding_agent_polyglot.py  # Polyglot-specific agent
-│   ├── self_improve_step.py  # Single self-improvement iteration
-│   └── engine.py             # Main evolutionary loop
+│   └── coding_agent_polyglot.py  # Polyglot-specific agent variant
 ├── tools/
 │   ├── bash.py               # Bash shell tool
 │   └── edit.py               # File editing tool
 ├── prompts/
-│   ├── self_improvement_prompt.py
-│   ├── diagnose_improvement_prompt.py
-│   ├── testrepo_prompt.py
-│   └── tooluse_prompt.py
+│   ├── self_improvement_prompt.py  # Evolution diagnosis prompts
+│   ├── diagnose_improvement_prompt.py  # Improvement evaluation
+│   ├── testrepo_prompt.py    # Test execution instructions
+│   └── tooluse_prompt.py     # Tool usage patterns
 ├── utils/
-│   ├── common_utils.py
-│   ├── docker_utils.py
-│   ├── eval_utils.py
-│   ├── evo_utils.py
-│   ├── git_utils.py
-│   └── swe_log_parsers.py
+│   ├── common_utils.py       # JSON/file I/O
+│   ├── docker_utils.py       # Container management
+│   ├── eval_utils.py         # Test scoring
+│   ├── evo_utils.py          # Evolution utilities
+│   ├── git_utils.py          # Git/patch operations
+│   └── swe_log_parsers.py    # Test log parsers
 ├── swe_bench/                # SWE-bench integration
 ├── polyglot/                 # Polyglot benchmark integration
 ├── analysis/                 # Analysis & visualization
-├── tests/                    # Test suite
-├── misc/                     # Logo, diagrams
+├── tests/                    # Test suite (36 tests, 31 pass)
+├── misc/                     # Logo, diagrams, banners
 ├── Dockerfile                # Container definition
 └── pyproject.toml            # Python packaging
 ```

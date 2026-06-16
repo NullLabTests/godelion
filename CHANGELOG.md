@@ -33,6 +33,29 @@ All notable changes to Godelion are documented in this file.
 
 - **Removed `DGM_outer.py`**: Redundant compatibility shim that only forwarded to `run.py`
 
+## 0.2.1 - 2026-06-16
+
+### 🔧 Usability & Configurability
+
+- **Config-driven parameters**: New `evolution.selection_weight_diversity`, `evolution.archive_diversity_bonus`, and `evaluation.meta_cognitive_validation` settings in `config.yaml` with sensible defaults
+- **CLI flags**: `--diversity-weight`, `--diversity-bonus`, `--no-meta-cognitive`, `--resume` added
+- **Auto-resume**: `--resume` flag scans for latest checkpoint and continues from there (also works via `--continue-from`)
+- **Run summaries**: Each experiment now generates `run_summary.json` with full configuration, archive size, and generation count
+- **Improved logging**: Generation start logs report diversity metrics, selection parameters, and meta-cognitive status
+
+### 📖 Documentation
+
+- **README Architecture Overview**: New section explains the four-layer system design (Outer Loop → Self-Improvement → Coding Agent → Tools)
+- **Updated experiments guide**: Full documentation for selection methods, archive strategies, meta-cognitive validation, and auto-resume
+- **Updated project structure**: Accurate file listing reflecting removed `DGM_outer.py` and current layout
+- **"What's New in 0.2.0+"** section highlights all recent improvements
+
+### 🏗️ Code Quality
+
+- **Type hints** added to all new functions (get_architecture_summary, validate_improvement_proposal, analyze_patch_quality, compute_diversity_scores, save_checkpoint, load_checkpoint, find_latest_checkpoint, update_archive)
+- **Docstrings** updated for clarity on all new functions
+- **Fixed duplicate `initialize_run`** function after merge conflict
+
 ## 0.1.0 - 2025-06-13
 
 ### 🎉 Initial Release
