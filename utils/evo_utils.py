@@ -93,35 +93,41 @@ def get_all_performance(run_keyword, results_dir='./swe_bench'):
     
     return performance_results, overall_performance
 
-def is_compiled_self_improve(metadata, num_swe_issues=[], logger=None):
+def is_compiled_self_improve(metadata, num_swe_issues=None, logger=None):
     """
     Checks if the run was properly compiled and 'self-improved' by verifying:
-      1. The 'overall_performance' dict has the required keys:
-         ('accuracy_score', 'total_unresolved_ids', 'total_resolved_ids', 'total_emptypatch_ids').
-      2. There is at least one non-empty patch (resolved + unresolved > 0).
-      3. If num_swe_issues is provided, the total number of evaluated issues matches num_swe_issues.
+       1. The 'overall_performance' dict has the required keys:
+          ('accuracy_score', 'total_unresolved_ids', 'total_resolved_ids', 'total_emptypatch_ids').
+       2. There is at least one non-empty patch (resolved + unresolved > 0).
+       3. If num_swe_issues is provided, the total number of evaluated issues matches num_swe_issues.
 
     Returns True if all conditions are met, else False.
     """
+    if num_swe_issues is None:
+        num_swe_issues = []
     overall_perf = metadata.get('overall_performance', {})
     required_keys = ['accuracy_score', 'total_unresolved_ids', 'total_resolved_ids', 'total_emptypatch_ids']
 
+    def _log(msg):
+        if logger:
+            logger.info(msg)
+
     # 1. Must have the required keys
     if not overall_perf or not all(k in overall_perf for k in required_keys):
-        logger.info(f"no required keys")
+        _log("no required keys")
         return False
 
     # 2. Must have at least one non-empty patch
     num_resolved = len(overall_perf['total_resolved_ids'])
     num_unresolved = len(overall_perf['total_unresolved_ids'])
     if (num_resolved + num_unresolved) == 0:
-        logger.info(f"no non-empty patch")
+        _log("no non-empty patch")
         return False
 
     # 3. If specified, total evaluated must match num_swe_issues, else it means that some didn't compile
     total_evaluated = overall_perf['total_submitted_instances']
-    if total_evaluated < num_swe_issues[0]:
-        logger.info(f"not match num_issues")
+    if num_swe_issues and total_evaluated < num_swe_issues[0]:
+        _log("not match num_issues")
         return False
 
     return True

@@ -2,6 +2,7 @@ import argparse
 import datetime
 import json
 import os
+import re
 import docker
 
 from llm import create_client, get_response_from_llm, extract_json_between_markers
@@ -27,6 +28,54 @@ from godelion.config import config
 
 dataset = None
 diagnose_model = config.get("llm", "diagnose_model", default="claude-sonnet-4-20250514")
+
+META_COGNITIVE_PROMPT = """You are a meta-cognitive engine analyzing a self-improvement proposal for an AI coding agent.
+
+# Improvement Proposal
+{problem_statement}
+
+# Current System Architecture Summary
+{architecture_summary}
+
+# Your Tasks
+1. **Risk Assessment**: Evaluate the risk of this modification (low/medium/high).
+   - Low: Minor prompt/configuration changes, safe defaults
+   - Medium: New tool or workflow that doesn't affect existing functionality
+   - High: Changes to core agent loop, safety mechanisms, or evaluation pipeline
+
+2. **Failure Mode Analysis**: Identify potential failure modes:
+   - Could this improvement cause regressions on existing benchmarks?
+   - Could it introduce infinite loops or excessive token usage?
+   - Could it break the Docker sandbox or safety mechanisms?
+   - Is there a simpler alternative that achieves the same goal?
+
+3. **Impact Assessment**: Estimate the improvement's effect on:
+   - pass@1 accuracy on coding benchmarks
+   - Code quality and maintainability
+   - Safety and containment
+   - Runtime efficiency (token usage, wall time)
+
+4. **Validation Strategy**: What specific tests would validate this improvement works?
+
+Respond precisely in this JSON format:
+```json
+{{
+    "risk_level": "low|medium|high",
+    "risk_reasoning": "Detailed reasoning for risk assessment",
+    "failure_modes": ["list of potential failure modes"],
+    "impact_pass_at_1": -1.0 to 1.0,
+    "impact_code_quality": -1.0 to 1.0,
+    "impact_safety": -1.0 to 1.0,
+    "impact_efficiency": -1.0 to 1.0,
+    "validation_strategy": "How to validate this improvement",
+    "has_regression_risk": true/false,
+    "has_safety_concern": true/false,
+    "recommendation": "approve|flag|reject",
+    "recommendation_reasoning": "Why this recommendation"
+}}
+```
+
+Think carefully about the architecture and potential side effects."""
 
 def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attempts=3, polyglot=False):
     client = create_client(diagnose_model)
@@ -117,6 +166,93 @@ def diagnose_improvement(
         else:
             return None
     return improvement_diagnosis
+
+def get_architecture_summary():
+    """Generate a summary of the current system architecture for meta-cognitive analysis."""
+    parts = []
+    key_files = {
+        "coding_agent.py": "Main agent loop",
+        "coding_agent_polyglot.py": "Polyglot agent variant",
+        "tools/bash.py": "Bash execution tool",
+        "tools/edit.py": "File editing tool",
+        "prompts/diagnose_improvement_prompt.py": "Improvement diagnosis prompt",
+        "prompts/self_improvement_prompt.py": "Self-improvement diagnosis prompts",
+        "prompts/tooluse_prompt.py": "Tool usage instructions",
+        "prompts/testrepo_prompt.py": "Test execution instructions",
+        "llm_withtools.py": "LLM tool-calling interface",
+        "llm.py": "LLM client factory",
+        "self_improve_step.py": "Self-improvement orchestration",
+        "run.py": "Evolution outer loop",
+        "utils/docker_utils.py": "Docker sandbox management",
+        "utils/evo_utils.py": "Evolution utilities",
+        "utils/eval_utils.py": "Evaluation scoring",
+        "utils/git_utils.py": "Git operations",
+        "utils/common_utils.py": "Common file utilities",
+    }
+    for fpath, desc in key_files.items():
+        full = os.path.join(os.path.abspath('.'), fpath)
+        if os.path.exists(full):
+            with open(full) as f:
+                lines = len(f.readlines())
+            parts.append(f"- `{fpath}` ({desc}): {lines} lines")
+        else:
+            parts.append(f"- `{fpath}` ({desc}): [not present]")
+    return "\n".join(parts)
+
+
+def validate_improvement_proposal(problem_statement, max_attempts=2):
+    """
+    Meta-cognitive validation of an improvement proposal before running the full eval cycle.
+    Returns (approved: bool, analysis: dict or None).
+    """
+    arch_summary = get_architecture_summary()
+    prompt = META_COGNITIVE_PROMPT.format(
+        problem_statement=problem_statement,
+        architecture_summary=arch_summary,
+    )
+    client = create_client(diagnose_model)
+    for attempt in range(max_attempts):
+        try:
+            response, _ = get_response_from_llm(
+                msg=prompt,
+                client=client[0],
+                model=client[1],
+                system_message="You are a safety-conscious meta-cognitive analyzer for self-improving AI systems. Always prioritize safety and robustness.",
+                print_debug=False,
+            )
+            analysis = extract_json_between_markers(response)
+            if analysis and "recommendation" in analysis:
+                safe_log(f"Meta-cognitive analysis: risk={analysis.get('risk_level')}, "
+                         f"recommendation={analysis.get('recommendation')}, "
+                         f"pass@1 impact={analysis.get('impact_pass_at_1')}")
+                approved = analysis.get("recommendation") != "reject"
+                return approved, analysis
+        except Exception as e:
+            safe_log(f"Meta-cognitive analysis attempt {attempt+1} failed: {e}")
+    safe_log("Meta-cognitive analysis failed, defaulting to approved")
+    return True, None
+
+
+def analyze_patch_quality(patch_file):
+    """Analyze a patch for quality metrics: size, file types modified, etc."""
+    try:
+        with open(patch_file) as f:
+            content = f.read()
+    except Exception:
+        return {"size_bytes": 0, "files_changed": 0, "lines_added": 0, "lines_removed": 0}
+
+    lines = content.split('\n')
+    added = sum(1 for l in lines if l.startswith('+') and not l.startswith('+++'))
+    removed = sum(1 for l in lines if l.startswith('-') and not l.startswith('---'))
+    files_changed = len([l for l in lines if l.startswith('diff --git')])
+
+    return {
+        "size_bytes": len(content.encode()),
+        "files_changed": files_changed,
+        "lines_added": added,
+        "lines_removed": removed,
+    }
+
 
 def save_metadata(metadata, output_dir):
     metadata_file = os.path.join(output_dir, "metadata.json")
@@ -222,18 +358,16 @@ def run_harness_polyglot(entry, model_name_or_path, patch_files, num_evals, outp
         safe_log("End of evaluation more")
 
 def self_improve(
-    parent_commit='initial',  # 'initial' for baseline, otherwise a previous run_id
+    parent_commit='initial',
     output_dir='output_selfimprove/',
     force_rebuild=False,
     num_evals=1,
     post_improve_diagnose=True,
     entry=None,
-    test_task_list=None,  # None means the entry above only
-    # Additional evaluation parameters
+    test_task_list=None,
     test_more_threshold=None,
     test_task_list_more=None,
     full_eval_threshold=None,
-    # Run baseline
     run_baseline=None,
     polyglot=False
 ):  
@@ -256,6 +390,7 @@ def self_improve(
     os.makedirs(output_dir, exist_ok=True)
     metadata['run_id'] = run_id
     metadata['parent_commit'] = parent_commit
+    metadata['full_eval_threshold'] = full_eval_threshold
     test_task_list_big = load_json_file("./swe_bench/subsets/big.json")
 
     # Set up logger
@@ -400,6 +535,21 @@ def self_improve(
 
     # Stop and remove the container
     cleanup_container(container)
+
+    # Analyze patch quality
+    patch_quality = analyze_patch_quality(model_patch_file)
+    metadata['patch_quality'] = patch_quality
+
+    # Meta-cognitive validation of the improvement proposal
+    if post_improve_diagnose and problem_statement:
+        safe_log("Running meta-cognitive validation of improvement proposal")
+        proposal_ok, meta_analysis = validate_improvement_proposal(problem_statement)
+        metadata['meta_cognitive_analysis'] = meta_analysis
+        metadata['proposal_validated'] = proposal_ok
+        if not proposal_ok:
+            safe_log("Proposal rejected by meta-cognitive analysis. Skipping expensive eval.")
+            save_metadata(metadata, output_dir)
+            return metadata
 
     # Evaluate the performance of the self-improvement
     model_patch_exists = os.path.exists(model_patch_file)

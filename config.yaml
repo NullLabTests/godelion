@@ -38,8 +38,8 @@ evolution:
   max_generations: 80
   self_improve_size: 2
   parallel_workers: 2
-  selection_method: "score_child_prop"  # random | score_prop | score_child_prop | best
-  archive_update: "keep_all"  # keep_all | keep_better
+  selection_method: "score_child_prop"  # random | score_prop | score_child_prop | diversity_weighted | best
+  archive_update: "keep_all"  # keep_all | keep_better | keep_diverse
   eval_noise: 0.1
   noise_leeway: 0.1
 

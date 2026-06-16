@@ -238,7 +238,7 @@ def find_selfimprove_eval_logs(entry, out_dir, commit_id='initial', filter=True)
             eval_logs.append(read_file(file))
     return md_logs, eval_logs, predicted_patches, eval_results
 
-def process_selfimprove_eval_logs(md_logs, eval_logs, predicted_patches, eval_results):
+def process_selfimprove_eval_logs(md_logs, eval_logs, predicted_patches, eval_results=None):
     # NOTE: using only the first logs
     md_log = md_logs[0] if md_logs else "No logs available."
     eval_log = eval_logs[0] if eval_logs else "No test results available. Assume all tests failed."

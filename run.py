@@ -56,6 +56,44 @@ def any_exceeding_context_length(output_dir, commit_id, instance_ids):
     return False
 
 
+def compute_diversity_scores(output_dir, archive):
+    """Compute diversity scores for archive members based on patch quality and parent lineage."""
+    diversity = {}
+    if len(archive) < 2:
+        return {c: 1.0 for c in archive}
+
+    # Track parent lineages for diversity
+    lineages = {}
+    for commit in archive:
+        try:
+            meta = load_json_file(os.path.join(output_dir, commit, "metadata.json"))
+            lineage = [commit]
+            parent = meta.get('parent_commit', 'initial')
+            while parent != 'initial' and parent in archive:
+                lineage.append(parent)
+                parent = load_json_file(os.path.join(output_dir, parent, "metadata.json")).get('parent_commit', 'initial')
+            lineages[commit] = set(lineage)
+        except Exception:
+            lineages[commit] = {commit}
+
+    # Diversity = 1 - (lineage overlap with rest of archive)
+    for commit in archive:
+        my_lineage = lineages[commit]
+        overlap_scores = []
+        for other in archive:
+            if other == commit:
+                continue
+            other_lineage = lineages.get(other, {other})
+            intersection = len(my_lineage & other_lineage)
+            union = len(my_lineage | other_lineage)
+            overlap = intersection / max(union, 1)
+            overlap_scores.append(overlap)
+        avg_overlap = sum(overlap_scores) / max(len(overlap_scores), 1)
+        diversity[commit] = 1.0 - avg_overlap
+
+    return diversity
+
+
 def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', run_baseline=None, polyglot=False):
     selfimprove_entries = []
     candidates = {}
@@ -82,6 +120,12 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
     if run_baseline == 'no_darwin':
         commits = list(candidates.keys())
         parent_commits = commits[-1:]
+        diversity_scores = {c: 1.0 for c in commits}
+    else:
+        diversity_scores = compute_diversity_scores(output_dir, archive)
+
+    if run_baseline == 'no_darwin':
+        parent_commits = list(candidates.keys())[-1:]
     elif method == 'score_prop':
         commits = list(candidates.keys())
         scores = [candidates[commit]['accuracy_score'] for commit in commits]
@@ -100,6 +144,15 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
             probabilities = [p / prob_sum for p in probabilities]
         else:
             probabilities = [1 / len(probabilities)] * len(probabilities)
+        parent_commits = random.choices(commits, probabilities, k=selfimprove_size)
+    elif method == 'diversity_weighted':
+        commits = list(candidates.keys())
+        scores = [candidates[commit]['accuracy_score'] for commit in commits]
+        div_scores = [diversity_scores.get(commit, 0.5) for commit in commits]
+        sig_scores = [1 / (1 + math.exp(-10 * (s - 0.5))) for s in scores]
+        combined = [0.7 * s + 0.3 * d for s, d in zip(sig_scores, div_scores)]
+        prob_sum = sum(combined)
+        probabilities = [c / prob_sum for c in combined] if prob_sum > 0 else [1 / len(combined)] * len(combined)
         parent_commits = random.choices(commits, probabilities, k=selfimprove_size)
     elif method == 'best':
         sorted_commits = sorted(candidates, key=lambda x: candidates[x]['accuracy_score'], reverse=True)
@@ -172,8 +225,18 @@ def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway
             score = metadata["overall_performance"]["accuracy_score"]
             if score >= original_score:
                 archive.append(run_id)
+    elif method == 'keep_diverse':
+        original_score = get_original_score(output_dir) - noise_leeway
+        diversity = compute_diversity_scores(output_dir, archive + new_ids)
+        for run_id in new_ids:
+            metadata = load_json_file(os.path.join(output_dir, run_id, "metadata.json"))
+            score = metadata["overall_performance"]["accuracy_score"]
+            div_bonus = 0.1 * diversity.get(run_id, 0.5)
+            if score + div_bonus >= original_score:
+                archive.append(run_id)
     else:
         archive += new_ids
+    archive = list(dict.fromkeys(archive))
     return archive
 
 
@@ -197,15 +260,50 @@ def get_full_eval_threshold(output_dir, archive):
     return threshold
 
 
+def save_checkpoint(output_dir, gen_num, archive, selfimprove_entries, selfimprove_ids, selfimprove_ids_compiled):
+    """Save a checkpoint that can be used to resume the run."""
+    checkpoint = {
+        "generation": gen_num,
+        "archive": archive,
+        "selfimprove_entries": selfimprove_entries,
+        "children": selfimprove_ids,
+        "children_compiled": selfimprove_ids_compiled,
+        "timestamp": datetime.datetime.now().isoformat(),
+    }
+    with open(os.path.join(output_dir, f"checkpoint_gen_{gen_num}.json"), "w") as f:
+        json.dump(checkpoint, f, indent=2)
+
+
+def load_checkpoint(output_dir, gen_num):
+    """Load a checkpoint for a specific generation."""
+    path = os.path.join(output_dir, f"checkpoint_gen_{gen_num}.json")
+    if os.path.exists(path):
+        return load_json_file(path)
+    return None
+
+
+def get_archive_diversity_report(output_dir, archive, logger):
+    """Log diversity metrics for the current archive."""
+    if len(archive) < 2:
+        return
+    diversity = compute_diversity_scores(output_dir, archive)
+    if diversity:
+        avg_div = sum(diversity.values()) / len(diversity)
+        min_div = min(diversity.values())
+        max_div = max(diversity.values())
+        logger.info(f"Archive diversity: avg={avg_div:.3f}, min={min_div:.3f}, max={max_div:.3f}")
+    return diversity
+
+
 def main():
     parser = argparse.ArgumentParser(description="Godelion: Open-Ended Evolution of Self-Improving Coding Agents")
     parser.add_argument("--config", type=str, default=None, help="Path to YAML config file")
     parser.add_argument("--max-generation", type=int, default=None, help="Maximum number of evolution iterations")
     parser.add_argument("--selfimprove-size", type=int, default=None, help="Number of self-improvement attempts per generation")
     parser.add_argument("--selfimprove-workers", type=int, default=None, help="Number of parallel workers")
-    parser.add_argument("--selection-method", type=str, default=None, choices=['random', 'score_prop', 'score_child_prop', 'best'], help="Parent selection method")
+    parser.add_argument("--selection-method", type=str, default=None, choices=['random', 'score_prop', 'score_child_prop', 'diversity_weighted', 'best'], help="Parent selection method")
     parser.add_argument("--continue-from", type=str, default=None, help="Directory to continue from")
-    parser.add_argument("--update-archive", type=str, default=None, choices=['keep_better', 'keep_all'], help="Archive update method")
+    parser.add_argument("--update-archive", type=str, default=None, choices=['keep_better', 'keep_all', 'keep_diverse'], help="Archive update method")
     parser.add_argument("--num-evals", type=int, default=None, help="Number of repeated evaluations per self-improve")
     parser.add_argument("--post-improve-diagnose", default=None, action='store_true', help="Diagnose after evaluation")
     parser.add_argument("--shallow-eval", default=None, action='store_true', help="Single shallow evaluation")
@@ -265,9 +363,15 @@ def main():
     logger.info(f"Archive initial: {archive}")
 
     test_more_threshold = 0.4
+    checkpoint_enabled = cfg.get("checkpoint", "enabled", default=True)
+    checkpoint_interval = cfg.get("checkpoint", "interval_generations", default=1)
 
     for gen_num in range(start_gen_num, max_generation):
         logger.info(f"--- Generation {gen_num} ---")
+
+        # Log diversity metrics at start of generation
+        get_archive_diversity_report(output_dir, archive, logger)
+
         selfimprove_entries = choose_selfimproves(
             output_dir, archive, selfimprove_size,
             method=choose_method,
@@ -319,14 +423,22 @@ def main():
         )
         archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=archive_method, noise_leeway=eval_noise)
 
+        gen_record = {
+            "generation": gen_num,
+            "selfimprove_entries": selfimprove_entries,
+            "children": selfimprove_ids,
+            "children_compiled": selfimprove_ids_compiled,
+            "archive": archive,
+            "archive_diversity": compute_diversity_scores(output_dir, archive) if len(archive) > 1 else {},
+        }
+
         with open(os.path.join(output_dir, "dgm_metadata.jsonl"), "a") as f:
-            f.write(json.dumps({
-                "generation": gen_num,
-                "selfimprove_entries": selfimprove_entries,
-                "children": selfimprove_ids,
-                "children_compiled": selfimprove_ids_compiled,
-                "archive": archive,
-            }) + "\n")
+            f.write(json.dumps(gen_record) + "\n")
+
+        # Save checkpoint
+        if checkpoint_enabled and (gen_num % checkpoint_interval == 0 or gen_num == max_generation - 1):
+            save_checkpoint(output_dir, gen_num, archive, selfimprove_entries, selfimprove_ids, selfimprove_ids_compiled)
+            logger.info(f"Checkpoint saved for generation {gen_num}")
 
         logger.info(f"Archive after gen {gen_num}: {archive}")
         logger.info(f"Generation {gen_num} complete.")
