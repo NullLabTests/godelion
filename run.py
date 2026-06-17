@@ -83,19 +83,88 @@ def any_exceeding_context_length(output_dir, commit_id, instance_ids):
     return False
 
 
-def compute_diversity_scores(output_dir: str, archive: list) -> dict:
-    """Compute diversity scores for archive members based on lineage overlap.
+def get_commit_modified_files(output_dir: str, commit: str) -> set:
+    """Get the set of filenames modified across the entire lineage of a commit.
+
+    Walks the ancestral chain from commit back to 'initial', collecting
+    all filenames referenced in each model_patch.diff along the way.
+
+    Returns an empty set if no patch files are found or metadata is missing.
+    """
+    modified_files = set()
+    current = commit
+    while current != 'initial':
+        patch_path = os.path.join(output_dir, current, "model_patch.diff")
+        if os.path.exists(patch_path):
+            try:
+                with open(patch_path) as f:
+                    for line in f:
+                        if line.startswith('diff --git'):
+                            parts = line.split()
+                            if len(parts) >= 4:
+                                b_file = parts[3]
+                                modified_files.add(b_file[2:] if b_file.startswith('b/') else b_file)
+            except Exception:
+                pass
+        meta_path = os.path.join(output_dir, current, "metadata.json")
+        try:
+            meta = load_json_file(meta_path)
+            current = meta.get('parent_commit', 'initial')
+        except Exception:
+            current = 'initial'
+    return modified_files
+
+
+def compute_patch_content_diversity(output_dir: str, archive: list) -> dict:
+    """Compute diversity based on which source files each agent modifies.
+
+    Measures behavioral diversity by comparing the sets of files modified
+    by each agent (and its ancestors). Two agents that modify completely
+    different files get high diversity; agents modifying the same files
+    get low diversity.
+
+    Returns:
+        dict mapping each commit to its patch-content diversity (0.0–1.0).
+    """
+    if len(archive) < 2:
+        return {c: 1.0 for c in archive}
+
+    patch_sets = {}
+    for commit in archive:
+        patch_sets[commit] = get_commit_modified_files(output_dir, commit)
+
+    diversity = {}
+    for commit in archive:
+        my_files = patch_sets[commit]
+        overlaps = []
+        for other in archive:
+            if other == commit:
+                continue
+            other_files = patch_sets.get(other, set())
+            if not my_files and not other_files:
+                overlap = 0.5
+            elif not my_files or not other_files:
+                overlap = 0.0
+            else:
+                intersection = len(my_files & other_files)
+                union = len(my_files | other_files)
+                overlap = intersection / max(union, 1)
+            overlaps.append(overlap)
+        avg_overlap = sum(overlaps) / max(len(overlaps), 1)
+        diversity[commit] = 1.0 - avg_overlap
+
+    return diversity
+
+
+def _compute_lineage_diversity(output_dir: str, archive: list) -> dict:
+    """Compute diversity scores based on lineage overlap only.
 
     For each archive member, diversity = 1 - average pairwise lineage overlap
     with all other members. Members from distinct evolutionary branches get
     high scores; closely related members get low scores.
 
-    Args:
-        output_dir: Base output directory containing run metadata.
-        archive: List of run_ids (commit hashes or 'initial').
-
     Returns:
-        dict mapping each commit to its diversity score (0.0–1.0).
+        dict mapping each commit to its lineage diversity (0.0–1.0).
     """
     diversity = {}
     if len(archive) < 2:
@@ -129,6 +198,46 @@ def compute_diversity_scores(output_dir: str, archive: list) -> dict:
         diversity[commit] = 1.0 - avg_overlap
 
     return diversity
+
+
+def compute_diversity_scores(output_dir: str, archive: list, lineage_weight: float = 0.6) -> dict:
+    """Compute combined diversity scores from lineage overlap and patch content.
+
+    Blends two diversity signals:
+    - Lineage diversity: how distinct the evolutionary branches are
+    - Patch-content diversity: which source files each agent modifies
+
+    Falls back to lineage-only diversity when patch content data is unavailable
+    (e.g., in early generations where no self-modification has occurred yet).
+
+    Args:
+        output_dir: Base output directory containing run metadata.
+        archive: List of run_ids (commit hashes or 'initial').
+        lineage_weight: Weight for lineage diversity (0.0 = patch-only, 1.0 = lineage-only).
+
+    Returns:
+        dict mapping each commit to its combined diversity score (0.0–1.0).
+    """
+    if len(archive) < 2:
+        return {c: 1.0 for c in archive}
+
+    lineage_div = _compute_lineage_diversity(output_dir, archive)
+    patch_div = compute_patch_content_diversity(output_dir, archive)
+
+    # Check if patch data carries any signal (values significantly different from 0.5)
+    patch_values = list(patch_div.values())
+    has_patch_signal = any(abs(v - 0.5) > 0.01 for v in patch_values)
+
+    if not has_patch_signal:
+        return lineage_div
+
+    combined = {}
+    for c in archive:
+        ld = lineage_div.get(c, 0.5)
+        pd = patch_div.get(c, 0.5)
+        combined[c] = lineage_weight * ld + (1.0 - lineage_weight) * pd
+
+    return combined
 
 
 def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', diversity_weight=0.3, run_baseline=None, polyglot=False):
@@ -179,7 +288,10 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
         scores = [1 / (1 + math.exp(-10 * (score - 0.5))) for score in scores]
         children_counts = [candidates[commit]['children_count'] for commit in commits]
         children_counts = [1 / (1 + count) for count in children_counts]
-        probabilities = [s * c for s, c in zip(scores, children_counts)]
+        # Diversity gentle pressure: prefer agents with distinct behavioral profiles
+        div_scores = [diversity_scores.get(commit, 0.5) for commit in commits]
+        div_multiplier = [0.9 + 0.2 * d for d in div_scores]  # range [0.9, 1.1]
+        probabilities = [s * c * d for s, c, d in zip(scores, children_counts, div_multiplier)]
         prob_sum = sum(probabilities)
         if prob_sum > 0:
             probabilities = [p / prob_sum for p in probabilities]
@@ -352,17 +464,64 @@ def find_latest_checkpoint(output_dir: str) -> int | None:
     return max_gen
 
 
+def prune_archive(output_dir: str, archive: list, max_size: int, logger=None) -> list:
+    """Prune archive to max_size while preserving quality and diversity.
+
+    Always keeps the 'initial' baseline. Remaining slots are filled by score
+    (primary) then diversity (secondary). This prevents unbounded archive growth
+    while retaining the most performant and diverse agents.
+
+    Returns the pruned archive (unchanged if max_size <= 0 or already within limit).
+    """
+    if max_size <= 0 or len(archive) <= max_size:
+        return archive
+
+    always_keep = {'initial'}
+    scores = {}
+    for commit in archive:
+        try:
+            meta = load_json_file(os.path.join(output_dir, commit, "metadata.json"))
+            scores[commit] = meta["overall_performance"]["accuracy_score"]
+        except Exception:
+            scores[commit] = 0.0
+
+    diversity = compute_diversity_scores(output_dir, archive)
+
+    removable = [c for c in archive if c not in always_keep]
+    removable.sort(key=lambda c: (scores.get(c, 0.0), diversity.get(c, 0.0)), reverse=True)
+
+    keep = set(always_keep)
+    keep.update(removable[:max_size - len(always_keep)])
+
+    pruned = [c for c in archive if c in keep]
+
+    if logger:
+        removed = [c for c in archive if c not in keep]
+        logger.info(f"Pruned archive: {len(archive)} -> {len(pruned)} (max_size={max_size}, removed {len(removed)})")
+        if removed:
+            removed_scores = [scores[c] for c in removed]
+            removed_div = [diversity.get(c, 0.0) for c in removed]
+            logger.info(f"Removed members - score: [{min(removed_scores):.3f}, {max(removed_scores):.3f}], "
+                        f"diversity: [{min(removed_div):.3f}, {max(removed_div):.3f}]")
+
+    return pruned
+
+
 def get_archive_diversity_report(output_dir, archive, logger):
-    """Log diversity metrics for the current archive."""
+    """Log diversity metrics for the current archive (combined, lineage, and patch)."""
     if len(archive) < 2:
         return
-    diversity = compute_diversity_scores(output_dir, archive)
-    if diversity:
-        avg_div = sum(diversity.values()) / len(diversity)
-        min_div = min(diversity.values())
-        max_div = max(diversity.values())
-        logger.info(f"Archive diversity: avg={avg_div:.3f}, min={min_div:.3f}, max={max_div:.3f}")
-    return diversity
+    combined = compute_diversity_scores(output_dir, archive)
+    lineage = _compute_lineage_diversity(output_dir, archive)
+    patch = compute_patch_content_diversity(output_dir, archive)
+    if combined:
+        for name, div in [("combined", combined), ("lineage", lineage), ("patch", patch)]:
+            if div:
+                avg_d = sum(div.values()) / len(div)
+                min_d = min(div.values())
+                max_d = max(div.values())
+                logger.info(f"Archive diversity ({name}): avg={avg_d:.3f}, min={min_d:.3f}, max={max_d:.3f}")
+    return combined
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -380,6 +539,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--no-meta-cognitive", default=None, action='store_true', help="Skip meta-cognitive validation of proposals")
     parser.add_argument("--diversity-weight", type=float, default=None, help="Diversity weight for diversity_weighted selection")
     parser.add_argument("--diversity-bonus", type=float, default=None, help="Diversity bonus for keep_diverse archive update")
+    parser.add_argument("--max-archive-size", type=int, default=None, help="Maximum archive size (0 = unlimited)")
     parser.add_argument("--shallow-eval", default=None, action='store_true', help="Single shallow evaluation")
     parser.add_argument("--polyglot", default=None, action='store_true', help="Run polyglot benchmark")
     parser.add_argument("--no-full-eval", default=None, action='store_true', help="Skip full evaluation")
@@ -408,6 +568,7 @@ def resolve_config_settings(args, cfg=None) -> dict:
         "diversity_weight": float(cfg_or_arg("evolution.selection_weight_diversity", args.diversity_weight) or 0.3),
         "diversity_bonus": float(cfg_or_arg("evolution.archive_diversity_bonus", args.diversity_bonus) or 0.1),
         "eval_noise": float(cfg.get("evolution.eval_noise", default=0.1)),
+        "max_archive_size": int(cfg_or_arg("evolution.max_archive_size", args.max_archive_size) or 0),
         "output_base_dir": cfg.get("logging.output_dir", default="./output_godelion"),
         "checkpoint_enabled": bool(cfg.get("checkpoint", "enabled", default=True)),
         "checkpoint_interval": int(cfg.get("checkpoint", "interval_generations", default=1)),
@@ -524,6 +685,9 @@ def main():
             logger=logger,
         )
         archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=settings["archive_method"], noise_leeway=settings["eval_noise"], diversity_bonus=settings["diversity_bonus"])
+
+        if settings["max_archive_size"] > 0:
+            archive = prune_archive(output_dir, archive, settings["max_archive_size"], logger=logger)
 
         gen_record = {
             "generation": gen_num,

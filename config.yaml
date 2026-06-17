@@ -46,6 +46,7 @@ evolution:
   archive_diversity_bonus: 0.1
   eval_noise: 0.1
   noise_leeway: 0.1
+  max_archive_size: 30  # 0 = unlimited; caps archive size with diversity-aware pruning
 
 # --- Evaluation Settings ---
 evaluation:

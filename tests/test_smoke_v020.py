@@ -521,6 +521,7 @@ class TestConfigExtraction:
                 diversity_weight=None, diversity_bonus=None, shallow_eval=None,
                 polyglot=None, no_full_eval=None, run_baseline=None, config=None,
                 continue_from=None, resume=None,
+                max_archive_size=None,
             )
             settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
             assert settings["max_generation"] == 15
@@ -548,6 +549,7 @@ class TestConfigExtraction:
                 diversity_weight=None, diversity_bonus=None, shallow_eval=None,
                 polyglot=None, no_full_eval=None, run_baseline=None, config=None,
                 continue_from=None, resume=None,
+                max_archive_size=None,
             )
             settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
             assert settings["max_generation"] == 50       # CLI overrides
@@ -569,6 +571,7 @@ class TestConfigExtraction:
                 diversity_weight=None, diversity_bonus=None, shallow_eval=None,
                 polyglot=None, no_full_eval=None, run_baseline=None, config=None,
                 continue_from=None, resume=None,
+                max_archive_size=None,
             )
             settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
             assert settings["meta_cognitive_val"] is False

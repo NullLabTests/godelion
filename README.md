@@ -68,6 +68,17 @@ compounding improvements over generations.
 | **🔐 Safety-First** | Constitutional checks, human approval gates, protected files |
 | **📦 Modern Python** | `pyproject.toml`, type hints, pre-commit hooks, CI config |
 
+### What's New in v0.3.0+
+
+| Feature | Description |
+|---------|-------------|
+| **🔬 Behavioral Diversity Metric** | Patch-content diversity measures *which source files* each agent modifies — catches behavioral convergence that lineage-only metrics miss |
+| **🧬 Combined Diversity Scores** | Blends lineage (60%) and patch-content (40%) diversity for richer parent selection and archive management |
+| **♻️ Improvement History Feedback** | Diagnosis prompts now include past improvement scores from the lineage, creating a compounding feedback loop |
+| **📐 Archive Pruning** | `max_archive_size` config caps archive growth with diversity-aware eviction (score-primary, diversity-secondary) |
+| **🔍 Patch-Aware Meta-Cognition** | The meta-cognitive validator now sees the actual patch diff and checks whether it addresses the diagnosed problem |
+| **🛡️ Safer Meta-Cognitive Defaults** | When meta-cognitive analysis fails, the proposal is now *rejected* (was previously approved) — conservative by default |
+
 ### What's New in v0.2.0+
 
 | Feature | Description |
@@ -337,17 +348,19 @@ python run.py --config config.local.yaml --max-generation 40 --selfimprove-size 
 ### Selection Methods
 
 ```bash
-# Diversity-weighted selection (accuracy + lineage diversity)
+# Diversity-weighted selection (accuracy + lineage + patch-content diversity)
 python run.py --selection-method diversity_weighted
 
 # Pure accuracy-based selection
 python run.py --selection-method best
 
-# Accuracy-proportional with child count anti-preference
+# Accuracy-proportional with child count anti-preference + gentle diversity boost (default)
 python run.py --selection-method score_child_prop
 ```
 
-### Archive Update Strategies
+> **Note**: The default `score_child_prop` method now includes a subtle diversity multiplier (0.9–1.1×) that gently prefers agents with distinct behavioral profiles without overriding the accuracy signal.
+
+### Archive Management
 
 ```bash
 # Keep all children (maximum diversity, default)
@@ -358,6 +371,12 @@ python run.py --update-archive keep_better
 
 # Keep children with diversity bonus for novel lineages
 python run.py --update-archive keep_diverse
+
+# Cap archive at 30 members with diversity-aware pruning (evicts lowest-score, lowest-diversity)
+python run.py --max-archive-size 30
+
+# Disable pruning entirely (unlimited growth)
+python run.py --max-archive-size 0
 ```
 
 ### Meta-Cognitive Validation

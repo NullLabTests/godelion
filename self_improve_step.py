@@ -34,6 +34,12 @@ META_COGNITIVE_PROMPT = """You are a meta-cognitive engine analyzing a self-impr
 # Improvement Proposal
 {problem_statement}
 
+# Actual Code Changes
+The following is the actual diff produced by the agent:
+```diff
+{patch_diff}
+```
+
 # Current System Architecture Summary
 {architecture_summary}
 
@@ -55,7 +61,12 @@ META_COGNITIVE_PROMPT = """You are a meta-cognitive engine analyzing a self-impr
    - Safety and containment
    - Runtime efficiency (token usage, wall time)
 
-4. **Validation Strategy**: What specific tests would validate this improvement works?
+4. **Patch-Problem Alignment**: Compare the actual code changes against the diagnosed problem:
+   - Does the patch actually address the diagnosed problem?
+   - Are the changes proportional to the problem statement?
+   - Could there be unintended side effects beyond the intended change?
+
+5. **Validation Strategy**: What specific tests would validate this improvement works?
 
 Respond precisely in this JSON format:
 ```json
@@ -67,6 +78,8 @@ Respond precisely in this JSON format:
     "impact_code_quality": -1.0 to 1.0,
     "impact_safety": -1.0 to 1.0,
     "impact_efficiency": -1.0 to 1.0,
+    "patch_problem_alignment": 0.0 to 1.0,
+    "patch_alignment_reasoning": "Does the patch actually solve the diagnosed problem?",
     "validation_strategy": "How to validate this improvement",
     "has_regression_risk": true/false,
     "has_safety_concern": true/false,
@@ -76,6 +89,62 @@ Respond precisely in this JSON format:
 ```
 
 Think carefully about the architecture and potential side effects."""
+
+def get_improvement_history(output_dir: str, commit: str, max_history: int = 5) -> list:
+    """Walk lineage and collect improvement diagnosis history.
+
+    Reads the improvement_diagnosis from each ancestor's metadata.json
+    and returns chronologically ordered history entries with score,
+    improvements, and regressions text.
+    """
+    history = []
+    visited = set()
+    current = commit
+    while current != 'initial' and current not in visited and len(history) < max_history:
+        visited.add(current)
+        meta_path = os.path.join(output_dir, current, "metadata.json")
+        try:
+            meta = load_json_file(meta_path)
+            diagnosis = meta.get('improvement_diagnosis')
+            if diagnosis and isinstance(diagnosis, dict):
+                score = diagnosis.get('score')
+                if score is not None:
+                    history.append({
+                        'score': score,
+                        'improvements': diagnosis.get('improvements', ''),
+                        'regressions': diagnosis.get('regressions', ''),
+                    })
+            current = meta.get('parent_commit', 'initial')
+        except Exception:
+            break
+    return history
+
+
+def format_improvement_history(history: list) -> str:
+    """Format improvement history for inclusion in diagnosis prompts."""
+    if not history:
+        return ""
+
+    parts = ["## Past Self-Improvement Attempts in This Lineage\n"]
+    positive = sum(1 for h in history if h.get('score', 0) > 0)
+    negative = sum(1 for h in history if h.get('score', 0) < 0)
+    parts.append(f"Of {len(history)} past self-modifications in this lineage: "
+                 f"{positive} were net-positive, {negative} were net-negative.\n")
+
+    for i, h in enumerate(reversed(history)):
+        score = h.get('score', 0)
+        label = "IMPROVEMENT" if score > 0 else ("REGRESSION" if score < 0 else "NEUTRAL")
+        parts.append(f"### Attempt {i+1} ({label}, score={score:.1f})")
+        imp = h.get('improvements', '')
+        reg = h.get('regressions', '')
+        if imp:
+            parts.append(f"- What worked: {imp[:300]}")
+        if reg:
+            parts.append(f"- What went wrong: {reg[:300]}")
+        parts.append("")
+
+    return "\n".join(parts)
+
 
 def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attempts=3, polyglot=False):
     client = create_client(diagnose_model)
@@ -89,6 +158,13 @@ def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attem
             entry, commit, root_dir, out_dir, dataset,
             patch_files=patch_files,
         )
+
+    # Inject lineage improvement history into the system message
+    improvement_history = get_improvement_history(out_dir, commit)
+    if improvement_history:
+        history_text = format_improvement_history(improvement_history)
+        diagnose_sys_message = f"{diagnose_sys_message}\n\n{history_text}"
+
     try:
         response, msg_history = get_response_from_llm(
             msg=diagnose_prompt,
@@ -203,16 +279,32 @@ def get_architecture_summary() -> str:
     return "\n".join(parts)
 
 
-def validate_improvement_proposal(problem_statement: str, max_attempts: int = 2) -> tuple:
+def validate_improvement_proposal(problem_statement: str, patch_file: str | None = None, max_attempts: int = 2) -> tuple:
     """Meta-cognitive validation of an improvement proposal before running the full eval cycle.
 
     Uses an LLM to assess risk, failure modes, and impact of the proposed change.
+    If patch_file is provided, includes the actual diff in the analysis so the
+    validator can check whether the patch actually addresses the diagnosed problem.
+
     Returns (approved, analysis) where approved is False if recommendation is 'reject',
     and analysis is the parsed JSON dict or None on failure.
     """
+    patch_diff = ""
+    if patch_file and os.path.exists(patch_file):
+        try:
+            with open(patch_file) as f:
+                content = f.read()
+                # Truncate very large patches to avoid token overflow
+                if len(content) > 50000:
+                    content = content[:50000] + "\n... [patch truncated]"
+                patch_diff = content
+        except Exception as e:
+            safe_log(f"Could not read patch file for meta-cognitive validation: {e}")
+
     arch_summary = get_architecture_summary()
     prompt = META_COGNITIVE_PROMPT.format(
         problem_statement=problem_statement,
+        patch_diff=patch_diff,
         architecture_summary=arch_summary,
     )
     client = create_client(diagnose_model)
@@ -229,13 +321,14 @@ def validate_improvement_proposal(problem_statement: str, max_attempts: int = 2)
             if analysis and "recommendation" in analysis:
                 safe_log(f"Meta-cognitive analysis: risk={analysis.get('risk_level')}, "
                          f"recommendation={analysis.get('recommendation')}, "
-                         f"pass@1 impact={analysis.get('impact_pass_at_1')}")
+                         f"pass@1 impact={analysis.get('impact_pass_at_1')}, "
+                         f"alignment={analysis.get('patch_problem_alignment')}")
                 approved = analysis.get("recommendation") != "reject"
                 return approved, analysis
         except Exception as e:
             safe_log(f"Meta-cognitive analysis attempt {attempt+1} failed: {e}")
-    safe_log("Meta-cognitive analysis failed, defaulting to approved")
-    return True, None
+    safe_log("Meta-cognitive analysis failed, rejecting proposal (safe default)")
+    return False, None
 
 
 def analyze_patch_quality(patch_file: str) -> dict:
@@ -553,7 +646,7 @@ def self_improve(
     # Meta-cognitive validation of the improvement proposal (before expensive eval)
     if meta_cognitive_validation and problem_statement:
         safe_log("Running meta-cognitive validation of improvement proposal")
-        proposal_ok, meta_analysis = validate_improvement_proposal(problem_statement)
+        proposal_ok, meta_analysis = validate_improvement_proposal(problem_statement, patch_file=model_patch_file)
         metadata['meta_cognitive_analysis'] = meta_analysis
         metadata['proposal_validated'] = proposal_ok
         if not proposal_ok:
