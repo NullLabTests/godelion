@@ -427,12 +427,18 @@ python run.py --polyglot
 # Performance over generations
 python -m analysis.plot_performance --output-dir ./output_godelion/20250101_120000_123456
 
+# Synthetic demo (no run required — tests your visualization setup)
+python -m analysis.plot_performance --output-dir . --demo
+
 # Lineage tree (requires graphviz)
 python -m analysis.plot_lineage --output-dir ./output_godelion/20250101_120000_123456
 
 # Full HTML report
 python -m analysis.report --output-dir ./output_godelion/20250101_120000_123456
 ```
+
+![Demo performance plot](analysis_performance_demo.png)
+*Synthetic demo showing the type of output generated after a multi-generation run. Real runs produce the same 4-panel figure from actual evolutionary data.*
 
 ---
 
