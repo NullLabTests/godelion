@@ -47,6 +47,7 @@ evolution:
   eval_noise: 0.1
   noise_leeway: 0.1
   max_archive_size: 30  # 0 = unlimited; caps archive size with diversity-aware pruning
+  min_patch_lines: 3  # minimum lines changed for a patch to be considered non-trivial
 
 # --- Evaluation Settings ---
 evaluation:

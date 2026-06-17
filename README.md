@@ -76,6 +76,7 @@ compounding improvements over generations.
 | **🧬 Combined Diversity Scores** | Blends lineage (60%) and patch-content (40%) diversity for richer parent selection and archive management |
 | **♻️ Improvement History Feedback** | Diagnosis prompts now include past improvement scores from the lineage, creating a compounding feedback loop |
 | **📐 Archive Pruning** | `max_archive_size` config caps archive growth with diversity-aware eviction (score-primary, diversity-secondary) |
+| **📏 Trivial Patch Filter** | `min_patch_lines` config filters out self-modifications too small to be meaningful (default: 3 lines) |
 | **🔍 Patch-Aware Meta-Cognition** | The meta-cognitive validator now sees the actual patch diff and checks whether it addresses the diagnosed problem |
 | **🛡️ Safer Meta-Cognitive Defaults** | When meta-cognitive analysis fails, the proposal is now *rejected* (was previously approved) — conservative by default |
 

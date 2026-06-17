@@ -164,6 +164,12 @@ def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attem
     if improvement_history:
         history_text = format_improvement_history(improvement_history)
         diagnose_sys_message = f"{diagnose_sys_message}\n\n{history_text}"
+        scores = [h.get('score', 0) for h in improvement_history]
+        positive = sum(1 for s in scores if s > 0)
+        negative = sum(1 for s in scores if s < 0)
+        safe_log(f"Improvement history: {len(improvement_history)} past attempts "
+                 f"({positive} positive, {negative} negative), "
+                 f"scores={scores}")
 
     try:
         response, msg_history = get_response_from_llm(
@@ -642,6 +648,14 @@ def self_improve(
     # Analyze patch quality
     patch_quality = analyze_patch_quality(model_patch_file)
     metadata['patch_quality'] = patch_quality
+
+    # Filter out trivial patches that don't meet minimum change threshold
+    min_patch_lines = config.get("evolution.min_patch_lines", default=3)
+    total_changed = patch_quality['lines_added'] + patch_quality['lines_removed']
+    if total_changed < min_patch_lines:
+        safe_log(f"Patch too trivial ({total_changed} lines changed, min={min_patch_lines}). Skipping.")
+        save_metadata(metadata, output_dir)
+        return metadata
 
     # Meta-cognitive validation of the improvement proposal (before expensive eval)
     if meta_cognitive_validation and problem_statement:
