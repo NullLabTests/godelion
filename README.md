@@ -130,7 +130,7 @@ source venv/bin/activate
 pip install -e .
 
 # Optional: for analysis & plotting
-sudo apt-get install graphviz graphviz-dev
+sudo apt-get install graphviz libgraphviz-dev
 pip install -e ".[dev,analysis]"
 ```
 
@@ -210,7 +210,7 @@ That's it. The system will start evolving. Output is saved to `./output_godelion
 2. **Propose**: An LLM proposes a modification to `coding_agent.py`, tools, or prompts
 3. **Implement**: The proposed change is implemented inside a Docker container
 4. **Validate**: The modified agent is tested on held-out benchmark tasks
-5. **Compete**: If the change improves performance (or at least doesn't regress), it enters the archive
+5. **Compete**: The change enters the archive (configurable: keep all, keep only improvements, or keep diverse lineages)
 6. **Repeat**: Future generations can build on any archived agent
 
 ### Architecture Overview
@@ -228,8 +228,8 @@ Godelion is structured as a **layered evolutionary system** with four main compo
 ```
 Archive ─→ Parent Selection ─→ Self-Improve ─→ Eval ─→ Filter ─→ Archive
           (fitness +        (Docker sandbox,   (SWE-bench   (is_compiled,
-          diversity)         meta-cognitive     Polyglot)    score >= thr)
-                             validation?)
+          diversity)         meta-cognitive     Polyglot)    archive_update
+                             validation?)       thresholds)  policy)
 ```
 
 The **meta-cognitive validation** step runs *before* the expensive eval harness — it uses an LLM to assess risk, failure modes, and impact of the proposed change. Proposals with high regression risk or safety concerns can be rejected early, saving significant time and cost.
@@ -263,7 +263,7 @@ Godelion uses a **hierarchical YAML configuration system**:
 |---------|-------------|
 | `llm` | Model names, API keys, fallbacks, retry policy |
 | `local` | Local model provider, URL, model names |
-| `evolution` | Generations, selection method, archive policy |
+| `evolution` | Generations, selection method, archive policy, max archive size, min patch lines |
 | `evaluation` | Number of evals, shallow mode, thresholds |
 | `docker` | Image name, timeouts, resource limits, network |
 | `safety` | Constitutional checks, protected files, approvals |
@@ -342,8 +342,8 @@ python run.py
 ### Custom Run
 
 ```bash
-# 40 generations, 4 children per generation, 4 parallel workers
-python run.py --config config.local.yaml --max-generation 40 --selfimprove-size 4 --selfimprove-workers 4
+# 40 generations, 4 children per generation, 4 parallel workers, cap archive at 30
+python run.py --config config.local.yaml --max-generation 40 --selfimprove-size 4 --selfimprove-workers 4 --max-archive-size 30
 ```
 
 ### Selection Methods
@@ -475,7 +475,7 @@ godelion/
 ├── swe_bench/                # SWE-bench integration
 ├── polyglot/                 # Polyglot benchmark integration
 ├── analysis/                 # Analysis & visualization
-├── tests/                    # Test suite (36 tests, 31 pass)
+├── tests/                    # Test suite (43 tests, all passing)
 ├── misc/                     # Logo, diagrams, banners
 ├── Dockerfile                # Container definition
 └── pyproject.toml            # Python packaging
@@ -602,10 +602,10 @@ This project builds on prior research into self-improving systems. See [NOTICE](
 for legal attributions. If you use this work in your research, please cite:
 
 ```bibtex
-@software{godelion2025,
+@software{godelion2026,
   title = {Godelion: Open-Ended Evolution of Self-Improving Coding Agents},
   author = {Godelion Contributors},
-  year = {2025},
+  year = {2026},
   url = {https://github.com/NullLabTests/godelion}
 }
 ```
