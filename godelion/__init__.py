@@ -1,3 +1,3 @@
 # Godelion: Open-Ended Evolution of Self-Improving Coding Agents
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
