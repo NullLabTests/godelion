@@ -17,6 +17,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
 from pathlib import Path
 
+from godelion import __version__
 from godelion.config import Config, config as global_config
 from prompts.self_improvement_prompt import find_selfimprove_eval_logs
 from self_improve_step import self_improve
@@ -544,6 +545,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--polyglot", default=None, action='store_true', help="Run polyglot benchmark")
     parser.add_argument("--no-full-eval", default=None, action='store_true', help="Skip full evaluation")
     parser.add_argument("--run-baseline", type=str, default=None, choices=['no_selfimprove', 'no_darwin'], help="Baseline to run")
+    parser.add_argument("--version", action='version', version=f"Godelion v{__version__}", help="Show version and exit")
     return parser
 
 

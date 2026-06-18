@@ -17,6 +17,8 @@
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python" alt="Python">
   <img src="https://img.shields.io/badge/Docker-Required-2496ED?style=for-the-badge&logo=docker" alt="Docker">
   <img src="https://img.shields.io/badge/Local%20Models-Ollama%2FvLLM-00d2ff?style=for-the-badge" alt="Local Models">
+  <a href="https://github.com/NullLabTests/godelion/actions"><img src="https://img.shields.io/github/actions/workflow/status/NullLabTests/godelion/ci.yml?branch=master&style=for-the-badge&label=CI" alt="CI"></a>
+  <a href="https://img.shields.io/github/v/release/NullLabTests/godelion?style=for-the-badge"><img src="https://img.shields.io/github/v/release/NullLabTests/godelion?style=for-the-badge&label=Version&color=blue" alt="Version"></a>
 </p>
 
 ---
@@ -475,7 +477,7 @@ godelion/
 ├── swe_bench/                # SWE-bench integration
 ├── polyglot/                 # Polyglot benchmark integration
 ├── analysis/                 # Analysis & visualization
-├── tests/                    # Test suite (43 tests, all passing)
+├── tests/                    # Test suite (36 tests, all passing)
 ├── misc/                     # Logo, diagrams, banners
 ├── Dockerfile                # Container definition
 └── pyproject.toml            # Python packaging

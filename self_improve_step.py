@@ -688,7 +688,7 @@ def self_improve(
         safe_log("Diagnosing the self-improvement")
         metadata['is_compiled'] = is_compiled_self_improve(metadata)
         if metadata['is_compiled']:
-            safe_log("The self-improvement succeed to be complied")
+            safe_log("The self-improvement succeeded to be compiled")
             improvement_diagnosis = diagnose_improvement(
                 entry, parent_commit, root_dir,
                 model_patch_file, out_dir_base, run_id,
@@ -697,8 +697,8 @@ def self_improve(
             metadata['improvement_diagnosis'] = improvement_diagnosis
             safe_log(f"Improvement diagnosis: {improvement_diagnosis}")
         else:
-            safe_log("The self-improvement fail to be complied")
-            metadata['improvement_diagnosis'] = "Fail to complied. Ignore this."
+            safe_log("The self-improvement failed to compile")
+            metadata['improvement_diagnosis'] = "Failed to compile. Ignore this."
 
     # Save metadata of this self-improvement attempt
     save_metadata(metadata, output_dir)

@@ -44,8 +44,7 @@ evolution:
   archive_update: "keep_all"  # keep_all | keep_better | keep_diverse
   # diversity bonus for keep_diverse archive update (added to score threshold)
   archive_diversity_bonus: 0.1
-  eval_noise: 0.1
-  noise_leeway: 0.1
+  eval_noise: 0.1  # noise leeway for archive update scoring
   max_archive_size: 30  # 0 = unlimited; caps archive size with diversity-aware pruning
   min_patch_lines: 3  # minimum lines changed for a patch to be considered non-trivial
 

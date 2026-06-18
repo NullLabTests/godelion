@@ -2,6 +2,20 @@
 
 All notable changes to Godelion are documented in this file.
 
+## 0.3.1 - 2026-06-18
+
+### 🐛 Bug Fixes
+
+- **Fixed typo in self-improve logging**: "succeed to be complied" → "succeeded to be compiled", "Fail to complied" → "Failed to compile"
+
+### 🏗️ Code Quality
+
+- **Version bump**: 0.2.3 → 0.3.1 to reflect v0.3.0 feature additions
+- **Synced `pyproject.toml` version** with package `__init__.py` version
+- **Added `py.typed` marker** for PEP 561 compliance (enables downstream type checking)
+
+## 0.3.0 - 2026-06-17
+
 ## 0.2.0 - 2026-06-16
 
 ### 🧬 Enhanced Self-Improvement Engine
