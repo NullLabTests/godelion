@@ -88,10 +88,10 @@ def parse_log_django(log: str) -> dict[str, str]:
         pass_suffixes = (" ... ok", " ... OK", " ...  OK")
         for suffix in pass_suffixes:
             if line.endswith(suffix):
-                # TODO: Temporary, exclusive fix for django__django-7188
-                # The proper fix should involve somehow getting the test results to
-                # print on a separate line, rather than the same line
-                if line.strip().startswith("Applying sites.0002_alter_domain_unique...test_no_migrations"):
+                # Handle edge case where Django migration status text is
+                # concatenated with test output on the same line (e.g.
+                # "Applying sites.0002_alter_domain_unique...test_no_migrations ... ok")
+                if line.strip().startswith("Applying") and "..." in line:
                     line = line.split("...", 1)[-1].strip()
                 test = line.rsplit(suffix, 1)[0]
                 test_status_map[test] = TestStatus.PASSED.value
@@ -118,13 +118,14 @@ def parse_log_django(log: str) -> dict[str, str]:
             test = prev_test
             test_status_map[test] = TestStatus.PASSED.value
 
-    # TODO: This is very brittle, we should do better
-    # There's a bug in the django logger, such that sometimes a test output near the end gets
-    # interrupted by a particular long multiline print statement.
-    # We have observed this in one of 3 forms:
-    # - "{test_name} ... Testing against Django installed in {*} silenced.\nok"
-    # - "{test_name} ... Internal Server Error: \/(.*)\/\nok"
-    # - "{test_name} ... System check identified no issues (0 silenced).\nok"
+    # Handle multiline Django log edge cases where verbose setup output
+    # (e.g., "Testing against Django installed in ...", "Internal Server Error",
+    # "System check identified no issues") appears between the test name and
+    # the "ok" status on separate lines.
+    # Observed forms:
+    #   "{test_name} ... Testing against Django installed in {*} silenced.\nok"
+    #   "{test_name} ... Internal Server Error: \/(.*)\/\nok"
+    #   "{test_name} ... System check identified no issues (0 silenced).\nok"
     patterns = [
         r"^(.*?)\s\.\.\.\sTesting\ against\ Django\ installed\ in\ ((?s:.*?))\ silenced\)\.\nok$",
         r"^(.*?)\s\.\.\.\sInternal\ Server\ Error:\ \/(.*)\/\nok$",

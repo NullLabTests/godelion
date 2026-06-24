@@ -2,6 +2,18 @@
 
 All notable changes to Godelion are documented in this file.
 
+## 0.3.3 - 2026-06-24
+
+### 🐛 Bug Fixes
+
+- **Fixed `create_client` crash for `llama3.1-405b`**: Missing `return` statement caused the function to return `None`; the tuple-assignment bug also silently dropped the client
+- **Fixed typo `resoning_content` → `reasoning_content`** in `get_response_from_llm` for the DeepSeek reasoner branch
+
+### 🏗️ Code Quality
+
+- **Refined `parse_log_django` robustness**: Replaced fragile TODO-marked single-repo hack with a general `"Applying"` prefix check; cleaned up stale TODO comments with descriptive doc-comments
+- **Version bump**: 0.3.2 → 0.3.3
+
 ## 0.3.2 - 2026-06-18
 
 ### 🏗️ Code Quality
