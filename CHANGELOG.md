@@ -2,6 +2,12 @@
 
 All notable changes to Godelion are documented in this file.
 
+## 0.3.4 - 2026-06-24
+
+### 🐛 Bug Fixes
+
+- **Lazy-load optional dependencies in `llm.py`**: Made `anthropic`, `backoff`, and `openai` imports optional with stub fallbacks. This resolves 4 pre-existing test failures when these packages are not installed, and makes the package more resilient for environments that only use a subset of LLM providers.
+
 ## 0.3.3 - 2026-06-24
 
 ### 🐛 Bug Fixes

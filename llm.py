@@ -3,9 +3,33 @@ import json
 import os
 import re
 
-import anthropic
-import backoff
-import openai
+try:
+    import backoff
+except ModuleNotFoundError:
+    class _NoopBackoff:
+        @staticmethod
+        def on_exception(*a, **kw):
+            return lambda f: f
+        expo = None
+    backoff = _NoopBackoff()
+
+try:
+    import openai
+    _OpenAIRateLimitError = openai.RateLimitError
+    _OpenAIAPITimeoutError = openai.APITimeoutError
+except ModuleNotFoundError:
+    openai = None
+    class _OpenAIRateLimitError(Exception): pass
+    class _OpenAIAPITimeoutError(Exception): pass
+
+try:
+    import anthropic
+    _AnthropicRateLimitError = anthropic.RateLimitError
+    _AnthropicAPIStatusError = anthropic.APIStatusError
+except ModuleNotFoundError:
+    anthropic = None
+    class _AnthropicRateLimitError(Exception): pass
+    class _AnthropicAPIStatusError(Exception): pass
 
 MAX_OUTPUT_TOKENS = 4096
 AVAILABLE_LLMS = [
@@ -86,7 +110,7 @@ def create_client(model: str):
         raise ValueError(f"Model {model} not supported.")
 
 # Get N responses from a single message, used for ensembling.
-@backoff.on_exception(backoff.expo, (openai.RateLimitError, openai.APITimeoutError))
+@backoff.on_exception(backoff.expo, (_OpenAIRateLimitError, _OpenAIAPITimeoutError))
 def get_batch_responses_from_llm(
         msg,
         client,
@@ -167,7 +191,7 @@ def get_batch_responses_from_llm(
 
 @backoff.on_exception(
     backoff.expo,
-    (openai.RateLimitError, openai.APITimeoutError, anthropic.RateLimitError, anthropic.APIStatusError),
+    (_OpenAIRateLimitError, _OpenAIAPITimeoutError, _AnthropicRateLimitError, _AnthropicAPIStatusError),
     max_time=120,
 )
 def get_response_from_llm(
