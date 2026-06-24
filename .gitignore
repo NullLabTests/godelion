@@ -1,51 +1,23 @@
-# Python
+# Byte-compiled
 __pycache__/
 *.py[cod]
-*.egg-info/
-*.egg
-dist/
-build/
-.eggs/
-*.whl
+*$py.class
 
-# Environments
+# Env
+.env
+.venv
 venv/
-.venv/
-env/
-
-# Config
-config.local.yaml
-
-# Output
-output_*/
-output_godelion/
-output_dgm/
 
 # IDE
 .vscode/
 .idea/
 *.swp
-*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Docker
-.docker/
-
-# Logs
-*.log
-
-# Analysis
-analysis/*.png
-analysis/*.html
-analysis/*.csv
-
-# Checkpoints
-*.ckpt
-
-# Misc
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+# Build
+dist/
+build/
+*.egg-info/
