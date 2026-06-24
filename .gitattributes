@@ -1,1 +1,10 @@
-misc/swe_results.zip filter=lfs diff=lfs merge=lfs -text
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Python
+*.py text diff=python
+
+# Binary
+*.png binary
+*.jpg binary
+*.ico binary
