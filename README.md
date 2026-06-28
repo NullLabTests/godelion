@@ -175,7 +175,7 @@ python -m polyglot.prepare_polyglot_dataset
 python run.py
 ```
 
-That's it. The system will start evolving. Output is saved to `./output_godelion/`.
+The system will start evolving. Output is saved to `./output_godelion/`.
 
 ---
 
