@@ -8,17 +8,19 @@ Generates:
 - Performance distribution histogram
 - CSV export of all metrics
 """
+
 import argparse
 import json
 import os
 import sys
-from pathlib import Path
 
 try:
     import matplotlib
+
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     import numpy as np
+
     HAVE_MPL = True
 except ImportError:
     HAVE_MPL = False

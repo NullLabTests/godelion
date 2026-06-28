@@ -7,23 +7,23 @@ Usage:
 
 Options override config.yaml settings. See config.yaml for documentation.
 """
+
 import argparse
 import datetime
 import json
 import math
 import os
 import random
-import sys
-from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
-from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
 
 from godelion import __version__
-from godelion.config import Config, config as global_config
+from godelion.config import Config
+from godelion.config import config as global_config
 from prompts.self_improvement_prompt import find_selfimprove_eval_logs
 from self_improve_step import self_improve
 from utils.common_utils import load_json_file
 from utils.docker_utils import setup_logger
-from utils.evo_utils import load_dgm_metadata, is_compiled_self_improve
+from utils.evo_utils import is_compiled_self_improve, load_dgm_metadata
 
 
 def initialize_run(output_dir: str, prevrun_dir: str | None = None, polyglot: bool = False, resume: bool = False) -> tuple:
@@ -39,7 +39,7 @@ def initialize_run(output_dir: str, prevrun_dir: str | None = None, polyglot: bo
         Tuple of (archive, start_gen_num, resume_gen_or_None).
     """
     start_gen_num = 0
-    archive: list = ['initial']
+    archive: list = ["initial"]
     resume_gen: int | None = None
 
     # Auto-resume: find latest checkpoint and use it
@@ -48,8 +48,8 @@ def initialize_run(output_dir: str, prevrun_dir: str | None = None, polyglot: bo
         if resume_gen is not None:
             ckpt = load_checkpoint(output_dir, resume_gen)
             if ckpt:
-                archive = ckpt.get('archive', ['initial'])
-                start_gen_num = ckpt['generation'] + 1
+                archive = ckpt.get("archive", ["initial"])
+                start_gen_num = ckpt["generation"] + 1
                 print(f"Resuming from generation {resume_gen} (archive: {len(archive)} members)")
                 return archive, start_gen_num, resume_gen
 
@@ -58,12 +58,12 @@ def initialize_run(output_dir: str, prevrun_dir: str | None = None, polyglot: bo
         metadata_path = os.path.join(prevrun_dir, "dgm_metadata.jsonl")
         if os.path.exists(metadata_path):
             metadata = load_dgm_metadata(metadata_path, last_only=True)
-            archive = metadata['archive']
-            start_gen_num = metadata['generation'] + 1
+            archive = metadata["archive"]
+            start_gen_num = metadata["generation"] + 1
             return archive, start_gen_num, None
 
     # Fresh start — copy initial evaluation results
-    initial_folder_name = 'initial' if not polyglot else 'initial_polyglot'
+    initial_folder_name = "initial" if not polyglot else "initial_polyglot"
     if not os.path.exists(f"{output_dir}/{initial_folder_name}"):
         if os.path.exists(initial_folder_name):
             os.system(f"cp -r {initial_folder_name}/ {output_dir}/initial")
@@ -79,7 +79,7 @@ def any_exceeding_context_length(output_dir, commit_id, instance_ids):
             continue
         md_log = md_logs[0]
         error_str = "Error in get_response_withtools: Error code: 400 - {'message': 'Input is too long for requested model.'}"
-        if f'{error_str}\n{error_str}' in md_log:
+        if f"{error_str}\n{error_str}" in md_log:
             return True
     return False
 
@@ -94,25 +94,25 @@ def get_commit_modified_files(output_dir: str, commit: str) -> set:
     """
     modified_files = set()
     current = commit
-    while current != 'initial':
+    while current != "initial":
         patch_path = os.path.join(output_dir, current, "model_patch.diff")
         if os.path.exists(patch_path):
             try:
                 with open(patch_path) as f:
                     for line in f:
-                        if line.startswith('diff --git'):
+                        if line.startswith("diff --git"):
                             parts = line.split()
                             if len(parts) >= 4:
                                 b_file = parts[3]
-                                modified_files.add(b_file[2:] if b_file.startswith('b/') else b_file)
+                                modified_files.add(b_file[2:] if b_file.startswith("b/") else b_file)
             except Exception:
                 pass
         meta_path = os.path.join(output_dir, current, "metadata.json")
         try:
             meta = load_json_file(meta_path)
-            current = meta.get('parent_commit', 'initial')
+            current = meta.get("parent_commit", "initial")
         except Exception:
-            current = 'initial'
+            current = "initial"
     return modified_files
 
 
@@ -176,10 +176,10 @@ def _compute_lineage_diversity(output_dir: str, archive: list) -> dict:
         try:
             meta = load_json_file(os.path.join(output_dir, commit, "metadata.json"))
             lineage = [commit]
-            parent = meta.get('parent_commit', 'initial')
-            while parent != 'initial' and parent in archive:
+            parent = meta.get("parent_commit", "initial")
+            while parent != "initial" and parent in archive:
                 lineage.append(parent)
-                parent = load_json_file(os.path.join(output_dir, parent, "metadata.json")).get('parent_commit', 'initial')
+                parent = load_json_file(os.path.join(output_dir, parent, "metadata.json")).get("parent_commit", "initial")
             lineages[commit] = set(lineage)
         except Exception:
             lineages[commit] = {commit}
@@ -241,7 +241,7 @@ def compute_diversity_scores(output_dir: str, archive: list, lineage_weight: flo
     return combined
 
 
-def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', diversity_weight=0.3, run_baseline=None, polyglot=False):
+def choose_selfimproves(output_dir, archive, selfimprove_size, method="random", diversity_weight=0.3, run_baseline=None, polyglot=False):
     selfimprove_entries = []
     candidates = {}
 
@@ -250,16 +250,16 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
             metadata_path = os.path.join(output_dir, commit, "metadata.json")
             metadata = load_json_file(metadata_path)
             candidates[commit] = {
-                'accuracy_score': metadata['overall_performance']['accuracy_score'],
-                'total_unresolved_ids': metadata['overall_performance']['total_unresolved_ids'],
-                'total_emptypatch_ids': metadata['overall_performance']['total_emptypatch_ids'],
-                'total_resolved_ids': metadata['overall_performance']['total_resolved_ids'],
-                'children_count': 0,
+                "accuracy_score": metadata["overall_performance"]["accuracy_score"],
+                "total_unresolved_ids": metadata["overall_performance"]["total_unresolved_ids"],
+                "total_emptypatch_ids": metadata["overall_performance"]["total_emptypatch_ids"],
+                "total_resolved_ids": metadata["overall_performance"]["total_resolved_ids"],
+                "children_count": 0,
             }
-            if commit != 'initial':
-                parent_commit = metadata['parent_commit']
+            if commit != "initial":
+                parent_commit = metadata["parent_commit"]
                 if parent_commit in candidates:
-                    candidates[parent_commit]['children_count'] += 1
+                    candidates[parent_commit]["children_count"] += 1
         except Exception as e:
             print(f"{commit} not eligible for being a parent: {e}")
             continue
@@ -268,26 +268,26 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
         print("No eligible candidates in archive.")
         return []
 
-    if run_baseline == 'no_darwin':
+    if run_baseline == "no_darwin":
         commits = list(candidates.keys())
         parent_commits = commits[-1:]
         diversity_scores = {c: 1.0 for c in commits}
     else:
         diversity_scores = compute_diversity_scores(output_dir, archive)
 
-    if run_baseline == 'no_darwin':
+    if run_baseline == "no_darwin":
         parent_commits = list(candidates.keys())[-1:]
-    elif method == 'score_prop':
+    elif method == "score_prop":
         commits = list(candidates.keys())
-        scores = [candidates[commit]['accuracy_score'] for commit in commits]
+        scores = [candidates[commit]["accuracy_score"] for commit in commits]
         scores = [1 / (1 + math.exp(-10 * (score - 0.5))) for score in scores]
         probabilities = [score / sum(scores) for score in scores]
         parent_commits = random.choices(commits, probabilities, k=selfimprove_size)
-    elif method == 'score_child_prop':
+    elif method == "score_child_prop":
         commits = list(candidates.keys())
-        scores = [candidates[commit]['accuracy_score'] for commit in commits]
+        scores = [candidates[commit]["accuracy_score"] for commit in commits]
         scores = [1 / (1 + math.exp(-10 * (score - 0.5))) for score in scores]
-        children_counts = [candidates[commit]['children_count'] for commit in commits]
+        children_counts = [candidates[commit]["children_count"] for commit in commits]
         children_counts = [1 / (1 + count) for count in children_counts]
         # Diversity gentle pressure: prefer agents with distinct behavioral profiles
         div_scores = [diversity_scores.get(commit, 0.5) for commit in commits]
@@ -299,9 +299,9 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
         else:
             probabilities = [1 / len(probabilities)] * len(probabilities)
         parent_commits = random.choices(commits, probabilities, k=selfimprove_size)
-    elif method == 'diversity_weighted':
+    elif method == "diversity_weighted":
         commits = list(candidates.keys())
-        scores = [candidates[commit]['accuracy_score'] for commit in commits]
+        scores = [candidates[commit]["accuracy_score"] for commit in commits]
         div_scores = [diversity_scores.get(commit, 0.5) for commit in commits]
         sig_scores = [1 / (1 + math.exp(-10 * (s - 0.5))) for s in scores]
         acc_weight = 1.0 - diversity_weight
@@ -309,9 +309,9 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
         prob_sum = sum(combined)
         probabilities = [c / prob_sum for c in combined] if prob_sum > 0 else [1 / len(combined)] * len(combined)
         parent_commits = random.choices(commits, probabilities, k=selfimprove_size)
-    elif method == 'best':
-        sorted_commits = sorted(candidates, key=lambda x: candidates[x]['accuracy_score'], reverse=True)
-        parent_commits = sorted_commits[:min(selfimprove_size, len(sorted_commits))]
+    elif method == "best":
+        sorted_commits = sorted(candidates, key=lambda x: candidates[x]["accuracy_score"], reverse=True)
+        parent_commits = sorted_commits[: min(selfimprove_size, len(sorted_commits))]
         if len(parent_commits) < selfimprove_size:
             parent_commits.extend(random.choices(parent_commits, k=selfimprove_size - len(parent_commits)))
     else:
@@ -323,9 +323,9 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
     for parent_commit in parent_commits:
         if parent_commit not in candidates:
             continue
-        empty_ids = candidates[parent_commit]['total_emptypatch_ids']
-        resolved_ids = candidates[parent_commit]['total_resolved_ids']
-        unresolved_ids = candidates[parent_commit]['total_unresolved_ids']
+        empty_ids = candidates[parent_commit]["total_emptypatch_ids"]
+        resolved_ids = candidates[parent_commit]["total_resolved_ids"]
+        unresolved_ids = candidates[parent_commit]["total_unresolved_ids"]
 
         if polyglot:
             entry_ids = empty_ids + unresolved_ids
@@ -336,15 +336,15 @@ def choose_selfimproves(output_dir, archive, selfimprove_size, method='random', 
             if num_total_ids == 0:
                 continue
             if len(empty_ids) >= 0.1 * num_total_ids and random.random() < 0.25:
-                entry = 'solve_empty_patches'
+                entry = "solve_empty_patches"
                 selfimprove_entries.append((parent_commit, entry))
                 continue
             if random.random() < 0.25:
-                entry = 'solve_stochasticity'
+                entry = "solve_stochasticity"
                 selfimprove_entries.append((parent_commit, entry))
                 continue
             if any_exceeding_context_length(output_dir, parent_commit, empty_ids + unresolved_ids) and random.random() < 0.25:
-                entry = 'solve_contextlength'
+                entry = "solve_contextlength"
                 selfimprove_entries.append((parent_commit, entry))
                 continue
             if not unresolved_ids:
@@ -382,16 +382,16 @@ def get_original_score(output_dir):
         return 0.0
 
 
-def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway=0.1, diversity_bonus=0.1):
-    if method in ('keep_better', 'keep_diverse'):
+def update_archive(output_dir, archive, new_ids, method="keep_all", noise_leeway=0.1, diversity_bonus=0.1):
+    if method in ("keep_better", "keep_diverse"):
         original_score = get_original_score(output_dir) - noise_leeway
-    if method == 'keep_better':
+    if method == "keep_better":
         for run_id in new_ids:
             metadata = load_json_file(os.path.join(output_dir, run_id, "metadata.json"))
             score = metadata["overall_performance"]["accuracy_score"]
             if score >= original_score:
                 archive.append(run_id)
-    elif method == 'keep_diverse':
+    elif method == "keep_diverse":
         diversity = compute_diversity_scores(output_dir, archive + new_ids)
         for run_id in new_ids:
             metadata = load_json_file(os.path.join(output_dir, run_id, "metadata.json"))
@@ -407,7 +407,7 @@ def update_archive(output_dir, archive, new_ids, method='keep_all', noise_leeway
 
 def get_full_eval_threshold(output_dir, archive):
     archive_scores = []
-    num_full_eval = sum(len(load_json_file(f"./swe_bench/subsets/{size}.json")) for size in ['small', 'medium', 'big'])
+    num_full_eval = sum(len(load_json_file(f"./swe_bench/subsets/{size}.json")) for size in ["small", "medium", "big"])
     original_score = get_original_score(output_dir)
     archive_scores.append(original_score)
     for run_id in archive:
@@ -453,11 +453,12 @@ def find_latest_checkpoint(output_dir: str) -> int | None:
     Returns the generation number of the latest checkpoint, or None if none found.
     """
     import re
+
     max_gen = None
     if not os.path.isdir(output_dir):
         return None
     for fname in os.listdir(output_dir):
-        m = re.match(r'checkpoint_gen_(\d+)\.json', fname)
+        m = re.match(r"checkpoint_gen_(\d+)\.json", fname)
         if m:
             gen = int(m.group(1))
             if max_gen is None or gen > max_gen:
@@ -477,7 +478,7 @@ def prune_archive(output_dir: str, archive: list, max_size: int, logger=None) ->
     if max_size <= 0 or len(archive) <= max_size:
         return archive
 
-    always_keep = {'initial'}
+    always_keep = {"initial"}
     scores = {}
     for commit in archive:
         try:
@@ -492,7 +493,7 @@ def prune_archive(output_dir: str, archive: list, max_size: int, logger=None) ->
     removable.sort(key=lambda c: (scores.get(c, 0.0), diversity.get(c, 0.0)), reverse=True)
 
     keep = set(always_keep)
-    keep.update(removable[:max_size - len(always_keep)])
+    keep.update(removable[: max_size - len(always_keep)])
 
     pruned = [c for c in archive if c in keep]
 
@@ -502,8 +503,9 @@ def prune_archive(output_dir: str, archive: list, max_size: int, logger=None) ->
         if removed:
             removed_scores = [scores[c] for c in removed]
             removed_div = [diversity.get(c, 0.0) for c in removed]
-            logger.info(f"Removed members - score: [{min(removed_scores):.3f}, {max(removed_scores):.3f}], "
-                        f"diversity: [{min(removed_div):.3f}, {max(removed_div):.3f}]")
+            logger.info(
+                f"Removed members - score: [{min(removed_scores):.3f}, {max(removed_scores):.3f}], diversity: [{min(removed_div):.3f}, {max(removed_div):.3f}]"
+            )
 
     return pruned
 
@@ -531,21 +533,27 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-generation", type=int, default=None, help="Maximum number of evolution iterations")
     parser.add_argument("--selfimprove-size", type=int, default=None, help="Number of self-improvement attempts per generation")
     parser.add_argument("--selfimprove-workers", type=int, default=None, help="Number of parallel workers")
-    parser.add_argument("--selection-method", type=str, default=None, choices=['random', 'score_prop', 'score_child_prop', 'diversity_weighted', 'best'], help="Parent selection method")
+    parser.add_argument(
+        "--selection-method",
+        type=str,
+        default=None,
+        choices=["random", "score_prop", "score_child_prop", "diversity_weighted", "best"],
+        help="Parent selection method",
+    )
     parser.add_argument("--continue-from", type=str, default=None, help="Directory to continue from (uses metadata.jsonl)")
-    parser.add_argument("--resume", default=None, action='store_true', help="Auto-resume from latest checkpoint in output dir")
-    parser.add_argument("--update-archive", type=str, default=None, choices=['keep_better', 'keep_all', 'keep_diverse'], help="Archive update method")
+    parser.add_argument("--resume", default=None, action="store_true", help="Auto-resume from latest checkpoint in output dir")
+    parser.add_argument("--update-archive", type=str, default=None, choices=["keep_better", "keep_all", "keep_diverse"], help="Archive update method")
     parser.add_argument("--num-evals", type=int, default=None, help="Number of repeated evaluations per self-improve")
-    parser.add_argument("--post-improve-diagnose", default=None, action='store_true', help="Diagnose after evaluation")
-    parser.add_argument("--no-meta-cognitive", default=None, action='store_true', help="Skip meta-cognitive validation of proposals")
+    parser.add_argument("--post-improve-diagnose", default=None, action="store_true", help="Diagnose after evaluation")
+    parser.add_argument("--no-meta-cognitive", default=None, action="store_true", help="Skip meta-cognitive validation of proposals")
     parser.add_argument("--diversity-weight", type=float, default=None, help="Diversity weight for diversity_weighted selection")
     parser.add_argument("--diversity-bonus", type=float, default=None, help="Diversity bonus for keep_diverse archive update")
     parser.add_argument("--max-archive-size", type=int, default=None, help="Maximum archive size (0 = unlimited)")
-    parser.add_argument("--shallow-eval", default=None, action='store_true', help="Single shallow evaluation")
-    parser.add_argument("--polyglot", default=None, action='store_true', help="Run polyglot benchmark")
-    parser.add_argument("--no-full-eval", default=None, action='store_true', help="Skip full evaluation")
-    parser.add_argument("--run-baseline", type=str, default=None, choices=['no_selfimprove', 'no_darwin'], help="Baseline to run")
-    parser.add_argument("--version", action='version', version=f"Godelion v{__version__}", help="Show version and exit")
+    parser.add_argument("--shallow-eval", default=None, action="store_true", help="Single shallow evaluation")
+    parser.add_argument("--polyglot", default=None, action="store_true", help="Run polyglot benchmark")
+    parser.add_argument("--no-full-eval", default=None, action="store_true", help="Skip full evaluation")
+    parser.add_argument("--run-baseline", type=str, default=None, choices=["no_selfimprove", "no_darwin"], help="Baseline to run")
+    parser.add_argument("--version", action="version", version=f"Godelion v{__version__}", help="Show version and exit")
     return parser
 
 
@@ -624,8 +632,12 @@ def main():
     shallow_eval_val = settings["shallow_eval_val"]
 
     logger.info(f"Starting Godelion run {run_id}")
-    logger.info(f"Config: max_generation={settings['max_generation']}, selfimprove_size={settings['selfimprove_size']}, workers={settings['selfimprove_workers']}")
-    logger.info(f"Selection: {settings['choose_method']} (diversity_weight={settings['diversity_weight']}), Archive: {settings['archive_method']} (diversity_bonus={settings['diversity_bonus']})")
+    logger.info(
+        f"Config: max_generation={settings['max_generation']}, selfimprove_size={settings['selfimprove_size']}, workers={settings['selfimprove_workers']}"
+    )
+    logger.info(
+        f"Selection: {settings['choose_method']} (diversity_weight={settings['diversity_weight']}), Archive: {settings['archive_method']} (diversity_bonus={settings['diversity_bonus']})"
+    )
     logger.info(f"Meta-cognitive validation: {settings['meta_cognitive_val']}, Post-diagnose: {post_improve_diagnose_val}")
     logger.info(f"Archive initial: {archive}")
 
@@ -636,7 +648,9 @@ def main():
         get_archive_diversity_report(output_dir, archive, logger)
 
         selfimprove_entries = choose_selfimproves(
-            output_dir, archive, settings["selfimprove_size"],
+            output_dir,
+            archive,
+            settings["selfimprove_size"],
             method=settings["choose_method"],
             diversity_weight=settings["diversity_weight"],
             run_baseline=settings["run_baseline_val"],
@@ -673,8 +687,8 @@ def main():
             for future in as_completed(futures):
                 try:
                     metadata = future.result(timeout=1.5 * 60 * 60)
-                    if metadata and 'run_id' in metadata:
-                        selfimprove_ids.append(metadata['run_id'])
+                    if metadata and "run_id" in metadata:
+                        selfimprove_ids.append(metadata["run_id"])
                 except TimeoutError:
                     logger.error("Self-improvement timed out (1.5h).")
                 except Exception as e:
@@ -682,11 +696,19 @@ def main():
 
         logger.info(f"Self-improve IDs: {selfimprove_ids}")
         selfimprove_ids_compiled = filter_compiled(
-            selfimprove_ids, output_dir,
+            selfimprove_ids,
+            output_dir,
             num_swe_issues=[len(swe_issues_sm)] if shallow_eval_val else [len(swe_issues_sm), len(swe_issues_med)],
             logger=logger,
         )
-        archive = update_archive(output_dir, archive, selfimprove_ids_compiled, method=settings["archive_method"], noise_leeway=settings["eval_noise"], diversity_bonus=settings["diversity_bonus"])
+        archive = update_archive(
+            output_dir,
+            archive,
+            selfimprove_ids_compiled,
+            method=settings["archive_method"],
+            noise_leeway=settings["eval_noise"],
+            diversity_bonus=settings["diversity_bonus"],
+        )
 
         if settings["max_archive_size"] > 0:
             archive = prune_archive(output_dir, archive, settings["max_archive_size"], logger=logger)

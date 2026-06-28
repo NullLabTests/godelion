@@ -1,4 +1,3 @@
-
 import json
 import os
 import re
@@ -6,30 +5,45 @@ import re
 try:
     import backoff
 except ModuleNotFoundError:
+
     class _NoopBackoff:
         @staticmethod
         def on_exception(*a, **kw):
             return lambda f: f
+
         expo = None
+
     backoff = _NoopBackoff()
 
 try:
     import openai
+
     _OpenAIRateLimitError = openai.RateLimitError
     _OpenAIAPITimeoutError = openai.APITimeoutError
 except ModuleNotFoundError:
     openai = None
-    class _OpenAIRateLimitError(Exception): pass
-    class _OpenAIAPITimeoutError(Exception): pass
+
+    class _OpenAIRateLimitError(Exception):
+        pass
+
+    class _OpenAIAPITimeoutError(Exception):
+        pass
+
 
 try:
     import anthropic
+
     _AnthropicRateLimitError = anthropic.RateLimitError
     _AnthropicAPIStatusError = anthropic.APIStatusError
 except ModuleNotFoundError:
     anthropic = None
-    class _AnthropicRateLimitError(Exception): pass
-    class _AnthropicAPIStatusError(Exception): pass
+
+    class _AnthropicRateLimitError(Exception):
+        pass
+
+    class _AnthropicAPIStatusError(Exception):
+        pass
+
 
 MAX_OUTPUT_TOKENS = 4096
 AVAILABLE_LLMS = [
@@ -65,6 +79,7 @@ AVAILABLE_LLMS = [
     "deepseek-reasoner",
 ]
 
+
 def create_client(model: str):
     """
     Create and return an LLM client based on the specified model.
@@ -89,37 +104,32 @@ def create_client(model: str):
         client_model = model.split("/")[-1]
         print(f"Using Vertex AI with model {client_model}.")
         return anthropic.AnthropicVertex(), client_model
-    elif 'gpt' in model or model.startswith("o1-") or model.startswith("o3-"):
+    elif "gpt" in model or model.startswith("o1-") or model.startswith("o3-"):
         print(f"Using OpenAI API with model {model}.")
         return openai.OpenAI(), model
     elif model.startswith("deepseek-"):
         print(f"Using OpenAI API with {model}.")
-        client = openai.OpenAI(
-            api_key=os.environ["DEEPSEEK_API_KEY"],
-            base_url="https://api.deepseek.com"
-        )
+        client = openai.OpenAI(api_key=os.environ["DEEPSEEK_API_KEY"], base_url="https://api.deepseek.com")
         return client, model
     elif model == "llama3.1-405b":
         print(f"Using OpenAI API with {model}.")
-        client = openai.OpenAI(
-            api_key=os.environ["OPENROUTER_API_KEY"],
-            base_url="https://openrouter.ai/api/v1"
-        )
+        client = openai.OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url="https://openrouter.ai/api/v1")
         return client, model
     else:
         raise ValueError(f"Model {model} not supported.")
 
+
 # Get N responses from a single message, used for ensembling.
 @backoff.on_exception(backoff.expo, (_OpenAIRateLimitError, _OpenAIAPITimeoutError))
 def get_batch_responses_from_llm(
-        msg,
-        client,
-        model,
-        system_message,
-        print_debug=False,
-        msg_history=None,
-        temperature=0.75,
-        n_responses=1,
+    msg,
+    client,
+    model,
+    system_message,
+    print_debug=False,
+    msg_history=None,
+    temperature=0.75,
+    n_responses=1,
 ):
     if msg_history is None:
         msg_history = []
@@ -143,9 +153,7 @@ def get_batch_responses_from_llm(
             seed=0,
         )
         content = [r.message.content for r in response.choices]
-        new_msg_history = [
-            new_msg_history + [{"role": "assistant", "content": c}] for c in content
-        ]
+        new_msg_history = [new_msg_history + [{"role": "assistant", "content": c}] for c in content]
     elif model == "llama-3-1-405b-instruct":
         new_msg_history = msg_history + [{"role": "user", "content": msg}]
         response = client.chat.completions.create(
@@ -160,9 +168,7 @@ def get_batch_responses_from_llm(
             stop=None,
         )
         content = [r.message.content for r in response.choices]
-        new_msg_history = [
-            new_msg_history + [{"role": "assistant", "content": c}] for c in content
-        ]
+        new_msg_history = [new_msg_history + [{"role": "assistant", "content": c}] for c in content]
     else:
         content, new_msg_history = [], []
         for _ in range(n_responses):
@@ -182,12 +188,13 @@ def get_batch_responses_from_llm(
         print()
         print("*" * 20 + " LLM START " + "*" * 20)
         for j, msg in enumerate(new_msg_history[0]):
-            print(f'{j}, {msg["role"]}: {msg["content"]}')
+            print(f"{j}, {msg['role']}: {msg['content']}")
         print(content)
         print("*" * 21 + " LLM END " + "*" * 21)
         print()
 
     return content, new_msg_history
+
 
 @backoff.on_exception(
     backoff.expo,
@@ -195,13 +202,13 @@ def get_batch_responses_from_llm(
     max_time=120,
 )
 def get_response_from_llm(
-        msg,
-        client,
-        model,
-        system_message,
-        print_debug=False,
-        msg_history=None,
-        temperature=0.7,
+    msg,
+    client,
+    model,
+    system_message,
+    print_debug=False,
+    msg_history=None,
+    temperature=0.7,
 ):
     if msg_history is None:
         msg_history = []
@@ -321,35 +328,36 @@ def get_response_from_llm(
     if print_debug:
         print()
         print("*" * 20 + " LLM START " + "*" * 20)
-        print(f'User: {new_msg_history[-2]["content"]}')
-        print(f'Assistant: {new_msg_history[-1]["content"]}')
+        print(f"User: {new_msg_history[-2]['content']}")
+        print(f"Assistant: {new_msg_history[-1]['content']}")
         print("*" * 21 + " LLM END " + "*" * 21)
         print()
     return content, new_msg_history
 
+
 def extract_json_between_markers(llm_output):
     inside_json_block = False
     json_lines = []
-    
+
     # Split the output into lines and iterate
-    for line in llm_output.split('\n'):
+    for line in llm_output.split("\n"):
         striped_line = line.strip()
-        
+
         # Check for start of JSON code block
         if striped_line.startswith("```json"):
             inside_json_block = True
             continue
-        
+
         # Check for end of code block
         if inside_json_block and striped_line.startswith("```"):
             # We've reached the closing triple backticks.
             inside_json_block = False
             break
-        
+
         # If we're inside the JSON block, collect the lines
         if inside_json_block:
             json_lines.append(line)
-    
+
     # If we never found a JSON code block, fallback to any JSON-like content
     if not json_lines:
         # Fallback: Try a regex that finds any JSON-like object in the text
@@ -371,7 +379,7 @@ def extract_json_between_markers(llm_output):
 
     # Join all lines in the JSON block into a single string
     json_string = "\n".join(json_lines).strip()
-    
+
     # Try to parse the collected JSON lines
     try:
         return json.loads(json_string)

@@ -10,9 +10,9 @@ Run separately::
 
 Not included in the default ``pytest tests/`` run (see pytest.ini).
 """
+
 import json
 import os
-import re
 import sys
 import tempfile
 import types
@@ -27,6 +27,7 @@ pytestmark = pytest.mark.smoke
 #  Fixture: import project modules with mocked deps in a sandbox
 # ===========================================================================
 
+
 @pytest.fixture(scope="session")
 def sm():
     """Return a dict of project functions, imported with mocked Docker/LLM deps.
@@ -39,8 +40,8 @@ def sm():
     for name in ("self_improve_step", "run"):
         sys.modules.pop(name, None)
 
-    import self_improve_step as _sis
     import run as _run
+    import self_improve_step as _sis
 
     yield {
         # self_improve_step
@@ -65,15 +66,25 @@ def sm():
 
     # Cleanup: remove stubbed modules so other test files aren't affected
     for _name in list(sys.modules):
-        if any(_name.startswith(p) for p in (
-            "self_improve_step", "run", "llm", "docker", "anthropic",
-            "openai", "backoff", "datasets",
-        )):
+        if any(
+            _name.startswith(p)
+            for p in (
+                "self_improve_step",
+                "run",
+                "llm",
+                "docker",
+                "anthropic",
+                "openai",
+                "backoff",
+                "datasets",
+            )
+        ):
             sys.modules.pop(_name, None)
 
 
 def _stub_modules():
     """Register mock modules in sys.modules for all heavy dependencies."""
+
     def _flat(name, attrs=None):
         mod = types.ModuleType(name)
         mod.__package__ = name
@@ -91,48 +102,60 @@ def _stub_modules():
 
     # External deps
     _flat("docker", {"from_env": lambda: types.SimpleNamespace()})
-    _flat("anthropic", {
-        "Anthropic": lambda **kw: types.SimpleNamespace(),
-        "AnthropicBedrock": lambda **kw: types.SimpleNamespace(),
-        "AnthropicVertex": lambda **kw: types.SimpleNamespace(),
-        "RateLimitError": type("RateLimitError", (Exception,), {}),
-        "APIStatusError": type("APIStatusError", (Exception,), {}),
-        "APITimeoutError": type("APITimeoutError", (Exception,), {}),
-    })
-    _flat("openai", {
-        "OpenAI": lambda **kw: types.SimpleNamespace(),
-        "RateLimitError": type("RateLimitError", (Exception,), {}),
-        "APITimeoutError": type("APITimeoutError", (Exception,), {}),
-        "APIStatusError": type("APIStatusError", (Exception,), {}),
-        "APIConnectionError": type("APIConnectionError", (Exception,), {}),
-    })
-    _flat("backoff", {
-        "on_exception": lambda *a, **kw: lambda f: f,
-        "expo": lambda **kw: types.SimpleNamespace(),
-    })
-    _flat("datasets", {"load_dataset": lambda x: types.SimpleNamespace(
-        __getitem__=lambda s, k: [{"patch": "dummy"}])})
-    _flat("llm", {
-        "create_client": lambda model="test": (types.SimpleNamespace(), model),
-        "get_response_from_llm": lambda **kw: (
-            '{"recommendation": "approve", "risk_level": "low"}', []),
-        "extract_json_between_markers": lambda text: {
-            "recommendation": "approve", "risk_level": "low"},
-    })
+    _flat(
+        "anthropic",
+        {
+            "Anthropic": lambda **kw: types.SimpleNamespace(),
+            "AnthropicBedrock": lambda **kw: types.SimpleNamespace(),
+            "AnthropicVertex": lambda **kw: types.SimpleNamespace(),
+            "RateLimitError": type("RateLimitError", (Exception,), {}),
+            "APIStatusError": type("APIStatusError", (Exception,), {}),
+            "APITimeoutError": type("APITimeoutError", (Exception,), {}),
+        },
+    )
+    _flat(
+        "openai",
+        {
+            "OpenAI": lambda **kw: types.SimpleNamespace(),
+            "RateLimitError": type("RateLimitError", (Exception,), {}),
+            "APITimeoutError": type("APITimeoutError", (Exception,), {}),
+            "APIStatusError": type("APIStatusError", (Exception,), {}),
+            "APIConnectionError": type("APIConnectionError", (Exception,), {}),
+        },
+    )
+    _flat(
+        "backoff",
+        {
+            "on_exception": lambda *a, **kw: lambda f: f,
+            "expo": lambda **kw: types.SimpleNamespace(),
+        },
+    )
+    _flat("datasets", {"load_dataset": lambda x: types.SimpleNamespace(__getitem__=lambda s, k: [{"patch": "dummy"}])})
+    _flat(
+        "llm",
+        {
+            "create_client": lambda model="test": (types.SimpleNamespace(), model),
+            "get_response_from_llm": lambda **kw: ('{"recommendation": "approve", "risk_level": "low"}', []),
+            "extract_json_between_markers": lambda text: {"recommendation": "approve", "risk_level": "low"},
+        },
+    )
 
     # Leaf sub-modules (parent packages exist on filesystem)
-    _leaf("utils.docker_utils", {
-        "build_dgm_container": lambda *a, **kw: types.SimpleNamespace(
-            start=lambda: None,
-            exec_run=lambda *a, **kw: types.SimpleNamespace(output=b"abc"), id="abc"),
-        "cleanup_container": lambda c: None,
-        "copy_from_container": lambda c, s, d: None,
-        "copy_to_container": lambda c, s, d: None,
-        "log_container_output": lambda r: None,
-        "remove_existing_container": lambda c, n: None,
-        "setup_logger": lambda p: types.SimpleNamespace(info=lambda m: None),
-        "safe_log": lambda m: None,
-    })
+    _leaf(
+        "utils.docker_utils",
+        {
+            "build_dgm_container": lambda *a, **kw: types.SimpleNamespace(
+                start=lambda: None, exec_run=lambda *a, **kw: types.SimpleNamespace(output=b"abc"), id="abc"
+            ),
+            "cleanup_container": lambda c: None,
+            "copy_from_container": lambda c, s, d: None,
+            "copy_to_container": lambda c, s, d: None,
+            "log_container_output": lambda r: None,
+            "remove_existing_container": lambda c, n: None,
+            "setup_logger": lambda p: types.SimpleNamespace(info=lambda m: None),
+            "safe_log": lambda m: None,
+        },
+    )
     _leaf("swe_bench.harness", {"harness": lambda **kw: []})
     _leaf("polyglot.harness", {"harness": lambda **kw: []})
     _leaf("swe_bench.report", {"make_report": lambda **kw: None})
@@ -141,6 +164,7 @@ def _stub_modules():
 # ===========================================================================
 #  Helpers
 # ===========================================================================
+
 
 def _make_metadata(output_dir, run_id, accuracy=0.5, parent="initial", extra=None):
     d = os.path.join(output_dir, run_id)
@@ -166,6 +190,7 @@ def _make_metadata(output_dir, run_id, accuracy=0.5, parent="initial", extra=Non
 # ===========================================================================
 #  Checkpoint tests
 # ===========================================================================
+
 
 class TestCheckpoint:
     def test_save_and_load_checkpoint(self, sm):
@@ -204,6 +229,7 @@ class TestCheckpoint:
 #  Diversity scoring tests
 # ===========================================================================
 
+
 class TestDiversity:
     def test_single_archive_member(self, sm):
         with tempfile.TemporaryDirectory() as tmp:
@@ -235,6 +261,7 @@ class TestDiversity:
 #  Patch quality analysis tests
 # ===========================================================================
 
+
 class TestPatchQuality:
     def test_analyze_patch_quality(self, sm):
         with tempfile.TemporaryDirectory() as tmp:
@@ -245,13 +272,13 @@ class TestPatchQuality:
             assert r["files_changed"] == 1 and r["lines_added"] == 3
 
     def test_analyze_missing_patch(self, sm):
-        assert sm["analyze_patch_quality"]("/nonexistent/p.diff") == {
-            "size_bytes": 0, "files_changed": 0, "lines_added": 0, "lines_removed": 0}
+        assert sm["analyze_patch_quality"]("/nonexistent/p.diff") == {"size_bytes": 0, "files_changed": 0, "lines_added": 0, "lines_removed": 0}
 
 
 # ===========================================================================
 #  Archive update tests
 # ===========================================================================
+
 
 class TestArchiveUpdate:
     def test_keep_all(self, sm):
@@ -279,6 +306,7 @@ class TestArchiveUpdate:
 #  Meta-cognitive validation plumbing tests
 # ===========================================================================
 
+
 class TestMetaCognitive:
     def test_validate_proposal_smoke(self, sm):
         approved, analysis = sm["validate_improvement_proposal"]("Fix something")
@@ -290,6 +318,7 @@ class TestMetaCognitive:
 # ===========================================================================
 #  Selection method tests
 # ===========================================================================
+
 
 class TestSelection:
     @staticmethod
@@ -313,8 +342,7 @@ class TestSelection:
             _make_metadata(tmp, "cb", accuracy=0.6, parent="init")
             for r in ("init", "ca", "cb"):
                 self._with_preds(tmp, r)
-            entries = sm["choose_selfimproves"](tmp, ["init", "ca", "cb"], 2,
-                                                 method="diversity_weighted", diversity_weight=0.5)
+            entries = sm["choose_selfimproves"](tmp, ["init", "ca", "cb"], 2, method="diversity_weighted", diversity_weight=0.5)
             assert len(entries) >= 1
 
     def test_score_prop(self, sm):
@@ -334,9 +362,11 @@ class TestSelection:
 #  CLI / config parsing tests
 # ===========================================================================
 
+
 class TestCLIParsing:
     def test_new_flags_accepted(self):
         import argparse
+
         p = argparse.ArgumentParser()
         p.add_argument("--resume", action="store_true")
         p.add_argument("--diversity-weight", type=float)
@@ -344,9 +374,20 @@ class TestCLIParsing:
         p.add_argument("--no-meta-cognitive", action="store_true")
         p.add_argument("--selection-method", choices=["random", "score_prop", "score_child_prop", "diversity_weighted", "best"])
         p.add_argument("--update-archive", choices=["keep_better", "keep_all", "keep_diverse"])
-        args = p.parse_args(["--resume", "--diversity-weight", "0.4", "--diversity-bonus", "0.2",
-                             "--no-meta-cognitive", "--selection-method", "diversity_weighted",
-                             "--update-archive", "keep_diverse"])
+        args = p.parse_args(
+            [
+                "--resume",
+                "--diversity-weight",
+                "0.4",
+                "--diversity-bonus",
+                "0.2",
+                "--no-meta-cognitive",
+                "--selection-method",
+                "diversity_weighted",
+                "--update-archive",
+                "keep_diverse",
+            ]
+        )
         assert args.resume is True
         assert args.diversity_weight == 0.4
         assert args.diversity_bonus == 0.2
@@ -356,6 +397,7 @@ class TestCLIParsing:
 
     def test_new_flags_at_defaults(self):
         import argparse
+
         p = argparse.ArgumentParser()
         p.add_argument("--resume", action="store_true")
         p.add_argument("--diversity-weight", type=float, default=None)
@@ -371,6 +413,7 @@ class TestCLIParsing:
 # ===========================================================================
 #  Initialize run tests
 # ===========================================================================
+
 
 class TestInitializeRun:
     def test_fresh_start_no_initial_dir(self, sm):
@@ -396,6 +439,7 @@ class TestInitializeRun:
 # ===========================================================================
 #  Edge cases
 # ===========================================================================
+
 
 class TestEdgeCases:
     def test_filter_compiled_empty(self, sm):
@@ -444,14 +488,14 @@ class TestEdgeCases:
 
     def test_choose_selfimproves_all_fail_metadata_diversity(self, sm):
         with tempfile.TemporaryDirectory() as tmp:
-            entries = sm["choose_selfimproves"](tmp, ["nonexistent"], 2,
-                                                 method="diversity_weighted")
+            entries = sm["choose_selfimproves"](tmp, ["nonexistent"], 2, method="diversity_weighted")
             assert entries == []
 
 
 # ===========================================================================
 #  Extracted helpers (v0.2.2+)
 # ===========================================================================
+
 
 class TestConfigExtraction:
     def test_build_parser_returns_parser(self, sm):
@@ -476,51 +520,75 @@ class TestConfigExtraction:
 
     def test_build_parser_choices(self, sm):
         p = sm["build_parser"]()
-        ns = p.parse_args([
-            "--selection-method", "best",
-            "--run-baseline", "no_darwin",
-            "--update-archive", "keep_diverse",
-        ])
+        ns = p.parse_args(
+            [
+                "--selection-method",
+                "best",
+                "--run-baseline",
+                "no_darwin",
+                "--update-archive",
+                "keep_diverse",
+            ]
+        )
         assert ns.selection_method == "best"
         assert ns.run_baseline == "no_darwin"
         assert ns.update_archive == "keep_diverse"
 
     def test_resolve_run_id_fresh(self, sm):
         import argparse
+
         ns = argparse.Namespace(continue_from=None, resume=None)
         rid = sm["resolve_run_id"](ns, "/tmp/output", resume_val=False)
         assert rid is not None and len(rid) > 10
 
     def test_resolve_run_id_continue_from(self, sm):
         import argparse
+
         ns = argparse.Namespace(continue_from="/tmp/some_run", resume=None)
         rid = sm["resolve_run_id"](ns, "/tmp/output", resume_val=False)
         assert rid == "some_run"
 
     def test_resolve_run_id_resume(self, sm):
         import argparse
+
         ns = argparse.Namespace(continue_from=None, resume=True)
         rid = sm["resolve_run_id"](ns, "/tmp/some_output", resume_val=True)
         assert rid == "some_output"
 
     def test_resolve_config_settings_defaults(self, sm):
-        from godelion.config import Config
         import argparse
+
+        from godelion.config import Config
+
         with tempfile.TemporaryDirectory() as tmp:
             cfg_path = os.path.join(tmp, "test_config.json")
             with open(cfg_path, "w") as f:
-                json.dump({
-                    "evolution": {"max_generations": 15, "self_improve_size": 4},
-                    "evaluation": {"num_evals": 3},
-                }, f)
+                json.dump(
+                    {
+                        "evolution": {"max_generations": 15, "self_improve_size": 4},
+                        "evaluation": {"num_evals": 3},
+                    },
+                    f,
+                )
             test_cfg = Config(cfg_path)
             ns = argparse.Namespace(
-                max_generation=None, selfimprove_size=None, selfimprove_workers=None,
-                selection_method=None, update_archive=None, num_evals=None,
-                post_improve_diagnose=None, no_meta_cognitive=None,
-                diversity_weight=None, diversity_bonus=None, shallow_eval=None,
-                polyglot=None, no_full_eval=None, run_baseline=None, config=None,
-                continue_from=None, resume=None,
+                max_generation=None,
+                selfimprove_size=None,
+                selfimprove_workers=None,
+                selection_method=None,
+                update_archive=None,
+                num_evals=None,
+                post_improve_diagnose=None,
+                no_meta_cognitive=None,
+                diversity_weight=None,
+                diversity_bonus=None,
+                shallow_eval=None,
+                polyglot=None,
+                no_full_eval=None,
+                run_baseline=None,
+                config=None,
+                continue_from=None,
+                resume=None,
                 max_archive_size=None,
             )
             settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
@@ -532,45 +600,74 @@ class TestConfigExtraction:
             assert settings["meta_cognitive_val"] is True  # default
 
     def test_resolve_config_settings_cli_overrides(self, sm):
-        from godelion.config import Config
         import argparse
+
+        from godelion.config import Config
+
         with tempfile.TemporaryDirectory() as tmp:
             cfg_path = os.path.join(tmp, "test_config.json")
             with open(cfg_path, "w") as f:
-                json.dump({
-                    "evolution": {"max_generations": 15, "selection_method": "random"},
-                    "evaluation": {"meta_cognitive_validation": True},
-                }, f)
+                json.dump(
+                    {
+                        "evolution": {"max_generations": 15, "selection_method": "random"},
+                        "evaluation": {"meta_cognitive_validation": True},
+                    },
+                    f,
+                )
             test_cfg = Config(cfg_path)
             ns = argparse.Namespace(
-                max_generation=50, selfimprove_size=None, selfimprove_workers=None,
-                selection_method="best", update_archive=None, num_evals=None,
-                post_improve_diagnose=None, no_meta_cognitive=True,
-                diversity_weight=None, diversity_bonus=None, shallow_eval=None,
-                polyglot=None, no_full_eval=None, run_baseline=None, config=None,
-                continue_from=None, resume=None,
+                max_generation=50,
+                selfimprove_size=None,
+                selfimprove_workers=None,
+                selection_method="best",
+                update_archive=None,
+                num_evals=None,
+                post_improve_diagnose=None,
+                no_meta_cognitive=True,
+                diversity_weight=None,
+                diversity_bonus=None,
+                shallow_eval=None,
+                polyglot=None,
+                no_full_eval=None,
+                run_baseline=None,
+                config=None,
+                continue_from=None,
+                resume=None,
                 max_archive_size=None,
             )
             settings = sm["resolve_config_settings"](ns, cfg=test_cfg)
-            assert settings["max_generation"] == 50       # CLI overrides
-            assert settings["choose_method"] == "best"     # CLI overrides
+            assert settings["max_generation"] == 50  # CLI overrides
+            assert settings["choose_method"] == "best"  # CLI overrides
             assert settings["meta_cognitive_val"] is False  # --no-meta-cognitive
 
     def test_resolve_config_settings_meta_cognitive_override(self, sm):
-        from godelion.config import Config
         import argparse
+
+        from godelion.config import Config
+
         with tempfile.TemporaryDirectory() as tmp:
             cfg_path = os.path.join(tmp, "test_config.json")
             with open(cfg_path, "w") as f:
                 json.dump({"evaluation": {"meta_cognitive_validation": False}}, f)
             test_cfg = Config(cfg_path)
             ns = argparse.Namespace(
-                max_generation=None, selfimprove_size=None, selfimprove_workers=None,
-                selection_method=None, update_archive=None, num_evals=None,
-                post_improve_diagnose=None, no_meta_cognitive=None,
-                diversity_weight=None, diversity_bonus=None, shallow_eval=None,
-                polyglot=None, no_full_eval=None, run_baseline=None, config=None,
-                continue_from=None, resume=None,
+                max_generation=None,
+                selfimprove_size=None,
+                selfimprove_workers=None,
+                selection_method=None,
+                update_archive=None,
+                num_evals=None,
+                post_improve_diagnose=None,
+                no_meta_cognitive=None,
+                diversity_weight=None,
+                diversity_bonus=None,
+                shallow_eval=None,
+                polyglot=None,
+                no_full_eval=None,
+                run_baseline=None,
+                config=None,
+                continue_from=None,
+                resume=None,
                 max_archive_size=None,
             )
             settings = sm["resolve_config_settings"](ns, cfg=test_cfg)

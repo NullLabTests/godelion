@@ -19,16 +19,16 @@ import git
 import importlib_resources
 import lox
 import pandas as pd
-import prompts
 import typer
-from dotenv import load_dotenv
-from plots import plot_refactoring
-from rich.console import Console
-
 from aider import models, sendchat
 from aider.coders import Coder, base_coder
 from aider.dump import dump  # noqa: F401
 from aider.io import InputOutput
+from dotenv import load_dotenv
+from plots import plot_refactoring
+from rich.console import Console
+
+import prompts
 
 BENCHMARK_DNAME = Path(os.environ.get("AIDER_BENCHMARK_DIR", "tmp.benchmarks"))
 
@@ -103,9 +103,7 @@ def show_stats(dirnames, graphs, stats_languages=None):
             continue
 
         if row.completed_tests != row.total_tests:
-            print(
-                f"Warning: {row.dir_name} is incomplete: {row.completed_tests} of {row.total_tests}"
-            )
+            print(f"Warning: {row.dir_name} is incomplete: {row.completed_tests} of {row.total_tests}")
 
         try:
             kind = (row.model, row.edit_format)
@@ -163,12 +161,8 @@ def main(
     dirnames: Optional[List[str]] = typer.Argument(None, help="Directory names"),
     graphs: bool = typer.Option(False, "--graphs", help="Generate graphs"),
     model: str = typer.Option("gpt-3.5-turbo", "--model", "-m", help="Model name"),
-    sleep: float = typer.Option(
-        0, "--sleep", help="Sleep seconds between tests when single threaded"
-    ),
-    languages: str = typer.Option(
-        None, "--languages", "-l", help="Only run tests for specific languages (comma separated)"
-    ),
+    sleep: float = typer.Option(0, "--sleep", help="Sleep seconds between tests when single threaded"),
+    languages: str = typer.Option(None, "--languages", "-l", help="Only run tests for specific languages (comma separated)"),
     edit_format: str = typer.Option(None, "--edit-format", "-e", help="Edit format"),
     editor_model: str = typer.Option(None, "--editor-model", help="Editor model name"),
     editor_edit_format: str = typer.Option(None, "--editor-edit-format", help="Editor edit format"),
@@ -177,20 +171,14 @@ def main(
         "--replay",
         help="Replay previous .aider.chat.history.md responses from previous benchmark run",
     ),
-    keywords: str = typer.Option(
-        None, "--keywords", "-k", help="Only run tests that contain keywords (comma sep)"
-    ),
-    clean: bool = typer.Option(
-        False, "--clean", "-c", help="Discard the existing testdir and make a clean copy"
-    ),
+    keywords: str = typer.Option(None, "--keywords", "-k", help="Only run tests that contain keywords (comma sep)"),
+    clean: bool = typer.Option(False, "--clean", "-c", help="Discard the existing testdir and make a clean copy"),
     cont: bool = typer.Option(False, "--cont", help="Continue the (single) matching testdir"),
     make_new: bool = typer.Option(False, "--new", "-n", help="Make a new dated testdir"),
     no_unit_tests: bool = typer.Option(False, "--no-unit-tests", help="Do not run unit tests"),
     no_aider: bool = typer.Option(False, "--no-aider", help="Do not run aider"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output"),
-    stats_only: bool = typer.Option(
-        False, "--stats", "-s", help="Do not run tests, just collect stats on completed tests"
-    ),
+    stats_only: bool = typer.Option(False, "--stats", "-s", help="Do not run tests, just collect stats on completed tests"),
     stats_languages: str = typer.Option(
         None,
         "--stats-languages",
@@ -200,15 +188,9 @@ def main(
     tries: int = typer.Option(2, "--tries", "-r", help="Number of tries for running tests"),
     threads: int = typer.Option(1, "--threads", "-t", help="Number of threads to run in parallel"),
     num_tests: int = typer.Option(-1, "--num-tests", "-n", help="Number of tests to run"),
-    num_ctx: Optional[int] = typer.Option(
-        None, "--num-ctx", help="Override model context window size"
-    ),
-    read_model_settings: str = typer.Option(
-        None, "--read-model-settings", help="Load aider model settings from YAML file"
-    ),
-    exercises_dir: str = typer.Option(
-        EXERCISES_DIR_DEFAULT, "--exercises-dir", help="Directory with exercise files"
-    ),
+    num_ctx: Optional[int] = typer.Option(None, "--num-ctx", help="Override model context window size"),
+    read_model_settings: str = typer.Option(None, "--read-model-settings", help="Load aider model settings from YAML file"),
+    exercises_dir: str = typer.Option(EXERCISES_DIR_DEFAULT, "--exercises-dir", help="Directory with exercise files"),
 ):
     repo = git.Repo(search_parent_directories=True)
     commit_hash = repo.head.object.hexsha[:7]
@@ -588,10 +570,7 @@ def summarize_results(dirname, stats_languages=None):
     projected_cost = res.avg_cost * res.total_tests
 
     print()
-    print(
-        f"costs: ${res.avg_cost:.4f}/test-case, ${res.cost:.2f} total,"
-        f" ${projected_cost:.2f} projected"
-    )
+    print(f"costs: ${res.avg_cost:.4f}/test-case, ${res.cost:.2f} total, ${projected_cost:.2f} projected")
 
     console.rule()
 
@@ -606,9 +585,7 @@ def get_versions(commit_hashes):
             continue
         hsh = hsh.split("-")[0]
         try:
-            version = subprocess.check_output(
-                ["git", "show", f"{hsh}:aider/__init__.py"], universal_newlines=True
-            )
+            version = subprocess.check_output(["git", "show", f"{hsh}:aider/__init__.py"], universal_newlines=True)
             version = re.search(r'__version__ = "(.*)"', version).group(1)
             versions.add(version)
         except subprocess.CalledProcessError:
@@ -724,14 +701,7 @@ def run_test_real(
             # restore the original file, in case we interrupted a prev run
             # Find the original file in the language-specific practice dir
             lang_part = str(testdir).split("/exercises/practice/")[0]
-            original_fname = (
-                original_dname
-                / Path(lang_part).name
-                / "exercises"
-                / "practice"
-                / testdir.name
-                / file_path
-            )
+            original_fname = original_dname / Path(lang_part).name / "exercises" / "practice" / testdir.name / file_path
             if original_fname.exists():
                 os.makedirs(src.parent, exist_ok=True)
                 shutil.copy(original_fname, src)

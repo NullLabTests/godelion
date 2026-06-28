@@ -1,7 +1,7 @@
 import os
-import yaml
-from pathlib import Path
 from typing import Any, Dict, Optional
+
+import yaml
 
 CONFIG_SEARCH_PATHS = [
     "./config.yaml",
@@ -78,6 +78,7 @@ class Config:
     @staticmethod
     def write_default(config_path: str = "config.yaml"):
         import pkgutil
+
         try:
             data = pkgutil.get_data(__package__ or "godelion", "config.yaml")
         except Exception:

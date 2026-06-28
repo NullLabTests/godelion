@@ -1,4 +1,5 @@
 """Tests for Godelion core components."""
+
 import json
 import os
 import sys
@@ -13,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 class TestConfig:
     def test_default_config_loads(self):
         from godelion.config import Config
+
         config_path = Path(__file__).parent.parent / "config.yaml"
         cfg = Config(str(config_path))
         assert cfg.get("llm", "coding_model") is not None
@@ -21,6 +23,7 @@ class TestConfig:
     def test_env_overrides(self):
         os.environ["GODELION_EVOLUTION__MAX_GENERATIONS"] = "100"
         from godelion.config import Config
+
         cfg = Config()
         cfg._apply_env_overrides()
         assert cfg.get("evolution", "max_generations") == "100"
@@ -28,6 +31,7 @@ class TestConfig:
 
     def test_deep_merge(self):
         from godelion.config import Config
+
         cfg = Config()
         base = {"a": {"b": 1, "c": 2}}
         override = {"a": {"b": 10, "d": 3}}
@@ -38,6 +42,7 @@ class TestConfig:
 
     def test_get_nested_default(self):
         from godelion.config import Config
+
         cfg = Config()
         assert cfg.get("nonexistent", "key", default="fallback") == "fallback"
 
@@ -66,6 +71,7 @@ class TestLlm:
 
     def test_create_client_raises_for_unknown(self):
         from llm import create_client
+
         with pytest.raises(ValueError, match="not supported"):
             create_client("nonexistent-model-12345")
 
@@ -73,6 +79,7 @@ class TestLlm:
 class TestToolLoader:
     def test_load_all_tools(self):
         from tools import load_all_tools
+
         tools = load_all_tools(logging=lambda x: None)
         assert len(tools) >= 2
         tool_names = [t["name"] for t in tools]
@@ -115,13 +122,16 @@ class TestEvoUtils:
         with tempfile.TemporaryDirectory() as tmpdir:
             eval_file = os.path.join(tmpdir, "test_run_eval.json")
             with open(eval_file, "w") as f:
-                json.dump({
-                    "resolved_instances": 5,
-                    "submitted_instances": 10,
-                    "unresolved_ids": ["a", "b"],
-                    "empty_patch_ids": ["c"],
-                    "resolved_ids": ["d", "e"],
-                }, f)
+                json.dump(
+                    {
+                        "resolved_instances": 5,
+                        "submitted_instances": 10,
+                        "unresolved_ids": ["a", "b"],
+                        "empty_patch_ids": ["c"],
+                        "resolved_ids": ["d", "e"],
+                    },
+                    f,
+                )
 
             results, overall = get_all_performance("test_run", results_dir=tmpdir)
             assert results is not None
@@ -155,17 +165,15 @@ class TestCommonUtils:
 
 class TestRunEngine:
     def test_initialize_run_no_prev(self):
-        from importlib import reload
         import run as run_module
+
         with tempfile.TemporaryDirectory() as tmpdir:
             archive, start_gen = run_module.initialize_run(tmpdir)
             # Should fail because no initial folder exists
             assert archive == ["initial"]
 
     def test_choose_selfimproves_empty(self):
-        from importlib import reload
         import run as run_module
-        result = run_module.choose_selfimproves(
-            "/nonexistent", ["initial"], 2, method="random"
-        )
+
+        result = run_module.choose_selfimproves("/nonexistent", ["initial"], 2, method="random")
         assert result == []

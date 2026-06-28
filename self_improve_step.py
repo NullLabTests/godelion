@@ -2,29 +2,31 @@ import argparse
 import datetime
 import json
 import os
-import re
+
 import docker
 
-from llm import create_client, get_response_from_llm, extract_json_between_markers
-from prompts.self_improvement_prompt import get_diagnose_prompt_polyglot, get_diagnose_prompt_swe, get_problem_description_prompt
+from godelion.config import config
+from llm import create_client, extract_json_between_markers, get_response_from_llm
+from polyglot.harness import harness as polyglot_harness
 from prompts.diagnose_improvement_prompt import get_diagnose_improvement_prompt
+from prompts.self_improvement_prompt import get_diagnose_prompt_polyglot, get_diagnose_prompt_swe, get_problem_description_prompt
 from prompts.testrepo_prompt import get_test_description
 from swe_bench.harness import harness
-from polyglot.harness import harness as polyglot_harness
 from swe_bench.report import make_report
 from utils.common_utils import load_json_file
-from utils.evo_utils import get_model_patch_paths, get_all_performance, is_compiled_self_improve
 from utils.docker_utils import (
     build_dgm_container as build_godelion_container,
+)
+from utils.docker_utils import (
     cleanup_container,
     copy_from_container,
     copy_to_container,
     log_container_output,
     remove_existing_container,
-    setup_logger,
     safe_log,
+    setup_logger,
 )
-from godelion.config import config
+from utils.evo_utils import get_all_performance, get_model_patch_paths, is_compiled_self_improve
 
 dataset = None
 diagnose_model = config.get("llm", "diagnose_model", default="claude-sonnet-4-20250514")
@@ -90,6 +92,7 @@ Respond precisely in this JSON format:
 
 Think carefully about the architecture and potential side effects."""
 
+
 def get_improvement_history(output_dir: str, commit: str, max_history: int = 5) -> list:
     """Walk lineage and collect improvement diagnosis history.
 
@@ -100,21 +103,23 @@ def get_improvement_history(output_dir: str, commit: str, max_history: int = 5) 
     history = []
     visited = set()
     current = commit
-    while current != 'initial' and current not in visited and len(history) < max_history:
+    while current != "initial" and current not in visited and len(history) < max_history:
         visited.add(current)
         meta_path = os.path.join(output_dir, current, "metadata.json")
         try:
             meta = load_json_file(meta_path)
-            diagnosis = meta.get('improvement_diagnosis')
+            diagnosis = meta.get("improvement_diagnosis")
             if diagnosis and isinstance(diagnosis, dict):
-                score = diagnosis.get('score')
+                score = diagnosis.get("score")
                 if score is not None:
-                    history.append({
-                        'score': score,
-                        'improvements': diagnosis.get('improvements', ''),
-                        'regressions': diagnosis.get('regressions', ''),
-                    })
-            current = meta.get('parent_commit', 'initial')
+                    history.append(
+                        {
+                            "score": score,
+                            "improvements": diagnosis.get("improvements", ""),
+                            "regressions": diagnosis.get("regressions", ""),
+                        }
+                    )
+            current = meta.get("parent_commit", "initial")
         except Exception:
             break
     return history
@@ -126,17 +131,16 @@ def format_improvement_history(history: list) -> str:
         return ""
 
     parts = ["## Past Self-Improvement Attempts in This Lineage\n"]
-    positive = sum(1 for h in history if h.get('score', 0) > 0)
-    negative = sum(1 for h in history if h.get('score', 0) < 0)
-    parts.append(f"Of {len(history)} past self-modifications in this lineage: "
-                 f"{positive} were net-positive, {negative} were net-negative.\n")
+    positive = sum(1 for h in history if h.get("score", 0) > 0)
+    negative = sum(1 for h in history if h.get("score", 0) < 0)
+    parts.append(f"Of {len(history)} past self-modifications in this lineage: {positive} were net-positive, {negative} were net-negative.\n")
 
     for i, h in enumerate(reversed(history)):
-        score = h.get('score', 0)
+        score = h.get("score", 0)
         label = "IMPROVEMENT" if score > 0 else ("REGRESSION" if score < 0 else "NEUTRAL")
-        parts.append(f"### Attempt {i+1} ({label}, score={score:.1f})")
-        imp = h.get('improvements', '')
-        reg = h.get('regressions', '')
+        parts.append(f"### Attempt {i + 1} ({label}, score={score:.1f})")
+        imp = h.get("improvements", "")
+        reg = h.get("regressions", "")
         if imp:
             parts.append(f"- What worked: {imp[:300]}")
         if reg:
@@ -150,12 +154,20 @@ def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attem
     client = create_client(diagnose_model)
     if polyglot:
         diagnose_sys_message, diagnose_prompt = get_diagnose_prompt_polyglot(
-            entry, commit, root_dir, out_dir, dataset,
+            entry,
+            commit,
+            root_dir,
+            out_dir,
+            dataset,
             patch_files=patch_files,
         )
     else:
         diagnose_sys_message, diagnose_prompt = get_diagnose_prompt_swe(
-            entry, commit, root_dir, out_dir, dataset,
+            entry,
+            commit,
+            root_dir,
+            out_dir,
+            dataset,
             patch_files=patch_files,
         )
 
@@ -164,12 +176,10 @@ def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attem
     if improvement_history:
         history_text = format_improvement_history(improvement_history)
         diagnose_sys_message = f"{diagnose_sys_message}\n\n{history_text}"
-        scores = [h.get('score', 0) for h in improvement_history]
+        scores = [h.get("score", 0) for h in improvement_history]
         positive = sum(1 for s in scores if s > 0)
         negative = sum(1 for s in scores if s < 0)
-        safe_log(f"Improvement history: {len(improvement_history)} past attempts "
-                 f"({positive} positive, {negative} negative), "
-                 f"scores={scores}")
+        safe_log(f"Improvement history: {len(improvement_history)} past attempts ({positive} positive, {negative} negative), scores={scores}")
 
     try:
         response, msg_history = get_response_from_llm(
@@ -189,19 +199,29 @@ def diagnose_problem(entry, commit, root_dir, out_dir, patch_files=[], max_attem
         safe_log(f"Error while diagnosing the problem: {e}")
         if max_attempts > 0:
             return diagnose_problem(
-                entry, commit, root_dir, out_dir,
+                entry,
+                commit,
+                root_dir,
+                out_dir,
                 patch_files=patch_files,
-                max_attempts=max_attempts-1,
+                max_attempts=max_attempts - 1,
                 polyglot=polyglot,
             )
         else:
             return None
     return problem_statement
 
+
 def diagnose_improvement(
-        entry, parent_commit, root_dir, model_patch_file, out_dir, run_id,
-        patch_files=[], max_attempts=3,
-    ):
+    entry,
+    parent_commit,
+    root_dir,
+    model_patch_file,
+    out_dir,
+    run_id,
+    patch_files=[],
+    max_attempts=3,
+):
     """
     Diagnose the improvement of the model patch.
 
@@ -214,13 +234,19 @@ def diagnose_improvement(
         run_id (str): The run id of the self-improvement attempt.
         patch_files (list): The list of patch files before self-improvement.
         max_attempts (int): The maximum number of attempts to diagnose the improvement.
-    
+
     Returns:
         dict: The improvement diagnosis.
     """
     client = create_client(diagnose_model)
     diagnose_sys_message, diagnose_prompt = get_diagnose_improvement_prompt(
-        entry, parent_commit, root_dir, model_patch_file, out_dir, run_id, dataset,
+        entry,
+        parent_commit,
+        root_dir,
+        model_patch_file,
+        out_dir,
+        run_id,
+        dataset,
         patch_files=patch_files,
     )
     safe_log(f"Diagnosing the improvement: {diagnose_prompt}")
@@ -242,12 +268,19 @@ def diagnose_improvement(
         safe_log(f"Error while diagnosing the improvement: {e}")
         if max_attempts > 0:
             return diagnose_improvement(
-                entry, parent_commit, root_dir, model_patch_file, out_dir, run_id,
-                patch_files=patch_files, max_attempts=max_attempts-1,
+                entry,
+                parent_commit,
+                root_dir,
+                model_patch_file,
+                out_dir,
+                run_id,
+                patch_files=patch_files,
+                max_attempts=max_attempts - 1,
             )
         else:
             return None
     return improvement_diagnosis
+
 
 def get_architecture_summary() -> str:
     """Generate a summary of the current system architecture for meta-cognitive analysis.
@@ -275,7 +308,7 @@ def get_architecture_summary() -> str:
         "utils/common_utils.py": "Common file utilities",
     }
     for fpath, desc in key_files.items():
-        full = os.path.join(os.path.abspath('.'), fpath)
+        full = os.path.join(os.path.abspath("."), fpath)
         if os.path.exists(full):
             with open(full) as f:
                 lines = len(f.readlines())
@@ -325,14 +358,16 @@ def validate_improvement_proposal(problem_statement: str, patch_file: str | None
             )
             analysis = extract_json_between_markers(response)
             if analysis and "recommendation" in analysis:
-                safe_log(f"Meta-cognitive analysis: risk={analysis.get('risk_level')}, "
-                         f"recommendation={analysis.get('recommendation')}, "
-                         f"pass@1 impact={analysis.get('impact_pass_at_1')}, "
-                         f"alignment={analysis.get('patch_problem_alignment')}")
+                safe_log(
+                    f"Meta-cognitive analysis: risk={analysis.get('risk_level')}, "
+                    f"recommendation={analysis.get('recommendation')}, "
+                    f"pass@1 impact={analysis.get('impact_pass_at_1')}, "
+                    f"alignment={analysis.get('patch_problem_alignment')}"
+                )
                 approved = analysis.get("recommendation") != "reject"
                 return approved, analysis
         except Exception as e:
-            safe_log(f"Meta-cognitive analysis attempt {attempt+1} failed: {e}")
+            safe_log(f"Meta-cognitive analysis attempt {attempt + 1} failed: {e}")
     safe_log("Meta-cognitive analysis failed, rejecting proposal (safe default)")
     return False, None
 
@@ -349,10 +384,10 @@ def analyze_patch_quality(patch_file: str) -> dict:
     except Exception:
         return {"size_bytes": 0, "files_changed": 0, "lines_added": 0, "lines_removed": 0}
 
-    lines = content.split('\n')
-    added = sum(1 for l in lines if l.startswith('+') and not l.startswith('+++'))
-    removed = sum(1 for l in lines if l.startswith('-') and not l.startswith('---'))
-    files_changed = len([l for l in lines if l.startswith('diff --git')])
+    lines = content.split("\n")
+    added = sum(1 for l in lines if l.startswith("+") and not l.startswith("+++"))
+    removed = sum(1 for l in lines if l.startswith("-") and not l.startswith("---"))
+    files_changed = len([l for l in lines if l.startswith("diff --git")])
 
     return {
         "size_bytes": len(content.encode()),
@@ -364,11 +399,12 @@ def analyze_patch_quality(patch_file: str) -> dict:
 
 def save_metadata(metadata, output_dir):
     metadata_file = os.path.join(output_dir, "metadata.json")
-    with open(metadata_file, 'w') as f:
+    with open(metadata_file, "w") as f:
         json.dump(metadata, f, indent=4)
 
+
 def run_harness_swe(entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more):
-    safe_log('Start harness')
+    safe_log("Start harness")
     test_task_list = [entry] if test_task_list is None else test_task_list
     dnames = harness(
         test_task_list=test_task_list,
@@ -380,8 +416,8 @@ def run_harness_swe(entry, model_name_or_path, patch_files, num_evals, output_di
         num_evals_parallel=5,
         pred_dname=os.path.join(output_dir, "predictions"),
     )
-    metadata['swe_dnames'] = [str(dn) for dn in dnames]
-    safe_log('Start make_report')
+    metadata["swe_dnames"] = [str(dn) for dn in dnames]
+    safe_log("Start make_report")
     make_report(
         dnames,
         run_ids=[f"{run_id}_{i}" for i in range(len(dnames))],
@@ -389,15 +425,18 @@ def run_harness_swe(entry, model_name_or_path, patch_files, num_evals, output_di
         output_dir=output_dir,
         dnames_workers=5,
     )
-    safe_log('Start get_performance')
+    safe_log("Start get_performance")
     performances, overall_performance = get_all_performance(model_name_or_path, results_dir=output_dir)
-    metadata['overall_performance'] = overall_performance
+    metadata["overall_performance"] = overall_performance
     safe_log("End of evaluation")
 
     # Check if additional evaluation should be run
-    if (overall_performance and \
-        test_more_threshold is not None and test_task_list_more is not None and \
-            overall_performance.get('total_resolved_instances', 0) >= len(test_task_list) * test_more_threshold):
+    if (
+        overall_performance
+        and test_more_threshold is not None
+        and test_task_list_more is not None
+        and overall_performance.get("total_resolved_instances", 0) >= len(test_task_list) * test_more_threshold
+    ):
         safe_log("Start additional evaluation cycle")
         dnames = harness(
             test_task_list=test_task_list_more,
@@ -409,7 +448,7 @@ def run_harness_swe(entry, model_name_or_path, patch_files, num_evals, output_di
             num_evals_parallel=5,
             pred_dname=os.path.join(output_dir, "predictions"),
         )
-        safe_log('Start make_report more')
+        safe_log("Start make_report more")
         make_report(
             dnames,
             run_ids=[f"{run_id}_{i}" for i in range(len(dnames))],
@@ -417,15 +456,18 @@ def run_harness_swe(entry, model_name_or_path, patch_files, num_evals, output_di
             output_dir=output_dir,
             dnames_workers=5,
         )
-        safe_log('Start get_performance')
+        safe_log("Start get_performance")
         performances, overall_performance = get_all_performance(model_name_or_path, results_dir=output_dir)
-        metadata['overall_performance'] = overall_performance
+        metadata["overall_performance"] = overall_performance
         safe_log("End of evaluation more")
 
-def run_harness_polyglot(entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more):
-    safe_log('Start harness')
+
+def run_harness_polyglot(
+    entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more
+):
+    safe_log("Start harness")
     test_task_list = [entry] if test_task_list is None else test_task_list
-    safe_log(f'workers {min(10, len(test_task_list))}')
+    safe_log(f"workers {min(10, len(test_task_list))}")
     dnames = polyglot_harness(
         test_task_list=test_task_list,
         num_samples=-1,
@@ -435,18 +477,21 @@ def run_harness_polyglot(entry, model_name_or_path, patch_files, num_evals, outp
         num_evals=num_evals,
         num_evals_parallel=min(5, num_evals),
         pred_dname=os.path.join(output_dir, "predictions"),
-        output_dir=output_dir
+        output_dir=output_dir,
     )
-    metadata['swe_dnames'] = [str(dn) for dn in dnames]
-    safe_log('Start get_performance')
+    metadata["swe_dnames"] = [str(dn) for dn in dnames]
+    safe_log("Start get_performance")
     performances, overall_performance = get_all_performance(model_name_or_path, results_dir=output_dir)
-    metadata['overall_performance'] = overall_performance
+    metadata["overall_performance"] = overall_performance
     safe_log("End of evaluation")
 
     # Check if additional evaluation should be run
-    if (overall_performance and \
-        test_more_threshold is not None and test_task_list_more is not None and \
-            overall_performance.get('total_resolved_instances', 0) >= len(test_task_list) * test_more_threshold):
+    if (
+        overall_performance
+        and test_more_threshold is not None
+        and test_task_list_more is not None
+        and overall_performance.get("total_resolved_instances", 0) >= len(test_task_list) * test_more_threshold
+    ):
         safe_log("Start additional evaluation cycle")
         dnames = polyglot_harness(
             test_task_list=test_task_list_more,
@@ -457,17 +502,18 @@ def run_harness_polyglot(entry, model_name_or_path, patch_files, num_evals, outp
             num_evals=num_evals,
             num_evals_parallel=min(5, num_evals),
             pred_dname=os.path.join(output_dir, "predictions"),
-            output_dir=output_dir
+            output_dir=output_dir,
         )
         # metadata['swe_dnames'] = [str(dn) for dn in dnames]
-        safe_log('Start get_performance')
+        safe_log("Start get_performance")
         performances, overall_performance = get_all_performance(model_name_or_path, results_dir=output_dir)
-        metadata['overall_performance_deep'] = overall_performance
+        metadata["overall_performance_deep"] = overall_performance
         safe_log("End of evaluation more")
 
+
 def self_improve(
-    parent_commit='initial',
-    output_dir='output_selfimprove/',
+    parent_commit="initial",
+    output_dir="output_selfimprove/",
     force_rebuild=False,
     num_evals=1,
     post_improve_diagnose=True,
@@ -478,8 +524,8 @@ def self_improve(
     test_task_list_more=None,
     full_eval_threshold=None,
     run_baseline=None,
-    polyglot=False
-):  
+    polyglot=False,
+):
 
     global dataset
     if polyglot:
@@ -487,19 +533,20 @@ def self_improve(
             dataset = json.loads(f.read())
     else:
         from datasets import load_dataset
+
         dataset = load_dataset("princeton-nlp/SWE-bench_Verified")
-        dataset = dataset['test']
+        dataset = dataset["test"]
 
     # Variables for this self-improvement attempt
     metadata = {}
-    root_dir = os.path.abspath('./')
-    run_id = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_%f')
+    root_dir = os.path.abspath("./")
+    run_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     out_dir_base = output_dir
     output_dir = os.path.join(root_dir, f"{output_dir}/{run_id}/")
     os.makedirs(output_dir, exist_ok=True)
-    metadata['run_id'] = run_id
-    metadata['parent_commit'] = parent_commit
-    metadata['full_eval_threshold'] = full_eval_threshold
+    metadata["run_id"] = run_id
+    metadata["parent_commit"] = parent_commit
+    metadata["full_eval_threshold"] = full_eval_threshold
     test_task_list_big = load_json_file("./swe_bench/subsets/big.json")
 
     # Set up logger
@@ -520,7 +567,10 @@ def self_improve(
     client = docker.from_env()
     remove_existing_container(client, container_name)
     container = build_godelion_container(
-        client, root_dir, image_name, container_name,
+        client,
+        root_dir,
+        image_name,
+        container_name,
         force_rebuild=force_rebuild,
     )
     container.start()
@@ -534,22 +584,22 @@ def self_improve(
             safe_log(f"Could not disable network: {e}")
 
     if polyglot:
-        exec_result = container.exec_run(f"rm {WORKDIR}/coding_agent.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/coding_agent.py", workdir="/")
         log_container_output(exec_result)
-        exec_result = container.exec_run(f"mv {WORKDIR}/coding_agent_polyglot.py {WORKDIR}/coding_agent.py", workdir='/')
+        exec_result = container.exec_run(f"mv {WORKDIR}/coding_agent_polyglot.py {WORKDIR}/coding_agent.py", workdir="/")
         log_container_output(exec_result)
-        exec_result = container.exec_run(f"rm {WORKDIR}/utils/eval_utils.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/utils/eval_utils.py", workdir="/")
         log_container_output(exec_result)
-        exec_result = container.exec_run(f"rm {WORKDIR}/utils/swe_log_parsers.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/utils/swe_log_parsers.py", workdir="/")
         log_container_output(exec_result)
     else:
-        exec_result = container.exec_run(f"rm {WORKDIR}/coding_agent_polyglot.py", workdir='/')
+        exec_result = container.exec_run(f"rm {WORKDIR}/coding_agent_polyglot.py", workdir="/")
 
     # Find all parent patches and apply them
-    patch_files = get_model_patch_paths(root_dir, os.path.join(output_dir, '../'), parent_commit)
-    if run_baseline not in ['no_selfimprove']:
+    patch_files = get_model_patch_paths(root_dir, os.path.join(output_dir, "../"), parent_commit)
+    if run_baseline not in ["no_selfimprove"]:
         for patch_file in patch_files:
-            copy_to_container(container, patch_file, f'{WORKDIR}/parent_patch.txt')
+            copy_to_container(container, patch_file, f"{WORKDIR}/parent_patch.txt")
             exec_result = container.exec_run(f"/bin/sh -c 'patch -p1 < {WORKDIR}/parent_patch.txt'", workdir=WORKDIR)
             log_container_output(exec_result)
             exec_result = container.exec_run(f"rm {WORKDIR}/parent_patch.txt", workdir=WORKDIR)
@@ -560,14 +610,14 @@ def self_improve(
     log_container_output(exec_result)
     exec_result = container.exec_run("git -c user.name='user' -c user.email='you@example.com' commit -m 'baseline commit'", workdir=WORKDIR)
     log_container_output(exec_result)
-    commit_output = exec_result.output.decode('utf-8')
-    if ']' in commit_output:
+    commit_output = exec_result.output.decode("utf-8")
+    if "]" in commit_output:
         commit_hash = commit_output.split()[1].strip("[]")
     else:
         commit_hash = commit_output.strip()
 
     # Install requirements again in case of any changes
-    exec_result = container.exec_run(f"python -m pip install -r {WORKDIR}/requirements.txt", workdir='/')
+    exec_result = container.exec_run(f"python -m pip install -r {WORKDIR}/requirements.txt", workdir="/")
     log_container_output(exec_result)
 
     # Get tasks to improve
@@ -581,8 +631,8 @@ def self_improve(
         save_metadata(metadata, output_dir)
         return metadata
 
-    metadata['entry'] = entry
-    metadata['problem_statement'] = problem_statement
+    metadata["entry"] = entry
+    metadata["problem_statement"] = problem_statement
     # If problem statement is not found, exit
     if not problem_statement:
         safe_log("Failed to diagnose the problem statement. Exiting.")
@@ -591,10 +641,19 @@ def self_improve(
         return metadata
 
     # Gather environment variables from config
-    env_var_names = config.get("docker", "env_vars", default=[
-        "ANTHROPIC_API_KEY", "OPENAI_API_KEY", "DEEPSEEK_API_KEY",
-        "OPENROUTER_API_KEY", "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION_NAME",
-    ])
+    env_var_names = config.get(
+        "docker",
+        "env_vars",
+        default=[
+            "ANTHROPIC_API_KEY",
+            "OPENAI_API_KEY",
+            "DEEPSEEK_API_KEY",
+            "OPENROUTER_API_KEY",
+            "AWS_ACCESS_KEY_ID",
+            "AWS_SECRET_ACCESS_KEY",
+            "AWS_REGION_NAME",
+        ],
+    )
     env_vars = {}
     for var_name in env_var_names:
         val = os.getenv(var_name)
@@ -607,17 +666,25 @@ def self_improve(
     test_description = get_test_description(swerepo=False)
     timeout_sec = docker_cfg["timeout"]
     cmd = [
-        "timeout", str(timeout_sec),
-        "python", f"{WORKDIR}/coding_agent.py",
-        "--problem_statement", problem_statement,
-        "--git_dir", WORKDIR,
-        "--chat_history_file", chat_history_file_container,
-        "--base_commit", commit_hash,
-        "--outdir", WORKDIR,
-        "--test_description", test_description,
+        "timeout",
+        str(timeout_sec),
+        "python",
+        f"{WORKDIR}/coding_agent.py",
+        "--problem_statement",
+        problem_statement,
+        "--git_dir",
+        WORKDIR,
+        "--chat_history_file",
+        chat_history_file_container,
+        "--base_commit",
+        commit_hash,
+        "--outdir",
+        WORKDIR,
+        "--test_description",
+        test_description,
         "--self_improve",
     ]
-    exec_result = container.exec_run(cmd, environment=env_vars, workdir='/')
+    exec_result = container.exec_run(cmd, environment=env_vars, workdir="/")
     log_container_output(exec_result)
 
     # Copy output files back to host
@@ -631,7 +698,7 @@ def self_improve(
         # Check if patch file exists and is not empty
         if not os.path.exists(model_patch_file):
             raise Exception("Model patch file is empty or does not exist")
-        with open(model_patch_file, 'r') as f:
+        with open(model_patch_file, "r") as f:
             patch_content = f.read()
             if not patch_content.strip():
                 raise Exception("Model patch file is empty")
@@ -647,11 +714,11 @@ def self_improve(
 
     # Analyze patch quality
     patch_quality = analyze_patch_quality(model_patch_file)
-    metadata['patch_quality'] = patch_quality
+    metadata["patch_quality"] = patch_quality
 
     # Filter out trivial patches that don't meet minimum change threshold
     min_patch_lines = config.get("evolution.min_patch_lines", default=3)
-    total_changed = patch_quality['lines_added'] + patch_quality['lines_removed']
+    total_changed = patch_quality["lines_added"] + patch_quality["lines_removed"]
     if total_changed < min_patch_lines:
         safe_log(f"Patch too trivial ({total_changed} lines changed, min={min_patch_lines}). Skipping.")
         save_metadata(metadata, output_dir)
@@ -661,8 +728,8 @@ def self_improve(
     if meta_cognitive_validation and problem_statement:
         safe_log("Running meta-cognitive validation of improvement proposal")
         proposal_ok, meta_analysis = validate_improvement_proposal(problem_statement, patch_file=model_patch_file)
-        metadata['meta_cognitive_analysis'] = meta_analysis
-        metadata['proposal_validated'] = proposal_ok
+        metadata["meta_cognitive_analysis"] = meta_analysis
+        metadata["proposal_validated"] = proposal_ok
         if not proposal_ok:
             safe_log("Proposal rejected by meta-cognitive analysis. Skipping expensive eval.")
             save_metadata(metadata, output_dir)
@@ -670,50 +737,61 @@ def self_improve(
 
     # Evaluate the performance of the self-improvement
     model_patch_exists = os.path.exists(model_patch_file)
-    metadata['model_patch_exists'] = model_patch_exists
+    metadata["model_patch_exists"] = model_patch_exists
     model_patch_notempty = os.path.getsize(model_patch_file) > 0
-    metadata['model_patch_notempty'] = model_patch_notempty
+    metadata["model_patch_notempty"] = model_patch_notempty
     model_name_or_path = run_id
     if model_patch_exists and model_patch_notempty:
         try:
             if not polyglot:
-                run_harness_swe(entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more)
+                run_harness_swe(
+                    entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more
+                )
             else:
-                run_harness_polyglot(entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more)
+                run_harness_polyglot(
+                    entry, model_name_or_path, patch_files, num_evals, output_dir, metadata, run_id, test_more_threshold, test_task_list, test_task_list_more
+                )
         except Exception as e:
             safe_log(f"Error while evaluating the self-improvement: {e}")
 
     # Post-self-improvement diagnosis
     if post_improve_diagnose:
         safe_log("Diagnosing the self-improvement")
-        metadata['is_compiled'] = is_compiled_self_improve(metadata)
-        if metadata['is_compiled']:
+        metadata["is_compiled"] = is_compiled_self_improve(metadata)
+        if metadata["is_compiled"]:
             safe_log("The self-improvement succeeded to be compiled")
             improvement_diagnosis = diagnose_improvement(
-                entry, parent_commit, root_dir,
-                model_patch_file, out_dir_base, run_id,
+                entry,
+                parent_commit,
+                root_dir,
+                model_patch_file,
+                out_dir_base,
+                run_id,
                 patch_files=patch_files,
             )
-            metadata['improvement_diagnosis'] = improvement_diagnosis
+            metadata["improvement_diagnosis"] = improvement_diagnosis
             safe_log(f"Improvement diagnosis: {improvement_diagnosis}")
         else:
             safe_log("The self-improvement failed to compile")
-            metadata['improvement_diagnosis'] = "Failed to compile. Ignore this."
+            metadata["improvement_diagnosis"] = "Failed to compile. Ignore this."
 
     # Save metadata of this self-improvement attempt
     save_metadata(metadata, output_dir)
     return metadata
 
+
 def main():
     parser = argparse.ArgumentParser(description="Self-improvement step for the repository.")
-    parser.add_argument('--parent_commit', default="initial", type=str, help='Current commit to find the eval results, "initial" if starting from original dgm, else the run_id')
-    parser.add_argument('--output_dir', default="./output_selfimprove", type=str, help='Directory to store the output')
-    parser.add_argument('--force_rebuild', default=False, action='store_true', help='Force rebuild of the Docker image')
-    parser.add_argument('--num_evals', default=1, type=int, help='Repeated number of swe evaluations after self-improvement')
-    parser.add_argument('--no_post_improve_diagnose', default=False, action='store_true', help='Skip diagnosing the self-improvement after evaluation')
-    parser.add_argument('--no_meta_cognitive', default=False, action='store_true', help='Skip meta-cognitive validation of improvement proposals')
-    parser.add_argument('--entry', default="django__django-10999", type=str, help='Task entry to improve')
-    parser.add_argument('--test_task_list', default=None, type=str, help='List of tasks to evaluate the self-improvement')
+    parser.add_argument(
+        "--parent_commit", default="initial", type=str, help='Current commit to find the eval results, "initial" if starting from original dgm, else the run_id'
+    )
+    parser.add_argument("--output_dir", default="./output_selfimprove", type=str, help="Directory to store the output")
+    parser.add_argument("--force_rebuild", default=False, action="store_true", help="Force rebuild of the Docker image")
+    parser.add_argument("--num_evals", default=1, type=int, help="Repeated number of swe evaluations after self-improvement")
+    parser.add_argument("--no_post_improve_diagnose", default=False, action="store_true", help="Skip diagnosing the self-improvement after evaluation")
+    parser.add_argument("--no_meta_cognitive", default=False, action="store_true", help="Skip meta-cognitive validation of improvement proposals")
+    parser.add_argument("--entry", default="django__django-10999", type=str, help="Task entry to improve")
+    parser.add_argument("--test_task_list", default=None, type=str, help="List of tasks to evaluate the self-improvement")
     args = parser.parse_args()
 
     # Copy cached initial version into experiment dir
@@ -729,6 +807,7 @@ def main():
         entry=args.entry,
         test_task_list=args.test_task_list,
     )
+
 
 if __name__ == "__main__":
     main()

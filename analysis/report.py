@@ -4,10 +4,10 @@ Godelion Analysis: Comprehensive Run Report
 
 Generates an HTML report summarizing the full evolutionary run.
 """
+
 import argparse
 import json
 import os
-import sys
 from datetime import datetime
 
 
@@ -36,11 +36,11 @@ def generate_html_report(output_dir: str) -> str:
     gen_rows = []
     for i, e in enumerate(entries):
         gen_rows.append(f"""<tr>
-            <td>{e.get('generation', i)}</td>
-            <td>{len(e.get('children', []))}</td>
-            <td>{len(e.get('children_compiled', []))}</td>
-            <td>{len(e.get('archive', []))}</td>
-            <td><small>{str(e.get('selfimprove_entries', []))[:80]}...</small></td>
+            <td>{e.get("generation", i)}</td>
+            <td>{len(e.get("children", []))}</td>
+            <td>{len(e.get("children_compiled", []))}</td>
+            <td>{len(e.get("archive", []))}</td>
+            <td><small>{str(e.get("selfimprove_entries", []))[:80]}...</small></td>
         </tr>""")
 
     html = f"""<!DOCTYPE html>
@@ -66,7 +66,7 @@ def generate_html_report(output_dir: str) -> str:
 </head>
 <body>
   <h1>🧬 Godelion Evolution Report</h1>
-  <p>Run: <code>{run_id}</code> | Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
+  <p>Run: <code>{run_id}</code> | Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}</p>
 
   <div class="stats">
     <div class="stat-card"><div class="value">{total_gens}</div><div class="label">Generations</div></div>
@@ -90,12 +90,12 @@ def generate_html_report(output_dir: str) -> str:
   <h2>Generation Details</h2>
   <table>
     <tr><th>Generation</th><th>Attempts</th><th>Compiled</th><th>Archive</th><th>Entries</th></tr>
-    {''.join(gen_rows)}
+    {"".join(gen_rows)}
   </table>
 
   <h2>Final Archive</h2>
   <ul>
-    {''.join(f'<li><code>{a}</code></li>' for a in final_archive)}
+    {"".join(f"<li><code>{a}</code></li>" for a in final_archive)}
   </ul>
 
   <p style="margin-top: 40px; color: #95a5a6; font-size: 12px;">

@@ -1,5 +1,6 @@
-from pathlib import Path
 import subprocess
+from pathlib import Path
+
 
 def tool_info():
     return {
@@ -14,29 +15,21 @@ def tool_info():
         "input_schema": {
             "type": "object",
             "properties": {
-                "command": {
-                    "type": "string",
-                    "enum": ["view", "create", "edit"],
-                    "description": "The command to run: `view`, `create`, or `edit`."
-                },
-                "path": {
-                    "description": "Absolute path to file or directory, e.g. `/repo/file.py` or `/repo`.",
-                    "type": "string"
-                },
-                "file_text": {
-                    "description": "Required parameter of `create` or `edit` command, containing the content for the entire file.",
-                    "type": "string"
-                }
+                "command": {"type": "string", "enum": ["view", "create", "edit"], "description": "The command to run: `view`, `create`, or `edit`."},
+                "path": {"description": "Absolute path to file or directory, e.g. `/repo/file.py` or `/repo`.", "type": "string"},
+                "file_text": {"description": "Required parameter of `create` or `edit` command, containing the content for the entire file.", "type": "string"},
             },
-            "required": ["command", "path"]
-        }
+            "required": ["command", "path"],
+        },
     }
+
 
 def maybe_truncate(content: str, max_length: int = 10000) -> str:
     """Truncate long content and add marker."""
     if len(content) > max_length:
         return content[:max_length] + "\n<response clipped>"
     return content
+
 
 def validate_path(path: str, command: str) -> Path:
     """
@@ -49,9 +42,7 @@ def validate_path(path: str, command: str) -> Path:
 
     # Check if it's an absolute path
     if not path_obj.is_absolute():
-        raise ValueError(
-            f"The path {path} is not an absolute path (must start with '/')."
-        )
+        raise ValueError(f"The path {path} is not an absolute path (must start with '/').")
 
     if command == "view":
         # Path must exist
@@ -72,15 +63,14 @@ def validate_path(path: str, command: str) -> Path:
 
     return path_obj
 
+
 def format_output(content: str, path: str, init_line: int = 1) -> str:
     """Format output with line numbers (for file content)."""
     content = maybe_truncate(content)
     content = content.expandtabs()
-    numbered_lines = [
-        f"{i + init_line:6}\t{line}"
-        for i, line in enumerate(content.split("\n"))
-    ]
+    numbered_lines = [f"{i + init_line:6}\t{line}" for i, line in enumerate(content.split("\n"))]
     return f"Here's the result of running `cat -n` on {path}:\n" + "\n".join(numbered_lines) + "\n"
+
 
 def read_file(path: Path) -> str:
     """Read and return the entire file contents."""
@@ -89,6 +79,7 @@ def read_file(path: Path) -> str:
     except Exception as e:
         raise ValueError(f"Failed to read file: {e}")
 
+
 def write_file(path: Path, content: str):
     """Write (overwrite) entire file contents."""
     try:
@@ -96,28 +87,23 @@ def write_file(path: Path, content: str):
     except Exception as e:
         raise ValueError(f"Failed to write file: {e}")
 
+
 def view_path(path_obj: Path) -> str:
     """View the entire file contents or directory listing."""
     if path_obj.is_dir():
         # For directories: list non-hidden files up to 2 levels deep
         try:
-            result = subprocess.run(
-                ['find', str(path_obj), '-maxdepth', '2', '-not', '-path', '*/\\.*'],
-                capture_output=True,
-                text=True
-            )
+            result = subprocess.run(["find", str(path_obj), "-maxdepth", "2", "-not", "-path", "*/\\.*"], capture_output=True, text=True)
             if result.stderr:
                 return f"Error listing directory: {result.stderr}"
-            return (
-                f"Here's the files and directories up to 2 levels deep in {path_obj}, excluding hidden items:\n"
-                + result.stdout
-            )
+            return f"Here's the files and directories up to 2 levels deep in {path_obj}, excluding hidden items:\n" + result.stdout
         except Exception as e:
             raise ValueError(f"Failed to list directory: {e}")
 
     # If it's a file, show the entire file with line numbers
     content = read_file(path_obj)
     return format_output(content, str(path_obj))
+
 
 def tool_function(command: str, path: str, file_text: str = None) -> str:
     """
@@ -149,6 +135,7 @@ def tool_function(command: str, path: str, file_text: str = None) -> str:
 
     except Exception as e:
         return f"Error: {str(e)}"
+
 
 if __name__ == "__main__":
     # Example usage

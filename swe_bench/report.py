@@ -1,9 +1,9 @@
 import argparse
-from concurrent.futures import ThreadPoolExecutor
 import json
 import os
-from pathlib import Path
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 
 def load_predictions(paths):
@@ -34,6 +34,7 @@ def load_predictions(paths):
 
     return predictions
 
+
 def remove_patches_to_tests(model_patch):
     """
     Remove any changes to the tests directory from the provided patch.
@@ -48,13 +49,7 @@ def remove_patches_to_tests(model_patch):
         if line.startswith("diff --git a/"):
             pieces = line.split()
             to = pieces[-1]
-            if to.startswith("b/") and (
-                    "/test/" in to
-                    or "/tests/" in to
-                    or "/testing/" in to
-                    or "/test_" in to
-                    or "/tox.ini" in to
-            ):
+            if to.startswith("b/") and ("/test/" in to or "/tests/" in to or "/testing/" in to or "/test_" in to or "/tox.ini" in to):
                 is_tests = True
             else:
                 is_tests = False
@@ -63,6 +58,7 @@ def remove_patches_to_tests(model_patch):
             filtered_lines.append(line)
 
     return "".join(filtered_lines)
+
 
 def preds_to_jsonl(dname, predictions):
     dname = Path(dname)
@@ -80,10 +76,11 @@ def preds_to_jsonl(dname, predictions):
             fh.write(json.dumps(minimal_pred) + "\n")
     return predictions_jsonl
 
+
 def run_evals(predictions_jsonl, run_id, dataset_name, root_dir, output_dir, num_eval_procs=5):
     os.chdir(output_dir)  # switch dir so that things will be saved in the specified output_dir
     run_evals_cmd = f"""
-python {os.path.join(root_dir, './swe_bench/SWE-bench/swebench/harness/run_evaluation.py')}
+python {os.path.join(root_dir, "./swe_bench/SWE-bench/swebench/harness/run_evaluation.py")}
     --dataset_name {dataset_name}
     --predictions_path {predictions_jsonl}
     --max_workers {num_eval_procs}
@@ -93,14 +90,15 @@ python {os.path.join(root_dir, './swe_bench/SWE-bench/swebench/harness/run_evalu
     subprocess.run(run_evals_cmd.split(), check=True)
     os.chdir(root_dir)  # switch back to the original directory
 
+
 def make_report(
-        dnames,
-        run_ids=None,
-        dataset_name="princeton-nlp/SWE-bench_Verified",
-        output_dir='./swe_bench',
-        dnames_workers=None,
-        num_eval_procs=5,
-    ):
+    dnames,
+    run_ids=None,
+    dataset_name="princeton-nlp/SWE-bench_Verified",
+    output_dir="./swe_bench",
+    dnames_workers=None,
+    num_eval_procs=5,
+):
     """
     Generate reports for multiple directories in parallel.
 
@@ -118,7 +116,7 @@ def make_report(
         predictions_jsonl = preds_to_jsonl(dname, predictions)
         run_evals(predictions_jsonl, run_id, dataset_name, root_dir, output_dir, num_eval_procs=num_eval_procs)
         print(f"Report generated for {dname}")
-    
+
     # Use ThreadPoolExecutor to parallelize over dnames
     if run_ids is None or len(run_ids) != len(dnames):
         run_ids = [f"{i:03}" for i in range(len(dnames))]
@@ -129,14 +127,15 @@ def make_report(
 
     print("All reports generated.")
 
+
 def main():
     parser = argparse.ArgumentParser(description="Run evaluations on predictions.")
-    parser.add_argument('--dnames', type=str, nargs='+', help="List of directories of predictions to evaluate.")
-    parser.add_argument('--run_ids', type=str, nargs='+', default=None, help="Run ID for this evaluation run.")
-    parser.add_argument('--dataset_name', type=str, default="princeton-nlp/SWE-bench_Verified", help="Name of the dataset to evaluate on.")
-    parser.add_argument('--dnames_workers', type=int, default=None, help="Number of parallel workers to use for processing dnames.")
-    parser.add_argument('--num_eval_procs', type=int, default=5, help="Number of parallel processes to use for evaluation.")
-    parser.add_argument('--output_dir', type=str, default='./swe_bench', help="Output directory for the reports.")
+    parser.add_argument("--dnames", type=str, nargs="+", help="List of directories of predictions to evaluate.")
+    parser.add_argument("--run_ids", type=str, nargs="+", default=None, help="Run ID for this evaluation run.")
+    parser.add_argument("--dataset_name", type=str, default="princeton-nlp/SWE-bench_Verified", help="Name of the dataset to evaluate on.")
+    parser.add_argument("--dnames_workers", type=int, default=None, help="Number of parallel workers to use for processing dnames.")
+    parser.add_argument("--num_eval_procs", type=int, default=5, help="Number of parallel processes to use for evaluation.")
+    parser.add_argument("--output_dir", type=str, default="./swe_bench", help="Output directory for the reports.")
     args = parser.parse_args()
 
     make_report(
@@ -147,6 +146,7 @@ def main():
         num_eval_procs=args.num_eval_procs,
         output_dir=args.output_dir,
     )
+
 
 if __name__ == "__main__":
     main()

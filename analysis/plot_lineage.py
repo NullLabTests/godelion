@@ -4,11 +4,11 @@ Godelion Analysis: Lineage Tree Visualization
 
 Generates a DOT/Graphviz visualization of the evolutionary lineage.
 """
+
 import argparse
 import json
 import os
 import sys
-from pathlib import Path
 
 
 def load_metadata(output_dir: str) -> list[dict]:
@@ -88,11 +88,12 @@ def generate_dot(nodes: dict, output_path: str):
     # Try to render with graphviz
     try:
         import graphviz
+
         src = graphviz.Source("\n".join(lines))
         src.render(output_path, format="png", cleanup=True)
         print(f"Saved: {output_path}.png")
     except ImportError:
-        print(f"Install graphviz Python package for PNG rendering: pip install graphviz")
+        print("Install graphviz Python package for PNG rendering: pip install graphviz")
         print(f"Or render manually: dot -Tpng {dot_path} -o {output_path}.png")
 
 

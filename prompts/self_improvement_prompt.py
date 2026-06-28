@@ -1,5 +1,4 @@
 import os
-import json
 
 from utils.common_utils import load_json_file, read_file
 
@@ -26,7 +25,8 @@ coding_agent_summary = """# Coding Agent Summary
   - Do not install additional packages or dependencies directly. Update `requirements.txt` if new dependencies are required and install them using `pip install -r requirements.txt`.
 \n\n"""
 
-coding_agent_summary_polyglot = """# Coding Agent Summary
+coding_agent_summary_polyglot = (
+    """# Coding Agent Summary
 
 - **Main File**: `coding_agent.py`
   - Primary Class: `AgenticSystem`
@@ -50,7 +50,8 @@ coding_agent_summary_polyglot = """# Coding Agent Summary
   - Verify the implementation details of helper functions prior to usage to ensure proper integration and expected behavior.
   - **DO NOT create parsing errors tools or functions, collecting raw error messages and letting the agent analyze them will be more efficient.**
 \n\n
-""" + """ 
+"""
+    + """ 
 ### DOC: tool function schema
 
 Carefully consider whether to add/enhance the current tool or edit the workflow in forward()
@@ -60,6 +61,7 @@ Make sure that every property, no matter how short, has a type and description c
 Other arguments than you have seen are not permitted. For example, in "edit_line_ranges" with "type": "array", arguments like "minItems" and "maxItems" are not permitted.
 \n\n
 """
+)
 
 diagnose_system_message = """Here is the implementation of the coding agent.
 
@@ -176,9 +178,14 @@ problem_description_prompt = """# To Implement\n\n{implementation_suggestion}\n\
 
 def get_problem_description_prompt(response_json, is_polyglot=False):
     if is_polyglot:
-        return coding_agent_summary_polyglot + problem_description_prompt.format(implementation_suggestion=response_json["implementation_suggestion"], problem_description=response_json["problem_description"])
+        return coding_agent_summary_polyglot + problem_description_prompt.format(
+            implementation_suggestion=response_json["implementation_suggestion"], problem_description=response_json["problem_description"]
+        )
     else:
-        return coding_agent_summary + problem_description_prompt.format(implementation_suggestion=response_json["implementation_suggestion"], problem_description=response_json["problem_description"])
+        return coding_agent_summary + problem_description_prompt.format(
+            implementation_suggestion=response_json["implementation_suggestion"], problem_description=response_json["problem_description"]
+        )
+
 
 def read_mdlog_file(filepath, filter=True):
     if not filter:
@@ -186,19 +193,20 @@ def read_mdlog_file(filepath, filter=True):
 
     # Filter out unwanted strings from the log file
     filter_content = [
-        'Error in get_response_withtools',
+        "Error in get_response_withtools",
     ]
     filtered_lines = []
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         for line in f:
             # Check if line contains any of the unwanted strings
             if not any(line.startswith(fc) for fc in filter_content):
-                filtered_lines.append(line.rstrip('\n'))
+                filtered_lines.append(line.rstrip("\n"))
     # Join the remaining lines with a newline and return
     return "\n".join(filtered_lines).strip()
 
-def find_selfimprove_eval_logs(entry, out_dir, commit_id='initial', filter=True):
-    predictions_dir = os.path.join(out_dir, commit_id, 'predictions')
+
+def find_selfimprove_eval_logs(entry, out_dir, commit_id="initial", filter=True):
+    predictions_dir = os.path.join(out_dir, commit_id, "predictions")
     all_preds_folders = [f for f in os.listdir(predictions_dir) if os.path.isdir(os.path.join(predictions_dir, f))]
     prediction_log_files = [os.path.join(predictions_dir, f, f"{entry}.md") for f in all_preds_folders]
     prediction_json_files = [os.path.join(predictions_dir, f, f"{entry}.json") for f in all_preds_folders]
@@ -222,10 +230,7 @@ def find_selfimprove_eval_logs(entry, out_dir, commit_id='initial', filter=True)
     if not try_eval_logs:
         # Find evaluation log under out_dir/logs/run_evaluation/{f}/{f}/
         # NOTE: it is {f}/{f}/ because of how swe_bench/report.py is reusing code from SWE-bench
-        eval_log_files = [
-            os.path.join(out_dir, commit_id, f'logs/run_evaluation/', f, f, entry, 'report.json')
-            for f in all_preds_folders
-        ]
+        eval_log_files = [os.path.join(out_dir, commit_id, "logs/run_evaluation/", f, f, entry, "report.json") for f in all_preds_folders]
         eval_log_files = [f for f in eval_log_files if os.path.exists(f)]
         eval_logs = []
         for file in eval_log_files:
@@ -237,6 +242,7 @@ def find_selfimprove_eval_logs(entry, out_dir, commit_id='initial', filter=True)
             print(file)
             eval_logs.append(read_file(file))
     return md_logs, eval_logs, predicted_patches, eval_results
+
 
 def process_selfimprove_eval_logs(md_logs, eval_logs, predicted_patches, eval_results=None):
     # NOTE: using only the first logs
@@ -250,6 +256,7 @@ def process_selfimprove_eval_logs(md_logs, eval_logs, predicted_patches, eval_re
 
     eval_result = eval_results[0] if eval_results else "No evaluation result available. Assume the agent failed."
     return md_log, eval_log, predicted_patch, eval_result
+
 
 diagnose_prompt_emptypatches_polyglot = """There are some empty patches when attempting to solve GitHub issues. Since the coding agent is stochastic, it may not always produce a patch. Handle cases where the coding agent fails to generate a patch or generates one that only modifies the test cases without editing the primary source code. For example, the simplest solution is to change the prompt to specifically make sure it called the edit tool.
 
@@ -302,109 +309,116 @@ In <JSON>, provide a JSON response with the following fields:
 
 Your response will be automatically parsed, so ensure that the string response is precisely in the correct format. Do NOT include the `<JSON>` tag in your output."""
 
+
 def get_diagnose_prompt_swe(entry_id, commit, root_dir, out_dir, dataset, patch_files=[]):
-    if entry_id == 'solve_empty_patches':
+    if entry_id == "solve_empty_patches":
         # Get user prompt for solving empty patches
         diagnose_prompt_out = diagnose_prompt_emptypatches
-    elif entry_id == 'solve_stochasticity':
+    elif entry_id == "solve_stochasticity":
         # Get user prompt for solving stochasticity
         diagnose_prompt_out = diagnose_prompt_stochasticity
-    elif entry_id == 'solve_contextlength':
+    elif entry_id == "solve_contextlength":
         # Get user prompt for solving context length
         diagnose_prompt_out = diagnose_prompt_contextlength
     else:
         # Get user prompt for the entry
         md_logs, eval_logs, predicted_patches, eval_results = find_selfimprove_eval_logs(entry_id, out_dir, commit_id=commit)
         md_log, eval_log, predicted_patch, eval_result = process_selfimprove_eval_logs(md_logs, eval_logs, predicted_patches, eval_results)
-        entry = next((e for e in dataset if e['instance_id'] == entry_id), None)
-        answer_patch = entry['patch']
-        test_patch = entry['test_patch']
-        github_issue = entry['problem_statement']
-        diagnose_prompt_out = swe_issue_prompt + diagnose_prompt.format(md_log=md_log, eval_log=eval_log, predicted_patch=predicted_patch, answer_patch=answer_patch, test_patch=test_patch, github_issue=github_issue)
+        entry = next((e for e in dataset if e["instance_id"] == entry_id), None)
+        answer_patch = entry["patch"]
+        test_patch = entry["test_patch"]
+        github_issue = entry["problem_statement"]
+        diagnose_prompt_out = swe_issue_prompt + diagnose_prompt.format(
+            md_log=md_log, eval_log=eval_log, predicted_patch=predicted_patch, answer_patch=answer_patch, test_patch=test_patch, github_issue=github_issue
+        )
 
     # Get system prompt
-    code_files = ['coding_agent.py', 'tools/', 'utils/']
+    code_files = ["coding_agent.py", "tools/", "utils/"]
     exclude_files = [
-        'utils/evo_utils.py',
-        'utils/docker_utils.py',
-        'utils/swe_log_parsers.py',
-        'prompts/self_improvement_prompt.py',
+        "utils/evo_utils.py",
+        "utils/docker_utils.py",
+        "utils/swe_log_parsers.py",
+        "prompts/self_improvement_prompt.py",
     ]
     code_text = get_current_code(root_dir, code_files, patch_files=patch_files, exclude_files=exclude_files)
     diagnose_system_message_out = coding_agent_summary + diagnose_system_message.format(code=code_text)
 
     return diagnose_system_message_out, diagnose_prompt_out
 
+
 def get_diagnose_prompt_polyglot(entry_id, commit, root_dir, out_dir, dataset, patch_files=[]):
 
     md_logs, eval_logs, predicted_patches, eval_results = find_selfimprove_eval_logs(entry_id, out_dir, commit_id=commit)
     md_log, eval_log, predicted_patch, eval_result = process_selfimprove_eval_logs(md_logs, eval_logs, predicted_patches, eval_results)
 
-    entry = next((e for e in dataset if e['instance_id'] == entry_id), None)
+    entry = next((e for e in dataset if e["instance_id"] == entry_id), None)
     assert entry, f"Could not find entry with id {entry_id} in dataset."
-    is_polyglot = 'language' in entry
-    answer_patch = entry['patch'] if not is_polyglot else entry['reference_answers']
-    test_patch = entry['test_patch'] if not is_polyglot else entry['reference_tests']
-    github_issue = entry['problem_statement']
+    is_polyglot = "language" in entry
+    answer_patch = entry["patch"] if not is_polyglot else entry["reference_answers"]
+    test_patch = entry["test_patch"] if not is_polyglot else entry["reference_tests"]
+    github_issue = entry["problem_statement"]
 
-    code_files = ['coding_agent.py', 'tools/', 'utils/']
+    code_files = ["coding_agent.py", "tools/", "utils/"]
     exclude_files = [
-        'utils/evo_utils.py',
-        'utils/docker_utils.py',
-        'utils/swe_log_parsers.py',
-        'utils/eval_utils.py',
-        'prompts/self_improvement_prompt.py',
+        "utils/evo_utils.py",
+        "utils/docker_utils.py",
+        "utils/swe_log_parsers.py",
+        "utils/eval_utils.py",
+        "prompts/self_improvement_prompt.py",
     ]
     code_text = get_current_code(root_dir, code_files, patch_files=patch_files, exclude_files=exclude_files, is_polyglot=is_polyglot)
-    
+
     import random
 
     if random.random() < 0.25:
         # Get user prompt for solving stochasticity
         return coding_agent_summary_polyglot + diagnose_system_message.format(code=code_text), diagnose_prompt_stochasticity_polyglot.format(md_log=md_log)
-    if 'empty_patch' in eval_result:
+    if "empty_patch" in eval_result:
         # Get user prompt for solving empty patches
         return coding_agent_summary_polyglot + diagnose_system_message.format(code=code_text), diagnose_prompt_emptypatches_polyglot.format(md_log=md_log)
-    return coding_agent_summary_polyglot + diagnose_system_message.format(code=code_text), polyglot_issue_prompt + diagnose_prompt.format(md_log=md_log, eval_log=eval_log, predicted_patch=predicted_patch, answer_patch=answer_patch, test_patch=test_patch, github_issue=github_issue)
+    return coding_agent_summary_polyglot + diagnose_system_message.format(code=code_text), polyglot_issue_prompt + diagnose_prompt.format(
+        md_log=md_log, eval_log=eval_log, predicted_patch=predicted_patch, answer_patch=answer_patch, test_patch=test_patch, github_issue=github_issue
+    )
 
 
 def get_eval_log_text(eval_json, test_status=None):
     if not test_status:
         first_key = next(iter(eval_json))
-        tests_status = eval_json[first_key].get('tests_status', {})
-    
+        tests_status = eval_json[first_key].get("tests_status", {})
+
     # Initialize result parts
     result_parts = []
-    
+
     # Handle FAIL_TO_PASS tests
     result_parts.append("## New tests for the issue")
     result_parts.append("These test whether the coding agent fixed the requested issue.")
-    fail_to_pass = tests_status.get('FAIL_TO_PASS', {})
-    if fail_to_pass.get('success'):
+    fail_to_pass = tests_status.get("FAIL_TO_PASS", {})
+    if fail_to_pass.get("success"):
         result_parts.append(f"Successfully fixed {len(fail_to_pass['success'])}:")
-        for test in fail_to_pass['success']:
+        for test in fail_to_pass["success"]:
             result_parts.append(f"  ✓ {test}")
-    if fail_to_pass.get('failure'):
+    if fail_to_pass.get("failure"):
         result_parts.append(f"Failed to fix {len(fail_to_pass['failure'])} tests:")
-        for test in fail_to_pass['failure']:
+        for test in fail_to_pass["failure"]:
             result_parts.append(f"  ✗ {test}")
     else:
-        result_parts.append(f"Pass All New Tests!")
-    
+        result_parts.append("Pass All New Tests!")
+
     # Handle PASS_TO_PASS tests
     result_parts.append("## Previous tests from the repo")
     result_parts.append("These test whether the modification that coding agent made break the previous tests")
-    pass_to_pass = tests_status.get('PASS_TO_PASS', {})
-    if pass_to_pass.get('success'):
+    pass_to_pass = tests_status.get("PASS_TO_PASS", {})
+    if pass_to_pass.get("success"):
         result_parts.append(f"\nMaintained {len(pass_to_pass['success'])} passing tests")
-    if pass_to_pass.get('failure'):
+    if pass_to_pass.get("failure"):
         result_parts.append(f"Regression in {len(pass_to_pass['failure'])} previously passing tests:")
-        for test in pass_to_pass['failure']:
+        for test in pass_to_pass["failure"]:
             result_parts.append(f"  ✗ {test}")
     else:
-        result_parts.append(f"Pass All Previous Tests!")
-    
+        result_parts.append("Pass All Previous Tests!")
+
     return "\n".join(result_parts) if result_parts else "No test results available. Assume all tests failed."
+
 
 def get_current_code(current_dir, code_files, patch_files=None, exclude_files=None, is_polyglot=False):
     """
@@ -427,7 +441,6 @@ def get_current_code(current_dir, code_files, patch_files=None, exclude_files=No
 
     code_text = []
 
-
     for file_path in code_files:
         full_path = os.path.join(current_dir, file_path)
 
@@ -440,9 +453,9 @@ def get_current_code(current_dir, code_files, patch_files=None, exclude_files=No
             rel_path = os.path.relpath(full_path, current_dir)
             if rel_path not in exclude_set:
                 # Handle polyglot case
-                if is_polyglot and 'coding_agent.py' in file_path:
-                    full_path = full_path.replace('coding_agent.py', f'coding_agent_polyglot.py')
-                
+                if is_polyglot and "coding_agent.py" in file_path:
+                    full_path = full_path.replace("coding_agent.py", "coding_agent_polyglot.py")
+
                 code_text.append(f"# {rel_path}")
                 code_text.append(read_file(full_path))
 
@@ -450,7 +463,7 @@ def get_current_code(current_dir, code_files, patch_files=None, exclude_files=No
             # If it's a directory, walk through it
             for root, _, files in os.walk(full_path):
                 for f in files:
-                    if f.endswith('.py'):
+                    if f.endswith(".py"):
                         file_full_path = os.path.join(root, f)
                         rel_path = os.path.relpath(file_full_path, current_dir)
                         # Check if this specific file is excluded
@@ -462,7 +475,7 @@ def get_current_code(current_dir, code_files, patch_files=None, exclude_files=No
     for i, patch_file in enumerate(patch_files):
         rel_path = os.path.relpath(patch_file, current_dir)
         if rel_path not in exclude_set:
-            code_text.append(f"# Patch {i+1}: {rel_path}")
+            code_text.append(f"# Patch {i + 1}: {rel_path}")
             code_text.append(read_file(patch_file))
 
     return "\n".join(code_text)

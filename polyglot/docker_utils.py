@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import docker
-import docker.errors
 import os
 import signal
 import tarfile
@@ -12,9 +10,12 @@ import time
 import traceback
 from pathlib import Path
 
+import docker
+import docker.errors
 from docker.models.containers import Container
 
 HEREDOC_DELIMITER = "EOF_1399519320"  # different from dataset HEREDOC_DELIMITERs!
+
 
 def copy_to_container(container: Container, src: Path, dst: Path):
     """
@@ -27,9 +28,7 @@ def copy_to_container(container: Container, src: Path, dst: Path):
     """
     # Check if destination path is valid
     if os.path.dirname(dst) == "":
-        raise ValueError(
-            f"Destination path parent directory cannot be empty!, dst: {dst}"
-        )
+        raise ValueError(f"Destination path parent directory cannot be empty!, dst: {dst}")
 
     # temporary tar file
     tar_path = src.with_suffix(".tar")
@@ -95,9 +94,7 @@ def remove_image(client, image_id, logger=None):
     except Exception as e:
         if raise_error:
             raise e
-        log_error(
-            f"Failed to remove image {image_id}: {e}\n" f"{traceback.format_exc()}"
-        )
+        log_error(f"Failed to remove image {image_id}: {e}\n{traceback.format_exc()}")
 
 
 def cleanup_container(client, container, logger):
@@ -137,9 +134,7 @@ def cleanup_container(client, container, logger):
             log_info(f"Attempting to stop container {container.name}...")
             container.stop(timeout=15)
     except Exception as e:
-        log_error(
-            f"Failed to stop container {container.name}: {e}. Trying to forcefully kill..."
-        )
+        log_error(f"Failed to stop container {container.name}: {e}. Trying to forcefully kill...")
         try:
             # Get the PID of the container
             container_info = client.api.inspect_container(container_id)
@@ -147,19 +142,14 @@ def cleanup_container(client, container, logger):
 
             # If container PID found, forcefully kill the container
             if pid > 0:
-                log_info(
-                    f"Forcefully killing container {container.name} with PID {pid}..."
-                )
+                log_info(f"Forcefully killing container {container.name} with PID {pid}...")
                 os.kill(pid, signal.SIGKILL)
             else:
                 log_error(f"PID for container {container.name}: {pid} - not killing.")
         except Exception as e2:
             if raise_error:
                 raise e2
-            log_error(
-                f"Failed to forcefully kill container {container.name}: {e2}\n"
-                f"{traceback.format_exc()}"
-            )
+            log_error(f"Failed to forcefully kill container {container.name}: {e2}\n{traceback.format_exc()}")
 
     # Attempt to remove the container
     try:
@@ -169,13 +159,10 @@ def cleanup_container(client, container, logger):
     except Exception as e:
         if raise_error:
             raise e
-        log_error(
-            f"Failed to remove container {container.name}: {e}\n"
-            f"{traceback.format_exc()}"
-        )
+        log_error(f"Failed to remove container {container.name}: {e}\n{traceback.format_exc()}")
 
 
-def exec_run_with_timeout(container, cmd, timeout: int|None=60):
+def exec_run_with_timeout(container, cmd, timeout: int | None = 60):
     """
     Run a command in a container with a timeout.
 
@@ -185,7 +172,7 @@ def exec_run_with_timeout(container, cmd, timeout: int|None=60):
         timeout (int): Timeout in seconds.
     """
     # Local variables to store the result of executing the command
-    exec_result = b''
+    exec_result = b""
     exec_id = None
     exception = None
     timed_out = False
@@ -249,7 +236,7 @@ def find_dependent_images(client: docker.DockerClient, image_name: str):
         # Check if the base image is in this image's history
         history = image.history()
         for layer in history:
-            if layer['Id'] == base_image_id:
+            if layer["Id"] == base_image_id:
                 # If found, add this image to the dependent images list
                 tags = image.tags
                 dependent_images.append(tags[0] if tags else image.id)
@@ -266,12 +253,7 @@ def list_images(client: docker.DockerClient):
     return {tag for i in client.images.list(all=True) for tag in i.tags}
 
 
-def clean_images(
-        client: docker.DockerClient,
-        prior_images: set,
-        cache_level: str,
-        clean: bool
-    ):
+def clean_images(client: docker.DockerClient, prior_images: set, cache_level: str, clean: bool):
     """
     Clean Docker images based on cache level and clean flag.
 
@@ -298,12 +280,7 @@ def clean_images(
     print(f"Removed {removed} images.")
 
 
-def should_remove(
-        image_name: str,
-        cache_level: str,
-        clean: bool,
-        prior_images: set
-    ):
+def should_remove(image_name: str, cache_level: str, clean: bool, prior_images: set):
     """
     Determine if an image should be removed based on cache level and clean flag.
     """

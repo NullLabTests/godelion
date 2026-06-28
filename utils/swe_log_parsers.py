@@ -1,12 +1,14 @@
 import re
 from enum import Enum
 
+
 class TestStatus(Enum):
     FAILED = "FAILED"
     PASSED = "PASSED"
     SKIPPED = "SKIPPED"
     ERROR = "ERROR"
     XFAIL = "XFAIL"
+
 
 def parse_log_pytest(log: str) -> dict[str, str]:
     """
@@ -129,7 +131,7 @@ def parse_log_django(log: str) -> dict[str, str]:
     patterns = [
         r"^(.*?)\s\.\.\.\sTesting\ against\ Django\ installed\ in\ ((?s:.*?))\ silenced\)\.\nok$",
         r"^(.*?)\s\.\.\.\sInternal\ Server\ Error:\ \/(.*)\/\nok$",
-        r"^(.*?)\s\.\.\.\sSystem check identified no issues \(0 silenced\)\nok$"
+        r"^(.*?)\s\.\.\.\sSystem check identified no issues \(0 silenced\)\nok$",
     ]
     for pattern in patterns:
         for match in re.finditer(pattern, log, re.MULTILINE):

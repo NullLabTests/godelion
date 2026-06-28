@@ -1,13 +1,17 @@
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import pytest
+
 from tools.edit import tool_function
+
 
 @pytest.fixture
 def temp_dir():
     """Create a temporary directory for test files."""
     with tempfile.TemporaryDirectory() as tmpdirname:
         yield Path(tmpdirname)
+
 
 @pytest.fixture
 def sample_file(temp_dir):
@@ -16,6 +20,7 @@ def sample_file(temp_dir):
     content = "line 1\nline 2\nline 3\nline 4\nline 5\n"
     file_path.write_text(content)
     return file_path
+
 
 class TestEditorTool:
     def test_view_file(self, sample_file):
@@ -74,11 +79,7 @@ class TestEditorTool:
         assert "Error" in result
         assert "does not exist" in result
 
-    @pytest.mark.parametrize("command", [
-        "unknown_command",
-        "",
-        None
-    ])
+    @pytest.mark.parametrize("command", ["unknown_command", "", None])
     def test_invalid_commands(self, command, sample_file):
         """Test various invalid commands."""
         result = tool_function(command, str(sample_file))

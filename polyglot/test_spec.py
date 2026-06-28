@@ -3,27 +3,25 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import platform
 import re
-
 from dataclasses import dataclass
-from typing import Any, Union, cast
+from typing import Union, cast
+
+from swebench.harness.utils import (
+    get_environment_yml,
+    get_requirements,
+)
 
 from polyglot.constants import (
     MAP_REPO_TO_INSTALL,
     MAP_REPO_VERSION_TO_SPECS,
     USE_X86,
 )
-
 from polyglot.dockerfiles import (
     get_dockerfile_base,
     get_dockerfile_env,
     get_dockerfile_instance,
-)
-from swebench.harness.utils import (
-    get_requirements,
-    get_environment_yml,
 )
 
 DIFF_MODIFIED_FILE_REGEX = r"--- a/(.*)"
@@ -34,6 +32,7 @@ class TestSpec:
     """
     A dataclass that represents a test specification for a single instance of polyglot.
     """
+
     instance_id: str
     repo: str
     repo_script_list: list[str]
@@ -184,9 +183,7 @@ def make_env_script_list(instance: dict, specs: dict, env_name: str) -> list[str
         # Install dependencies
         reqs = replace_uninstallable_packages_requirements_txt(get_requirements(instance))
         path_to_reqs = "$HOME/requirements.txt"
-        reqs_commands.append(
-            f"cat <<'{HEREDOC_DELIMITER}' > {path_to_reqs}\n{reqs}\n{HEREDOC_DELIMITER}"
-        )
+        reqs_commands.append(f"cat <<'{HEREDOC_DELIMITER}' > {path_to_reqs}\n{reqs}\n{HEREDOC_DELIMITER}")
         cmd = f"conda activate {env_name} && python -m pip install -r {path_to_reqs}"
         reqs_commands.append(cmd)
         reqs_commands.append(f"rm {path_to_reqs}")
@@ -194,9 +191,7 @@ def make_env_script_list(instance: dict, specs: dict, env_name: str) -> list[str
         # Create environment from yml
         reqs = get_environment_yml(instance, env_name)
         path_to_reqs = "environment.yml"
-        reqs_commands.append(
-            f"cat <<'{HEREDOC_DELIMITER}' > {path_to_reqs}\n{reqs}\n{HEREDOC_DELIMITER}"
-        )
+        reqs_commands.append(f"cat <<'{HEREDOC_DELIMITER}' > {path_to_reqs}\n{reqs}\n{HEREDOC_DELIMITER}")
         if "no_use_env" in specs and specs["no_use_env"]:
             # `conda create` based installation
             cmd = f"conda create -c conda-forge -n {env_name} python={specs['python']} -y"
@@ -238,7 +233,7 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
     test_files = re.findall(DIFF_MODIFIED_FILE_REGEX, test_patch)
 
     # Identify added files by looking for "new file mode" in the patch
-    added_files = re.findall(r'^diff --git a/(\S+) b/\1\nnew file mode', test_patch, re.MULTILINE)
+    added_files = re.findall(r"^diff --git a/(\S+) b/\1\nnew file mode", test_patch, re.MULTILINE)
     # Modified files are those in test_files but not in added_files
     modified_files = [f for f in test_files if f not in added_files]
 
@@ -249,15 +244,13 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
     if added_files:
         commands.append(f"rm -f {' '.join(added_files)}")
     # Handle C++ test case
-    if instance['language'] == 'cpp':
+    if instance["language"] == "cpp":
         commands.append("rm -rf build/")
 
     reset_tests_command = " && ".join(commands) if commands else "true"
 
-    apply_test_patch_command = (
-        f"git apply -v - <<'{HEREDOC_DELIMITER}'\n{test_patch}\n{HEREDOC_DELIMITER}"
-    )
-    language = instance['language']
+    apply_test_patch_command = f"git apply -v - <<'{HEREDOC_DELIMITER}'\n{test_patch}\n{HEREDOC_DELIMITER}"
+    language = instance["language"]
     test_command = MAP_REPO_VERSION_TO_SPECS[language]["test_cmd"]
     eval_commands = [
         "source /opt/miniconda3/bin/activate",
@@ -290,9 +283,9 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
 def make_test_spec(instance: dict) -> TestSpec:
     if isinstance(instance, TestSpec):
         return instance
-    instance_id = instance['instance_id']
-    language = instance['language']
-    repo = instance['repo']
+    instance_id = instance["instance_id"]
+    language = instance["language"]
+    repo = instance["repo"]
     base_commit = instance["base_commit"]
     test_patch = instance["test_patch"]
 
@@ -302,9 +295,7 @@ def make_test_spec(instance: dict) -> TestSpec:
 
     repo_script_list = make_repo_script_list(specs, repo, repo_directory, base_commit, env_name)
     env_script_list = make_env_script_list(instance, specs, env_name)
-    eval_script_list = make_eval_script_list(
-        instance, specs, env_name, repo_directory, base_commit, test_patch
-    )
+    eval_script_list = make_eval_script_list(instance, specs, env_name, repo_directory, base_commit, test_patch)
     if platform.machine() in {"aarch64", "arm64"}:
         # use arm64 unless explicitly specified
         arch = "arm64" if instance_id not in USE_X86 else "x86_64"
